@@ -10,8 +10,8 @@ export const defaultTheme: ITheme = {
 	headerColor: '',
 	bodyColor: '',
 
-	headerFont: '',
-	bodyFont: '',
+	headerFont: 'Regular 80px/96px \'Averia Serif Libre\', cursive',
+	bodyFont: 'Regular 20px/25px \'Averia Serif Libre\', cursive',
 
-	buttonBorderRadius: '',
+	buttonBorderRadius: '6px',
 }
