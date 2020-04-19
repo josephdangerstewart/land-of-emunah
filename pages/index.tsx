@@ -1,10 +1,12 @@
 import { Head } from '../components/head';
 import styled from 'styled-components';
+import { generateAnimation, Animations } from '../components/animations';
 
 const Image = styled.img`
 	height: 100%;
 	width: 100%;
 	object-fit: contain;
+	${generateAnimation(Animations.PopIn, 1.5)}
 `;
 
 const Container = styled.div`
