@@ -4,7 +4,7 @@ import { defaultTheme } from './default-theme';
 
 const ThemeContext = createContext<ITheme>(defaultTheme);
 
-export const Provider = ThemeContext.Provider;
+export const ThemeProvider = ThemeContext.Provider;
 
 export function useTheme(): ITheme {
 	return useContext(ThemeContext);
