@@ -1,22 +1,22 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Head } from '../components/head';
 import styled from 'styled-components';
-import { generateAnimation, Animations } from '../components/animations';
+import { generateAnimation, AnimationKind } from '../components/animations';
+import { AnimatableComponent } from '../types/AnimatableComponent';
 import { useTimeout } from '../components/hooks/use-timeout';
+import { useTransitionViewState } from '../components/animations';
 import { Card } from '../components/card';
 
-interface ImageProps {
-	inView: boolean;
-}
+const ANIMATION_DURATION = 1.5;
 
-const Image = styled.img<ImageProps>`
+const Image = styled.img<AnimatableComponent>`
 	height: 100%;
 	width: 100%;
 	object-fit: contain;
 	opacity: 0;
-	${({ inView }) => inView
-		? generateAnimation(Animations.PopIn, 1.5)
-		: generateAnimation(Animations.PopOut, 1.5)}
+	${({ inView, animationDuration }) => inView
+		? generateAnimation(AnimationKind.PopIn, animationDuration)
+		: generateAnimation(AnimationKind.PopOut, animationDuration)}
 `;
 
 const Container = styled.div`
@@ -25,10 +25,12 @@ const Container = styled.div`
 `;
 
 export default function Index() {
-	const [view, setView] = useState('logo');
+	const { view, setView, nextView } = useTransitionViewState('logo', ANIMATION_DURATION);
 
 	const fadeOut = useCallback(
-		() => setView('intro'),
+		() => {
+			setView('intro')
+		},
 		[],
 	);
 
@@ -40,12 +42,16 @@ export default function Index() {
 	return (
 		<Container>
 			<Head title="The Land of Emunah" />
-			<Image inView={view === 'logo'} src="/images/homepage-logo.png" />
+			<Image
+				inView={view === 'logo' && nextView === view}
+				animationDuration={ANIMATION_DURATION}
+				src="/images/homepage-logo.png"
+			/>
 			{view === 'intro' && (
 				<Card
 					title="An Invitation To Adventure"
 					bodyText="Outside of our physical realities, there are other worlds that exist within our creative minds and consciousness. This suggests that there is more than just the world we can physically see. Everything we fantasize is not contained in a physical world, but rather in something called imagination. However, as the creator, only you have access to your fantastical world. In order to share this imaginary world with others, we must provide a space to bring this world to life: a collaborative landscape of fantasy. We can combine our individual worlds of fantasy to build one imagined world together–a unified universe of creativity. The worlds that we build together are fantasy, but to us they are real."
-					onContinue={() => setView('next-boi')}
+					onContinue={() => setView('next-boi', false)}
 				/>
 			)}
 		</Container>

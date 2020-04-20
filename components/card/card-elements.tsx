@@ -7,8 +7,8 @@ export const CardContainer = styled.div`
 	max-height: 880px;
 	height: fit-content;
 	background-color: #E0D2A8;
-	border: 5px solid #67614E;
-	padding: 25px 60px;
+	border: 4px solid #67614E;
+	padding: 20px 40px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -42,7 +42,7 @@ export const Title = styled.h1`
 	padding: 0;
 	color: #375147;
 	text-align: center;
-	font: 50px 'Trade Winds', cursive;
+	font: 45px 'Trade Winds', cursive;
 `;
 
 export const Button = styled.button`
@@ -55,7 +55,7 @@ export const Button = styled.button`
 	transition: background-color .25s;
 	cursor: pointer;
 	border-radius: 12px;
-	font: 26px 'Averia Serif Libre', cursive;
+	font: 22px 'Averia Serif Libre', cursive;
 	width: fit-content;
 
 	&:hover {
