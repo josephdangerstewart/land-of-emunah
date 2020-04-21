@@ -8,7 +8,7 @@ import { useTransitionViewState } from '../components/animations';
 import { Card } from '../components/card';
 import { useRouter } from 'next/router';
 
-const ANIMATION_DURATION = 1.25;
+const ANIMATION_DURATION = .75;
 
 const Image = styled.img<AnimatableComponent>`
 	height: 100%;
