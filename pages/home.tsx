@@ -7,7 +7,7 @@ export default function Home() {
 	const router = useRouter();
 
 	const onContinue = useCallback(() => {
-		router.push('/');
+		router.push('/the-city');
 	}, [router]);
 
 	return (
