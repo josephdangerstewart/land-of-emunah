@@ -39,29 +39,29 @@ export const Location: React.FC<LocationProps> = ({
 	buttonText,
 	onContinue,
 }) => {
-	const { isInView, shouldRenderView, setView } = useTransitionViewState(true, ANIMATION_DURATION);
+	const { isInView, shouldRenderView, setView } = useTransitionViewState('intro', ANIMATION_DURATION);
 
 	useEffect(() => {
-		if (shouldRenderView(false)) {
+		if (shouldRenderView('continue')) {
 			onContinue();
 		}
 	}, [shouldRenderView]);
 
 	const handleOnContinue = useCallback(() => {
-		setView(false);
+		setView('continue');
 	}, [setView]);
 
 	return (
 		<CenteredPage>
 			<Container>
 				<FadeIn
-					inView={isInView(true)}
+					inView={isInView('intro')}
 					animationDuration={ANIMATION_DURATION}
 				>
 					<Header margin="0 0 15px">{title}</Header>
 				</FadeIn>
 				<FadeIn
-					inView={isInView(true)}
+					inView={isInView('intro')}
 					animationDuration={ANIMATION_DURATION}
 					delay={.15}
 				>
@@ -69,7 +69,7 @@ export const Location: React.FC<LocationProps> = ({
 				</FadeIn>
 				<TextContainer>
 					<FadeIn
-						inView={isInView(true)}
+						inView={isInView('intro')}
 						animationDuration={ANIMATION_DURATION}
 						delay={.3}
 					>
