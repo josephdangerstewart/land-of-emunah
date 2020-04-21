@@ -22,8 +22,8 @@ const Image = styled.img<AnimatableComponent>`
 
 const AnimatedCard = styled(Card)<AnimatableComponent>`
 	${({ inView, animationDuration }) => inView
-		? generateAnimation(AnimationKind.PopIn, animationDuration)
-		: generateAnimation(AnimationKind.PopOut, animationDuration)}
+		? generateAnimation(AnimationKind.FadeIn, animationDuration)
+		: generateAnimation(AnimationKind.FadeOut, animationDuration)}
 `;
 
 const Container = styled.div`
@@ -32,7 +32,7 @@ const Container = styled.div`
 `;
 
 export default function Index() {
-	const { view, setView, nextView } = useTransitionViewState('logo', ANIMATION_DURATION);
+	const { isInView, setView, shouldRenderView } = useTransitionViewState('logo', ANIMATION_DURATION);
 	const router = useRouter();
 
 	const fadeOut = useCallback(() => {
@@ -47,25 +47,25 @@ export default function Index() {
 	}, [router]);
 
 	useEffect(() => {
-		if (view === 'home') {
+		if (shouldRenderView('home')) {
 			router.push('/home');
 		}
-	}, [view, router]);
+	}, [shouldRenderView, router]);
 
 	return (
 		<Container>
 			<Head title="The Land of Emunah" />
 			<Image
-				inView={view === 'logo' && nextView === view}
+				inView={isInView('logo')}
 				animationDuration={ANIMATION_DURATION}
 				src="/images/homepage-logo.png"
 			/>
-			{view === 'intro' && (
+			{shouldRenderView('intro') && (
 				<AnimatedCard
 					title="An Invitation To Adventure"
 					bodyText="Outside of our physical realities, there are other worlds that exist within our creative minds and consciousness. This suggests that there is more than just the world we can physically see. Everything we fantasize is not contained in a physical world, but rather in something called imagination. However, as the creator, only you have access to your fantastical world. In order to share this imaginary world with others, we must provide a space to bring this world to life: a collaborative landscape of fantasy. We can combine our individual worlds of fantasy to build one imagined world together–a unified universe of creativity. The worlds that we build together are fantasy, but to us they are real."
 					onContinue={onContinue}
-					inView={view === 'intro' && nextView === view}
+					inView={isInView('intro')}
 					animationDuration={ANIMATION_DURATION}
 				/>
 			)}
