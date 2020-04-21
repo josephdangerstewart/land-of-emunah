@@ -14,7 +14,6 @@ export const CardContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	border-radius: 6px;
-	margin-top: 30px;
 `;
 
 export const Overlay = styled.div`

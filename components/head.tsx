@@ -19,6 +19,10 @@ export const Head: React.FC<HeadProps> = ({ title }) => {
 				<link href="https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap" rel="stylesheet"></link>
 			</NextHead>
 			<style jsx global>{`
+				* {
+					box-sizing: border-box;
+				}
+
 				html, body, #__next {
 					height: 100%;
 					padding: 0;

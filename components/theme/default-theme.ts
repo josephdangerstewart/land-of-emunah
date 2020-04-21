@@ -1,17 +1,16 @@
 import { ITheme } from '../../types/ITheme';
+import { darken } from 'polished';
 
 export const defaultTheme: ITheme = {
 	background: '#A4B494',
 	buttonBackground: '#E0D2A8',
-	buttonHoverBackground: '',
+	buttonHoverBackground: darken(0.1, '#E0D2A8'),
 
-	buttonBorder: '',
+	headerColor: '#375147',
+	bodyColor: '#375147',
+	buttonColor: '#375147',
 
-	headerColor: '',
-	bodyColor: '',
-
-	headerFont: 'Regular 80px/96px \'Averia Serif Libre\', cursive',
-	bodyFont: 'Regular 20px/25px \'Averia Serif Libre\', cursive',
-
-	buttonBorderRadius: '6px',
+	headerFont: '50px \'Averia Serif Libre\', cursive',
+	bodyFont: '18px \'Averia Serif Libre\', cursive',
+	buttonFont: '20px \'Averia Serif Libre\', cursive',
 }

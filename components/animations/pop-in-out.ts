@@ -2,7 +2,7 @@ import { keyframes } from 'styled-components';
 
 export const popIn = keyframes`
 	0% {
-		transform: scale(0.2);
+		transform: scale(0.5);
 		opacity: 0;
 	}
 
@@ -19,7 +19,7 @@ export const popOut = keyframes`
 	}
 
 	100% {
-		transform: scale(0.2);
+		transform: scale(0.5);
 		opacity: 0;
 	}
 `;
