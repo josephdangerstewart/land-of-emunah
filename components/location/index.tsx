@@ -14,6 +14,7 @@ import {
 } from './styled';
 import { generateAnimation, AnimationKind, useTransitionViewState } from '../animations';
 import { AnimatableComponent } from '../../types/AnimatableComponent';
+import { useImageLoader } from '../hooks/use-image-loader';
 
 const ANIMATION_DURATION = .75
 
@@ -40,6 +41,7 @@ export const Location: React.FC<LocationProps> = ({
 	onContinue,
 }) => {
 	const { isInView, shouldRenderView, setView } = useTransitionViewState('intro', ANIMATION_DURATION);
+	const loadedCoverImageSrc = useImageLoader(coverImageUrl);
 
 	useEffect(() => {
 		if (shouldRenderView('continue')) {
@@ -50,6 +52,10 @@ export const Location: React.FC<LocationProps> = ({
 	const handleOnContinue = useCallback(() => {
 		setView('continue');
 	}, [setView]);
+
+	if (!loadedCoverImageSrc) {
+		return null;
+	}
 
 	return (
 		<CenteredPage>
@@ -65,7 +71,7 @@ export const Location: React.FC<LocationProps> = ({
 					animationDuration={ANIMATION_DURATION}
 					delay={.15}
 				>
-					<Image src={coverImageUrl} />
+					<Image src={loadedCoverImageSrc} />
 				</FadeIn>
 				<TextContainer>
 					<FadeIn
