@@ -1,10 +1,16 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 
-export function useTimeout(cb: () => void, timeout: number): void {
-	const ref = useRef<number>();
-	
-	useEffect(() => {
-		ref.current = setTimeout(cb, timeout);
-		return () => clearTimeout(ref.current);
+export type SetTimeoutType = (handler: () => void, duration: number) => void;
+
+export function useSetTimeout(): SetTimeoutType {
+	const timeouts = useRef<number[]>([]);
+
+	const wrappedSetTimeout = useCallback<SetTimeoutType>((handler, duration) => {
+		const timeout = setTimeout(handler, duration);
+		timeouts.current.push(timeout);
 	}, []);
+
+	useEffect(() => () => timeouts.current.forEach(clearTimeout), []);
+	
+	return wrappedSetTimeout;
 }

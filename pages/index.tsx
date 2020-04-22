@@ -3,12 +3,14 @@ import { Head } from '../components/head';
 import styled from 'styled-components';
 import { generateAnimation, AnimationKind } from '../components/animations';
 import { AnimatableComponent } from '../types/AnimatableComponent';
-import { useTimeout } from '../components/hooks/use-timeout';
+import { useSetTimeout } from '../components/hooks/use-timeout';
 import { useTransitionViewState } from '../components/animations';
 import { Card } from '../components/card';
 import { useRouter } from 'next/router';
+import { useImageLoader } from '../components/hooks/use-image-loader';
 
 const ANIMATION_DURATION = .75;
+const LOGO_DISPLAY_DURATION = 4000;
 
 const Image = styled.img<AnimatableComponent>`
 	height: 100%;
@@ -32,6 +34,9 @@ const Container = styled.div`
 `;
 
 export default function Index() {
+	const setTimeout = useSetTimeout();
+	const logoSrc = useImageLoader('/images/homepage-logo.png');
+
 	const { isInView, setView, shouldRenderView } = useTransitionViewState('logo', ANIMATION_DURATION);
 	const router = useRouter();
 
@@ -40,7 +45,11 @@ export default function Index() {
 		router.prefetch('/home');
 	}, []);
 
-	useTimeout(fadeOut, 4000);
+	useEffect(() => {
+		if (logoSrc) {
+			setTimeout(fadeOut, LOGO_DISPLAY_DURATION);
+		}
+	}, [logoSrc])
 
 	const onContinue = useCallback(() => {
 		setView('home');
@@ -52,13 +61,21 @@ export default function Index() {
 		}
 	}, [shouldRenderView, router]);
 
+	if (!logoSrc) {
+		return (
+			<Container>
+				<Head />
+			</Container>
+		)
+	}
+
 	return (
 		<Container>
-			<Head title="The Land of Emunah" />
+			<Head />
 			<Image
 				inView={isInView('logo')}
 				animationDuration={ANIMATION_DURATION}
-				src="/images/homepage-logo.png"
+				src={logoSrc}
 			/>
 			{shouldRenderView('intro') && (
 				<AnimatedCard
