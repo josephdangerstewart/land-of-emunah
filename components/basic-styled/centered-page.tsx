@@ -6,9 +6,8 @@ const Outer = styled.div`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	overflow: auto;
 `;
-
-
 
 const Inner = styled.div<{ minHeight?: string }>`
 	margin: auto;

@@ -24,8 +24,7 @@ export const Overlay = styled.div`
 	height: 100vh;
 	display: flex;
 	justify-content: center;
-	overflow-x: hidden;
-	overflow-y: auto;
+	overflow: hidden;
 `;
 
 export const CoverImage = styled.img`
@@ -66,4 +65,31 @@ export const Button = styled.button`
 	&:hover {
 		background-color: ${lighten(0.1, '#FFE9AC')}
 	}
+`;
+
+export const ChoiceButton = styled(Button)<{ backgroundColor?: string }>`
+	flex: 1 0 calc(49% - 8px);
+	background-color: ${({ backgroundColor }) => backgroundColor};
+	margin: 4px;
+
+	${({ backgroundColor }) => backgroundColor ? `
+		&:hover {
+			background-color: ${lighten(0.1, backgroundColor)}
+		}
+	`: ''}
+`;
+
+export const ButtonsContainer = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+`;
+
+export const FaceContainer = styled.div<{ visible: boolean, isBack?: boolean }>`
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	backface-visibility: hidden;
+	${({ isBack }) => isBack ? 'transform: rotateY(180deg);' : ''}
+	${({ visible }) => !visible ? 'visibility: hidden; position: absolute;' : ''}
 `;

@@ -6,16 +6,28 @@ import {
 	Button,
 	Overlay,
 	CoverImage,
+	ButtonsContainer,
+	ChoiceButton,
+	FaceContainer,
 } from './card-elements';
 import { FlexSpacer } from '../basic-styled/flex-spacer';
 import { CenteredPage } from '../basic-styled/centered-page';
 import { useImageLoader } from '../hooks/use-image-loader';
 
+export interface ChoiceButton {
+	text: string;
+	backgroundColor?: string;
+	onClick: () => void;
+}
+
 export interface CardFaceProps {
 	title: string;
 	bodyText?: string;
-	onContinue: () => void;
+	onContinue?: () => void;
 	coverImageUrl?: string;
+	buttons?: ChoiceButton[];
+	visible: boolean;
+	isBack?: boolean;
 }
 
 export const CardFace: React.FC<CardFaceProps> = ({
@@ -23,15 +35,35 @@ export const CardFace: React.FC<CardFaceProps> = ({
 	bodyText,
 	onContinue,
 	coverImageUrl,
+	buttons,
+	visible,
+	isBack,
 }) => {
 	return (
-		<>
+		<FaceContainer visible={visible} isBack={isBack}>
 			<Title>{title}</Title>
 			{coverImageUrl && <CoverImage src={coverImageUrl} />}
 			{bodyText && <BodyText>{bodyText}</BodyText>}
 			<FlexSpacer />
-			<Button onClick={onContinue}>Continue</Button>
-		</>
+			{buttons
+				? (
+					<ButtonsContainer>
+						{buttons.map((button) => (
+							<ChoiceButton
+								onClick={button.onClick}
+								backgroundColor={button.backgroundColor}
+								key={button.text}
+							>
+								{button.text}
+							</ChoiceButton>
+						))}
+					</ButtonsContainer>
+				)
+				: (
+					<Button onClick={onContinue}>Continue</Button>
+				)
+			}
+		</FaceContainer>
 	)	
 }
 
@@ -60,11 +92,13 @@ export const Card: React.FC<CardProps> = ({
 		<Overlay>
 			<CenteredPage minHeight="min(80%, 880px)">
 				<CardContainer className={className}>
-					<Title>{title}</Title>
-					{loadedCoverImageSrc && <CoverImage src={loadedCoverImageSrc} />}
-					{bodyText && <BodyText>{bodyText}</BodyText>}
-					<FlexSpacer />
-					<Button onClick={onContinue}>Continue</Button>
+					<CardFace
+						title={title}
+						coverImageUrl={loadedCoverImageSrc}
+						bodyText={bodyText}
+						onContinue={onContinue}
+						visible
+					/>
 				</CardContainer>
 			</CenteredPage>
 		</Overlay>

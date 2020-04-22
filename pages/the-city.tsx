@@ -12,7 +12,29 @@ export default function TheCity() {
 				onContinue={() => {}}
 				encounter={{
 					description: 'As you are heading out of the city gates, ready to embark on a new adventure, you see that there are four different paths in front of you. Which direction do you go?',
-					coverImageUrl: '/images/locations/city.png'
+					coverImageUrl: '/images/locations/city.png',
+					choices: [
+						{
+							choiceText: 'Mountains',
+							buttonBackgroundColor: '#E8BBBD',
+							result: 'You have chosen the Mountains',
+						},
+						{
+							choiceText: 'Sea',
+							buttonBackgroundColor: '#A7DAED',
+							result: 'You have chosen the Sea',
+						},
+						{
+							choiceText: 'Desert',
+							buttonBackgroundColor: '#FFE9AC',
+							result: 'You have chosen the Desert',
+						},
+						{
+							choiceText: 'Forest',
+							buttonBackgroundColor: '#B8E3CC',
+							result: 'You have chosen the Forest',
+						},
+					]
 				}}
 			/>
 		</>

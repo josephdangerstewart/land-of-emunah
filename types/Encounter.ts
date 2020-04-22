@@ -8,4 +8,5 @@ export interface Encounter {
 export interface EncounterChoice {
 	choiceText: string;
 	result: string;
+	buttonBackgroundColor?: string;
 }
