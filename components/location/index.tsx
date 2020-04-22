@@ -14,7 +14,7 @@ import {
 import { generateAnimation, AnimationKind, useTransitionViewState } from '../animations';
 import { AnimatableComponent } from '../../types/AnimatableComponent';
 import { useImageLoader } from '../hooks/use-image-loader';
-import { EncounterCard } from './encounter-card';
+import { EncounterCard } from '../card';
 
 const ANIMATION_DURATION = .75
 
