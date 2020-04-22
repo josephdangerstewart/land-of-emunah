@@ -19,7 +19,7 @@ export interface CardProps {
 export const Card: React.FC<CardProps> = ({ title, bodyText, onContinue, className }) => {
 	return (
 		<Overlay>
-			<CenteredPage>
+			<CenteredPage minHeight="min(80%, 880px)">
 				<CardContainer className={className}>
 					<Title>{title}</Title>
 					{bodyText && <BodyText>{bodyText}</BodyText>}

@@ -8,13 +8,18 @@ const Outer = styled.div`
 	flex-direction: column;
 `;
 
-const Inner = styled.div`
+
+
+const Inner = styled.div<{ minHeight?: string }>`
 	margin: auto;
+	min-height: ${({ minHeight }) => minHeight}; 
 `;
 
-export const CenteredPage: React.FC = ({ children }) => (
+export const CenteredPage: React.FC<{ minHeight?: string }> = ({ children, minHeight }) => (
 	<Outer>
-		<Inner>
+		<Inner
+			minHeight={minHeight}
+		>
 			{children}
 		</Inner>
 	</Outer>

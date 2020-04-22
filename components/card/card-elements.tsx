@@ -3,7 +3,7 @@ import { lighten } from 'polished';
 
 export const CardContainer = styled.div`
 	max-width: 470px;
-	min-height: min(80%, 880px);
+	min-height: 100%;
 	max-height: 880px;
 	height: fit-content;
 	background-color: #E0D2A8;
