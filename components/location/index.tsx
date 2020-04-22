@@ -5,7 +5,6 @@ import { BodyText } from '../basic-styled/body-text';
 import { Button } from '../basic-styled/button';
 import { CenteredPage } from '../basic-styled/centered-page';
 import { Encounter } from '../../types/Encounter';
-
 import {
 	Image,
 	TextContainer,
@@ -15,6 +14,7 @@ import {
 import { generateAnimation, AnimationKind, useTransitionViewState } from '../animations';
 import { AnimatableComponent } from '../../types/AnimatableComponent';
 import { useImageLoader } from '../hooks/use-image-loader';
+import { EncounterCard } from './encounter-card';
 
 const ANIMATION_DURATION = .75
 
@@ -22,6 +22,12 @@ const FadeIn = styled.div<AnimatableComponent>`
 	${({ inView, animationDuration, delay }) => inView
 		? generateAnimation(AnimationKind.FadeIn, animationDuration, delay)
 		: generateAnimation(AnimationKind.FadeOut, animationDuration, delay)}
+`;
+
+const AnimatedEncounterCard = styled(EncounterCard)<AnimatableComponent>`
+	${({ inView, animationDuration }) => inView
+		? generateAnimation(AnimationKind.FadeIn, animationDuration)
+		: generateAnimation(AnimationKind.FadeOut, animationDuration)}
 `;
 
 export interface LocationProps {
@@ -39,8 +45,9 @@ export const Location: React.FC<LocationProps> = ({
 	coverImageUrl,
 	buttonText,
 	onContinue,
+	encounter,
 }) => {
-	const { isInView, shouldRenderView, setView } = useTransitionViewState('intro', ANIMATION_DURATION);
+	const { isInView, shouldRenderView, setView, addView } = useTransitionViewState('intro', ANIMATION_DURATION);
 	const loadedCoverImageSrc = useImageLoader(coverImageUrl);
 
 	useEffect(() => {
@@ -52,6 +59,10 @@ export const Location: React.FC<LocationProps> = ({
 	const handleOnContinue = useCallback(() => {
 		setView('continue');
 	}, [setView]);
+
+	const handleOpenEncounter = useCallback(() => {
+		addView('encounter');
+	}, []);
 
 	if (!loadedCoverImageSrc) {
 		return null;
@@ -81,13 +92,21 @@ export const Location: React.FC<LocationProps> = ({
 					>
 						<BodyText>{bodyText}</BodyText>
 						<ButtonContainer>
-							<Button onClick={handleOnContinue}>
+							<Button onClick={encounter ? handleOpenEncounter : handleOnContinue}>
 								{buttonText ?? 'Continue'}
 							</Button>
 						</ButtonContainer>
 					</FadeIn>
 				</TextContainer>
 			</Container>
+			{shouldRenderView('encounter') ? (
+				<AnimatedEncounterCard
+					encounter={encounter}
+					onContinue={handleOnContinue}
+					inView={isInView('encounter')}
+					animationDuration={ANIMATION_DURATION}
+				/>
+			) : null}
 		</CenteredPage>
 	)
 }

@@ -1,42 +1,62 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
+import { useWait } from '../hooks/use-wait';
 
 export interface UseTransitionStateHook<T> {
 	shouldRenderView: (view: T) => boolean;
 	isInView: (view: T) => boolean;
 	setView: (nextView: T, hasAnimation?: boolean) => void;
+	addView: (nextView: T) => void;
 }
 
 export function useTransitionViewState<T>(defaultView: T, duration: number): UseTransitionStateHook<T> {
-	const [viewState, setViewState] = useState(defaultView);
-	const [nextViewState, setNextViewState] = useState(defaultView);
-	const currentTimeout = useRef(null);
+	const wait = useWait();
+	const [viewState, setViewState] = useState([defaultView]);
+	const [nextViewState, setNextViewState] = useState([defaultView]);
+	const currentTimeouts = useRef<number[]>([]);
 
-	const setView = useCallback((nextView: T, hasAnimation = true) => {
-		if (currentTimeout.current) {
-			clearTimeout(currentTimeout.current);
+	const setView = useCallback(async (nextView: T, hasAnimation = true) => {
+		currentTimeouts.current.forEach(clearTimeout);
+
+		while (viewState.length > 1) {
+			const prevView = viewState[viewState.length - 1];
+
+			const prevNextViewIndex = nextViewState.findIndex((x) => x === prevView);
+			nextViewState.splice(prevNextViewIndex, 1);
+
+			setNextViewState([...nextViewState]);
+
+			await wait(duration * 1000);
+
+			viewState.pop();
+			setViewState(viewState);
 		}
 
-		setNextViewState(nextView);
+		setNextViewState([nextView]);
+
 		if (hasAnimation) {
-			currentTimeout.current = setTimeout(() => {
-				setViewState(nextView);
-			}, duration * 1000);
-		} else {
-			setViewState(nextView);
+			await wait(duration * 1000);
 		}
+		
+		setViewState([nextView]);
+	}, [viewState]);
+
+	const addView = useCallback((nextView: T) => {
+		setNextViewState([...nextViewState, nextView]);
+		setViewState([...viewState, nextView]);
 	}, []);
 
-	const shouldRenderView = useCallback((view: T) => viewState === view, [viewState]);
+	const shouldRenderView = useCallback((view: T) => viewState.includes(view), [viewState]);
 	const isInView = useCallback(
-		(view: T) => viewState === view && viewState === nextViewState,
+		(view: T) => viewState.includes(view) && nextViewState.includes(view),
 		[viewState, nextViewState]
 	);
 
-	useEffect(() => () => clearTimeout(currentTimeout.current), []);
+	useEffect(() => () => currentTimeouts.current.forEach(clearTimeout), []);
 
 	return {
 		setView,
 		shouldRenderView,
 		isInView,
+		addView,
 	};
 }

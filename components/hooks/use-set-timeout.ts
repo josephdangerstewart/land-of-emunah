@@ -1,6 +1,6 @@
 import { useRef, useCallback, useEffect } from 'react';
 
-export type SetTimeoutType = (handler: () => void, duration: number) => void;
+export type SetTimeoutType = (handler: (...args: any[]) => void, duration: number) => void;
 
 export function useSetTimeout(): SetTimeoutType {
 	const timeouts = useRef<number[]>([]);

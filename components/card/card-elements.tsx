@@ -28,6 +28,12 @@ export const Overlay = styled.div`
 	overflow-y: auto;
 `;
 
+export const CoverImage = styled.img`
+	width: 100%;
+	height: 225px;
+	object-fit: cover;
+`;
+
 export const BodyText = styled.p`
 	padding: 10px;
 	background-color: #FDF6E3;
@@ -49,7 +55,7 @@ export const Button = styled.button`
 	margin: 0;
 	border: none;
 	outline: none;
-	background-color: #BFAD74;
+	background-color: #FFE9AC;
 	color: #375147;
 	transition: background-color .25s;
 	cursor: pointer;
@@ -58,6 +64,6 @@ export const Button = styled.button`
 	width: fit-content;
 
 	&:hover {
-		background-color: ${lighten(0.1, '#BFAD74')}
+		background-color: ${lighten(0.1, '#FFE9AC')}
 	}
 `;

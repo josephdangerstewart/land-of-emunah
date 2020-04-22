@@ -3,7 +3,7 @@ import { Head } from '../components/head';
 import styled from 'styled-components';
 import { generateAnimation, AnimationKind } from '../components/animations';
 import { AnimatableComponent } from '../types/AnimatableComponent';
-import { useSetTimeout } from '../components/hooks/use-timeout';
+import { useSetTimeout } from '../components/hooks/use-set-timeout';
 import { useTransitionViewState } from '../components/animations';
 import { Card } from '../components/card';
 import { useRouter } from 'next/router';
