@@ -28,6 +28,7 @@ export interface CardFaceProps {
 	buttons?: ChoiceButton[];
 	visible: boolean;
 	isBack?: boolean;
+	flipped?: boolean;
 }
 
 export const CardFace: React.FC<CardFaceProps> = ({
@@ -38,9 +39,10 @@ export const CardFace: React.FC<CardFaceProps> = ({
 	buttons,
 	visible,
 	isBack,
+	flipped,
 }) => {
 	return (
-		<FaceContainer visible={visible} isBack={isBack}>
+		<FaceContainer visible={visible} isBack={isBack} flipped={flipped}>
 			<Title>{title}</Title>
 			{coverImageUrl && <CoverImage src={coverImageUrl} />}
 			{bodyText && <BodyText>{bodyText}</BodyText>}

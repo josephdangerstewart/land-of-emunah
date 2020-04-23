@@ -6,9 +6,9 @@ export const CardContainer = styled.div`
 	min-height: 100%;
 	max-height: 880px;
 	height: fit-content;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+
+	display: flex;
+	flex-flow: row nowrap;
 `;
 
 export const Overlay = styled.div`
@@ -79,17 +79,23 @@ export const ButtonsContainer = styled.div`
 	flex-wrap: wrap;
 `;
 
-export const FaceContainer = styled.div<{ visible: boolean, isBack?: boolean }>`
-	flex-grow: 1;
+export const FaceContainer = styled.div<{ visible: boolean, isBack?: boolean, flipped?: boolean }>`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	backface-visibility: hidden;
 	background-color: #E0D2A8;
 	border: 4px solid #67614E;
 	padding: 20px 40px;
-	display: flex;
 	border-radius: 6px;
-	${({ isBack }) => isBack ? 'transform: rotateY(180deg);' : ''}
-	${({ visible }) => !visible ? 'visibility: hidden; position: absolute;' : ''}
+	transition: transform 0.6s;
+	transform-style: preserve-3d;
+	backface-visibility: hidden;
+
+	width: 100%;
+    flex: none;
+
+	${({ isBack }) => isBack ? 'margin-left: -100%; backface-visibility: visible; z-index: -1;' : ''}
+	${({ visible }) => !visible ? 'visibility: hidden;' : ''}
+
+	${({ flipped }) => flipped ? 'transform: rotateY(180deg);' : ''}
 `;

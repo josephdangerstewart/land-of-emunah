@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { Encounter, EncounterChoice } from '../../types/Encounter';
 
 import {
@@ -8,7 +8,6 @@ import {
 
 import { CenteredPage } from '../basic-styled/centered-page';
 import { CardFace, ChoiceButton } from './card';
-import { useTransitionViewState } from '../animations';
 
 const ANIMATION_DURATION = 0.75;
 
@@ -23,7 +22,7 @@ export const EncounterCard: React.FC<EncounterCardProps> = ({
 	onContinue,
 	className,
 }) => {
-	const { setView, isInView } = useTransitionViewState(-1, ANIMATION_DURATION);
+	const [view, setView] = useState(-1);
 
 	const mappedChoiceButtons = useMemo<ChoiceButton[]>(
 		() => encounter.choices?.map((choice, index) => ({
@@ -34,7 +33,7 @@ export const EncounterCard: React.FC<EncounterCardProps> = ({
 	), [encounter.choices, setView]);
 
 	useEffect(() => {
-		setView(-1, false);
+		setView(-1);
 	}, [encounter.choices]);
 
 	return (
@@ -47,7 +46,8 @@ export const EncounterCard: React.FC<EncounterCardProps> = ({
 						bodyText={encounter.description}
 						buttons={mappedChoiceButtons}
 						onContinue={onContinue}
-						visible={isInView(-1)}
+						flipped={view !== -1}
+						visible
 					/>
 					{encounter.choices?.map((choice, index) => (
 						<CardFace
@@ -55,8 +55,10 @@ export const EncounterCard: React.FC<EncounterCardProps> = ({
 							coverImageUrl={encounter.coverImageUrl}
 							bodyText={choice.result}
 							onContinue={() => onContinue(choice)}
-							visible={isInView(index)}
+							visible={view === index}
 							key={choice.choiceText}
+							flipped={view === -1}
+							isBack
 						/>
 					))}
 				</CardContainer>
