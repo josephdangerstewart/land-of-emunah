@@ -6,14 +6,9 @@ export const CardContainer = styled.div`
 	min-height: 100%;
 	max-height: 880px;
 	height: fit-content;
-	background-color: #E0D2A8;
-	border: 4px solid #67614E;
-	padding: 20px 40px;
-	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	border-radius: 6px;
 `;
 
 export const Overlay = styled.div`
@@ -90,6 +85,11 @@ export const FaceContainer = styled.div<{ visible: boolean, isBack?: boolean }>`
 	flex-direction: column;
 	align-items: center;
 	backface-visibility: hidden;
+	background-color: #E0D2A8;
+	border: 4px solid #67614E;
+	padding: 20px 40px;
+	display: flex;
+	border-radius: 6px;
 	${({ isBack }) => isBack ? 'transform: rotateY(180deg);' : ''}
 	${({ visible }) => !visible ? 'visibility: hidden; position: absolute;' : ''}
 `;
