@@ -45,8 +45,7 @@ export const CardFace: React.FC<CardFaceProps> = ({
 		<FaceContainer visible={visible} isBack={isBack} flipped={flipped}>
 			<Title>{title}</Title>
 			{coverImageUrl && <CoverImage src={coverImageUrl} />}
-			{bodyText && <BodyText>{bodyText}</BodyText>}
-			<FlexSpacer />
+			{bodyText ? <BodyText>{bodyText}</BodyText> : <FlexSpacer />}
 			{buttons
 				? (
 					<ButtonsContainer>

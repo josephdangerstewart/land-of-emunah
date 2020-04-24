@@ -34,6 +34,8 @@ export const BodyText = styled.p`
 	color: #375147;
 	border-radius: 6px;
 	font: 18px 'Averia Serif Libre', cursive;
+	width: 100%;
+	flex-grow: 1;
 `;
 
 export const Title = styled.h1`
