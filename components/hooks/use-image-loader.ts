@@ -3,7 +3,7 @@ import { useState, useMemo, useEffect } from 'react';
 export function useImageLoader(src: string): string {
 	const [imageSrc, setImageSrc] = useState(null);
 
-	const image = useMemo(() => typeof Image !== 'undefined' ? new Image() : null, []);
+	const image = useMemo(() => typeof Image !== 'undefined' && src ? new Image() : null, [src]);
 
 	useEffect(() => {
 		if (!image) {
