@@ -38,6 +38,7 @@ export interface LocationProps {
 	buttonText?: string;
 	onContinue: () => void;
 	expectingEncounter?: boolean;
+	onOpenEncounter?: () => void;
 }
 
 export const Location: React.FC<LocationProps> = ({
@@ -48,6 +49,7 @@ export const Location: React.FC<LocationProps> = ({
 	onContinue,
 	encounter,
 	expectingEncounter,
+	onOpenEncounter,
 }) => {
 	const { isInView, shouldRenderView, setView, addView } = useTransitionViewState('intro', ANIMATION_DURATION);
 	const loadedCoverImageSrc = useImageLoader(coverImageUrl);
@@ -63,8 +65,12 @@ export const Location: React.FC<LocationProps> = ({
 	}, [setView]);
 
 	const handleOpenEncounter = useCallback(() => {
+		if (onOpenEncounter) {
+			onOpenEncounter();
+		}
+
 		addView('encounter');
-	}, []);
+	}, [onOpenEncounter]);
 
 	if (!loadedCoverImageSrc) {
 		return null;

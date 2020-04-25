@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { Encounter } from '../../types/Encounter';
 import { getLocationRepository } from '../../api/type-registry';
 import { usePastEncounters } from '../../components/hooks/use-past-encounters';
+import { usePreviousLocation } from '../../components/hooks/use-previous-location';
 
 interface PageContext {
 	params: {
@@ -32,6 +33,7 @@ interface LocationProps {
 export default function LocationPage({ currentLocation }: LocationProps) {
 	const router = useRouter();
 	const { getPastEncounters, addEncounterToHistory } = usePastEncounters();
+	const { setPreviousLocation } = usePreviousLocation();
 	const locationRepository = useMemo(() => getClientLocationRepository(), []);
 	const encounterRepository = useMemo(() => getClientEncounterRepository(), []);
 
@@ -43,13 +45,20 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 	}, []);
 
 	useEffect(() => {
+		setPreviousLocation(`/${currentLocation.path}/${currentLocation.id}`);
+	}, []);
+
+	useEffect(() => {
 		encounterRepository
 			.getRandomEncounter(getPastEncounters(), currentLocation.path)
 			.then(encounter => {
-				addEncounterToHistory(encounter.encounterId);
 				setEncounter(encounter);
 			});
 	}, []);
+
+	const onOpenEncounter = useCallback(() => {
+		addEncounterToHistory(encounter.encounterId);
+	}, [encounter]);
 
 	return (
 		<>
@@ -61,6 +70,7 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 				onContinue={handleOnContinue}
 				expectingEncounter
 				encounter={encounter}
+				onOpenEncounter={onOpenEncounter}
 			/>
 		</>
 	);
