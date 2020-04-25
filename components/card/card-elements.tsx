@@ -68,6 +68,7 @@ export const ChoiceButton = styled(Button)<{ backgroundColor?: string }>`
 	flex: 1 0 calc(49% - 8px);
 	background-color: ${({ backgroundColor }) => backgroundColor};
 	margin: 4px;
+	white-space: nowrap;
 
 	${({ backgroundColor }) => backgroundColor ? `
 		&:hover {
