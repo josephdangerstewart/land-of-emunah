@@ -6,6 +6,7 @@ import { Location } from '../../components/location';
 import { useRouter } from 'next/router';
 import { Encounter } from '../../types/Encounter';
 import { getLocationRepository } from '../../api/type-registry';
+import { usePastEncounters } from '../../components/hooks/use-past-encounters';
 
 interface PageContext {
 	params: {
@@ -30,6 +31,7 @@ interface LocationProps {
 
 export default function LocationPage({ currentLocation }: LocationProps) {
 	const router = useRouter();
+	const { getPastEncounters, addEncounterToHistory } = usePastEncounters();
 	const locationRepository = useMemo(() => getClientLocationRepository(), []);
 	const encounterRepository = useMemo(() => getClientEncounterRepository(), []);
 
@@ -42,8 +44,9 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 
 	useEffect(() => {
 		encounterRepository
-			.getRandomEncounter([], currentLocation.path)
+			.getRandomEncounter(getPastEncounters(), currentLocation.path)
 			.then(encounter => {
+				addEncounterToHistory(encounter.encounterId);
 				setEncounter(encounter);
 			});
 	}, []);

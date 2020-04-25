@@ -25,13 +25,18 @@ export class YamlEncounterRepository implements IEncounterRepository {
 		}
 
 		const typePath = path.join(this.encountersPath, type);
-		const knownEncounters = (await readdir(typePath)).filter(x => !previousEncounters.includes(x.replace(/\.yaml/, '')));
+		const allEncounters = await readdir(typePath);
+		let availableEncounters = allEncounters.filter(x => !previousEncounters.includes(x.replace(/\.yaml/, '')));
 
-		if (knownEncounters.length === 0) {
+		if (availableEncounters.length == 0) {
+			availableEncounters = allEncounters;
+		}
+
+		if (availableEncounters.length === 0) {
 			return null;
 		}
 
-		const nextEncounter = knownEncounters[Math.floor(Math.random() * knownEncounters.length)];
+		const nextEncounter = availableEncounters[Math.floor(Math.random() * availableEncounters.length)];
 
 		const fileContents = await readFile(path.join(typePath, nextEncounter), { encoding: 'utf8' });
 		const parsedEncounter = yaml.parse(fileContents);
