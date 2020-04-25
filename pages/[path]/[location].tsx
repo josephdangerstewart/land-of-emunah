@@ -8,6 +8,14 @@ import { Encounter } from '../../types/Encounter';
 import { getLocationRepository } from '../../api/type-registry';
 import { usePastEncounters } from '../../components/hooks/use-past-encounters';
 import { usePreviousLocation } from '../../components/hooks/use-previous-location';
+import {
+	desertTheme,
+	seaTheme,
+	mountainsTheme,
+	forestTheme,
+	ThemeProvider,
+} from '../../components/theme';
+import { IPartialTheme } from '../../types/IPartialTheme';
 
 interface PageContext {
 	params: {
@@ -60,8 +68,23 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 		addEncounterToHistory(encounter.encounterId);
 	}, [encounter]);
 
+	const theme = useMemo<IPartialTheme>(() => {
+		switch (currentLocation.path) {
+			case 'forest':
+				return forestTheme;
+			case 'desert':
+				return desertTheme;
+			case 'mountains':
+				return mountainsTheme;
+			case 'sea':
+				return seaTheme;
+			default:
+				return {};
+		}
+	}, [currentLocation.path]);
+
 	return (
-		<>
+		<ThemeProvider value={theme}>
 			<Head />
 			<Location
 				title={currentLocation.name}
@@ -72,6 +95,6 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 				encounter={encounter}
 				onOpenEncounter={onOpenEncounter}
 			/>
-		</>
+		</ThemeProvider>
 	);
 }
