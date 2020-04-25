@@ -1,0 +1,12 @@
+title: Test Encounter
+description: I am a test
+choices:
+  -
+    choiceText: Test Option A
+    result: You chose option a
+  -
+    choiceText: Test Option B
+    result: You chose option B
+  -
+    choiceText: Test Option C
+    result: You chose option C

@@ -1,15 +1,23 @@
 {
 	"desert": [
-
+		"entrance",
+		"dunes",
+		"playa"
 	],
 	"forest": [
-		"the-woods",
-		"the-clearing"
+		"entrance",
+		"canopy",
+		"clearing",
+		"mushroom-patch"
 	],
 	"sea": [
-
+		"bay",
+		"rocks",
+		"waves"
 	],
 	"mountains": [
-
+		"base",
+		"edge",
+		"plateau"
 	]
 }
