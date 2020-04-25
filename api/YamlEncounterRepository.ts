@@ -1,19 +1,18 @@
 import { IEncounterRepository } from '../types/IEncounterRepository';
 import { Encounter } from '../types/Encounter';
 import yaml from 'yaml';
-import fs from 'fs';
 import path from 'path';
-import util from 'util';
+import {
+	readdir,
+	readFile,
+} from './api-utility';
 
-const readFile = util.promisify(fs.readFile);
-const readdir = util.promisify(fs.readdir);
-
-export class FsEncounterRepository implements IEncounterRepository {
+export class YamlEncounterRepository implements IEncounterRepository {
 	private knownTypes: string[];
 	private encountersPath: string;
 	
-	constructor() {
-		this.encountersPath = path.join(path.resolve('./'), 'encounters');
+	constructor(relativeEncountersPath: string) {
+		this.encountersPath = path.join(path.resolve('./'), relativeEncountersPath);
 	}
 
 	public async init() {
@@ -24,8 +23,6 @@ export class FsEncounterRepository implements IEncounterRepository {
 		if (!this.knownTypes.includes(type)) {
 			return null;
 		}
-
-		console.log(previousEncounters);
 
 		const typePath = path.join(this.encountersPath, type);
 		const knownEncounters = (await readdir(typePath)).filter(x => !previousEncounters.includes(x.replace(/\.yaml/, '')));

@@ -1,0 +1,17 @@
+{
+	"title": "Location",
+	"description": "Describes a point on the map of the land of emunah",
+	"type": "object",
+	"properties": {
+		"name": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"coverImage": {
+			"type": "string"
+		}
+	},
+	"required": ["name", "description", "coverImage"]
+}
