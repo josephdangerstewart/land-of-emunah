@@ -55,18 +55,22 @@ export class YamlLocationRepository implements ILocationRepository {
 		return parsedFile as Location;
 	}
 
-	public async getNextLocation(path: string, location: string): Promise<Location> {
-		if (!this.knownPaths.includes(path) || !location) {
+	public async getNextLocation(path: string, location?: string): Promise<Location> {
+		if (!this.knownPaths.includes(path)) {
 			return null;
 		}
 
 		const locations = await this.getLocations(path);
-		if (!locations.includes(location)) {
+		if (location && !locations.includes(location)) {
 			return null;
 		}
 
 		const rawMapData = await readFile(fspath.join(this.locationsPath, 'map.json'), { encoding: 'utf8' });
 		const map = JSON.parse(rawMapData) as { [key: string]: string[] };
+
+		if (!location) {
+			return await this.getLocation(path, map[path][0]);
+		}
 
 		const index = map[path].findIndex(v => v === location);
 		

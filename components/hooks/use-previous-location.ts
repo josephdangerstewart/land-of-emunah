@@ -1,4 +1,5 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export interface UsePreviousLocationHook {
 	getPreviousLocation: () => string;
@@ -27,3 +28,12 @@ export function usePreviousLocation<UsePreviousLocationHook>() {
 		setPreviousLocation,
 	};
 };
+
+export function useSaveLocation() {
+	const { setPreviousLocation } = usePreviousLocation();
+	const router = useRouter();
+
+	useEffect(() => {
+		setPreviousLocation(router.route);
+	}, [setPreviousLocation, router]);
+}

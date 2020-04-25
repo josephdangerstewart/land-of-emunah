@@ -3,9 +3,11 @@ import { Location } from '../components/location';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { Head } from '../components/head';
+import { useSaveLocation } from '../components/hooks/use-previous-location';
 
 export default function Home() {
 	const router = useRouter();
+	useSaveLocation();
 
 	const onContinue = useCallback(() => {
 		router.push('/the-city');

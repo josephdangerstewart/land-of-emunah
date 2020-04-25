@@ -1,10 +1,11 @@
-import React, { useEffect, useCallback } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Header } from '../basic-styled/header';
 import { BodyText } from '../basic-styled/body-text';
 import { Button } from '../basic-styled/button';
 import { CenteredPage } from '../basic-styled/centered-page';
-import { Encounter } from '../../types/Encounter';
+import { Encounter, EncounterChoice } from '../../types/Encounter';
 import {
 	Image,
 	TextContainer,
@@ -36,9 +37,9 @@ export interface LocationProps {
 	coverImageUrl: string;
 	encounter?: Encounter;
 	buttonText?: string;
-	onContinue: () => void;
+	onContinue: (result?: EncounterChoice) => any;
 	expectingEncounter?: boolean;
-	onOpenEncounter?: () => void;
+	onOpenEncounter?: () => any;
 }
 
 export const Location: React.FC<LocationProps> = ({
@@ -53,14 +54,16 @@ export const Location: React.FC<LocationProps> = ({
 }) => {
 	const { isInView, shouldRenderView, setView, addView } = useTransitionViewState('intro', ANIMATION_DURATION);
 	const loadedCoverImageSrc = useImageLoader(coverImageUrl);
+	const [result, setResult] = useState<EncounterChoice>();
 
 	useEffect(() => {
 		if (shouldRenderView('continue')) {
-			onContinue();
+			onContinue(result);
 		}
 	}, [shouldRenderView]);
 
-	const handleOnContinue = useCallback(() => {
+	const handleOnContinue = useCallback((result: EncounterChoice) => {
+		setResult(result);
 		setView('continue');
 	}, [setView]);
 

@@ -21,7 +21,7 @@ const ThemedButton = styled.button<ITheme>`
 `;
 
 export interface ButtonProps {
-	onClick: () => void;
+	onClick: (...params: unknown[]) => unknown;
 	disabled: boolean;
 	children: React.ReactNode;
 }
