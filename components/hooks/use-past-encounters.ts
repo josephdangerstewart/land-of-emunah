@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 export interface UsePastEncountersHook {
 	getPastEncounters: () => string[];
 	addEncounterToHistory: (encounter: string) => string[];
+	clearEncounters: () => void;
 }
 
 export function usePastEncounters() {
@@ -27,17 +28,31 @@ export function usePastEncounters() {
 		}
 
 		const previousPastEncounters = getPastEncounters();
-
-		const wrapped = {
+		let wrapped = {
 			pastEncounters: [ ...previousPastEncounters, encounter ],
 		};
+
+		if (previousPastEncounters.includes(encounter)) {
+			wrapped = {
+				pastEncounters: [encounter],
+			};
+		}
 
 		window.localStorage.setItem('pastEncounters', JSON.stringify(wrapped));
 		return [ ...previousPastEncounters, encounter ];
 	}, [getPastEncounters]);
 
+	const clearEncounters = useCallback(() => {
+		if (typeof window === 'undefined') {
+			return;
+		}
+
+		window.localStorage.removeItem('pastEncounters');
+	}, []);
+
 	return {
 		getPastEncounters,
 		addEncounterToHistory,
+		clearEncounters,
 	};
 }
