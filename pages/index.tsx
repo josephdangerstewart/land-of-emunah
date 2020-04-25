@@ -49,7 +49,7 @@ export default function Index() {
 		if (logoSrc) {
 			setTimeout(fadeOut, LOGO_DISPLAY_DURATION);
 		}
-	}, [logoSrc])
+	}, [logoSrc]);
 
 	const onContinue = useCallback(() => {
 		setView('home');
@@ -66,7 +66,7 @@ export default function Index() {
 			<Container>
 				<Head />
 			</Container>
-		)
+		);
 	}
 
 	return (
@@ -87,5 +87,5 @@ export default function Index() {
 				/>
 			)}
 		</Container>
-	)
+	);
 }

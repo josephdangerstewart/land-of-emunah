@@ -34,5 +34,5 @@ export const Head: React.FC<HeadProps> = ({ title }) => {
 				}
 			`}</style>
 		</>
-	)
-}
+	);
+};

@@ -11,5 +11,5 @@ const P = styled.p<ITheme>`
 export const BodyText: React.FC = ({ children, ...rest }) => {
 	const theme = useTheme();
 
-	return <P {...theme} {...rest}>{children}</P>
-}
+	return <P {...theme} {...rest}>{children}</P>;
+};

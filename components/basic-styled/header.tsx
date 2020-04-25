@@ -25,5 +25,5 @@ export const Header: React.FC<HeaderProps> = ({ children, margin, ...rest }) => 
 		>
 			{children}
 		</StyledHeader>
-	)
-}
+	);
+};

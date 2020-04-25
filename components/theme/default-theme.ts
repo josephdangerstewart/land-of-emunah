@@ -13,4 +13,4 @@ export const defaultTheme: ITheme = {
 	headerFont: '50px \'Averia Serif Libre\', cursive',
 	bodyFont: '18px \'Averia Serif Libre\', cursive',
 	buttonFont: '20px \'Averia Serif Libre\', cursive',
-}
+};

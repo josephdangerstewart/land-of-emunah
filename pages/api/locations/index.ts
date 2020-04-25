@@ -5,4 +5,4 @@ export default async (_, res: NextApiResponse) => {
 	const repository = await getLocationRepository();
 	const paths = await repository.getPaths();
 	return res.json({ paths });
-}
+};

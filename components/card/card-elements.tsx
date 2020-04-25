@@ -81,7 +81,7 @@ export const ButtonsContainer = styled.div`
 	flex-wrap: wrap;
 `;
 
-export const FaceContainer = styled.div<{ visible: boolean, isBack?: boolean, flipped?: boolean }>`
+export const FaceContainer = styled.div<{ visible: boolean; isBack?: boolean; flipped?: boolean }>`
 	display: flex;
 	flex-direction: column;
 	align-items: center;

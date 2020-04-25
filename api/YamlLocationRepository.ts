@@ -16,7 +16,7 @@ export class YamlLocationRepository implements ILocationRepository {
 		this.locationsPath = fspath.join(fspath.resolve('./'), relativeLocationsPath);
 	}
 
-	public async init() {
+	public async init(): Promise<void> {
 		this.knownPaths = (await readdir(this.locationsPath)).filter(x => x !== 'map.json');
 	}
 	

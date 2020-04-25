@@ -1,3 +1,4 @@
+import React from 'react';
 import { Location } from '../components/location';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
@@ -21,5 +22,5 @@ export default function Home() {
 				onContinue={onContinue}
 			/>
 		</>
-	)
+	);
 }

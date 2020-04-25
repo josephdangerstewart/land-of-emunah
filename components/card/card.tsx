@@ -65,8 +65,8 @@ export const CardFace: React.FC<CardFaceProps> = ({
 				)
 			}
 		</FaceContainer>
-	)	
-}
+	);	
+};
 
 export interface CardProps {
 	title: string;
@@ -104,4 +104,4 @@ export const Card: React.FC<CardProps> = ({
 			</CenteredPage>
 		</Overlay>
 	);
-}
+};

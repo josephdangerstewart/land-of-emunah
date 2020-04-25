@@ -14,7 +14,7 @@ const animationMap: Record<AnimationKind, Keyframes> = {
 	[AnimationKind.PopOut]: popOut,
 	[AnimationKind.FadeIn]: fadeIn,
 	[AnimationKind.FadeOut]: fadeOut,
-}
+};
 
 export function generateAnimation(animation: AnimationKind, duration: number, delay = 0): FlattenSimpleInterpolation {
 	return css`

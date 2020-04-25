@@ -1,5 +1,6 @@
 import { useRef, useCallback, useEffect } from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type SetTimeoutType = (handler: (...args: any[]) => void, duration: number) => void;
 
 export function useSetTimeout(): SetTimeoutType {

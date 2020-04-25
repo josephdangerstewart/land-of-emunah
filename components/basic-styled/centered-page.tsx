@@ -22,4 +22,4 @@ export const CenteredPage: React.FC<{ minHeight?: string }> = ({ children, minHe
 			{children}
 		</Inner>
 	</Outer>
-)
+);

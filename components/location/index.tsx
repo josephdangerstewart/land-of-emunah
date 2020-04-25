@@ -16,7 +16,7 @@ import { AnimatableComponent } from '../../types/AnimatableComponent';
 import { useImageLoader } from '../hooks/use-image-loader';
 import { EncounterCard } from '../card';
 
-const ANIMATION_DURATION = .75
+const ANIMATION_DURATION = .75;
 
 const FadeIn = styled.div<AnimatableComponent>`
 	${({ inView, animationDuration, delay }) => inView
@@ -113,5 +113,5 @@ export const Location: React.FC<LocationProps> = ({
 				/>
 			) : null}
 		</CenteredPage>
-	)
-}
+	);
+};

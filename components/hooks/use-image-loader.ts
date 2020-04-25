@@ -12,13 +12,13 @@ export function useImageLoader(src: string): string {
 
 		image.onload = () => {
 			setImageSrc(image.src);
-		}
+		};
 
 		image.src = src;
 
 		return () => {
 			setImageSrc(null);
-		}
+		};
 	}, [src]);
 
 	useEffect(() => () => {
@@ -27,7 +27,7 @@ export function useImageLoader(src: string): string {
 		}
 
 		image.onload = null;
-	}, [])
+	}, []);
 
 	return imageSrc;
 }

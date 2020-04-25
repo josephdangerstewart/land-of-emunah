@@ -10,8 +10,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const encounter = await repository.getRandomEncounter(pastEncounters.split(','), type);
 
 	if (!encounter) {
-		return notFound(res, 'Encounter not found')
+		return notFound(res, 'Encounter not found');
 	}
 
 	return res.json({ encounter });
-}
+};

@@ -9,8 +9,6 @@ import {
 import { CenteredPage } from '../basic-styled/centered-page';
 import { CardFace, ChoiceButton } from './card';
 
-const ANIMATION_DURATION = 0.75;
-
 export interface EncounterCardProps {
 	encounter: Encounter;
 	onContinue: (result?: EncounterChoice) => void;
@@ -64,5 +62,5 @@ export const EncounterCard: React.FC<EncounterCardProps> = ({
 				</CardContainer>
 			</CenteredPage>
 		</Overlay>
-	)
-}
+	);
+};

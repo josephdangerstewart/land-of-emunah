@@ -10,7 +10,7 @@ import { getLocationRepository } from '../../api/type-registry';
 interface PageContext {
 	params: {
 		[key: string]: string;
-	}
+	};
 }
 
 export async function getServerSideProps(context: PageContext) {
@@ -21,7 +21,7 @@ export async function getServerSideProps(context: PageContext) {
 
 	return {
 		props: { currentLocation }
-	}
+	};
 }
 
 interface LocationProps {
@@ -37,7 +37,6 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 
 	const handleOnContinue = useCallback(async () => {
 		const nextLocation = await locationRepository.getNextLocation(currentLocation.path, currentLocation.id);
-		console.log(nextLocation);
 		router.push(`/${nextLocation.path}/${nextLocation.id}`);
 	}, []);
 
@@ -45,7 +44,6 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 		encounterRepository
 			.getRandomEncounter([], currentLocation.path)
 			.then(encounter => {
-				console.log(encounter);
 				setEncounter(encounter);
 			});
 	}, []);
@@ -62,5 +60,5 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 				encounter={encounter}
 			/>
 		</>
-	)
+	);
 }

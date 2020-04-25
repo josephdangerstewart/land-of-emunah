@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from 'react';
 import styled from 'styled-components';
 import { ITheme } from '../../types/ITheme';
@@ -22,10 +23,11 @@ const ThemedButton = styled.button<ITheme>`
 export interface ButtonProps {
 	onClick: () => void;
 	disabled: boolean;
+	children: React.ReactNode;
 }
 
 export const Button: React.FC<ButtonProps> = ({ children, ...rest }) => {
 	const theme = useTheme();
 
-	return <ThemedButton {...theme} {...rest}>{children}</ThemedButton>
+	return <ThemedButton {...theme} {...rest}>{children}</ThemedButton>;
 };
