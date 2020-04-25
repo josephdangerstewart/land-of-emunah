@@ -5,6 +5,7 @@ import util from 'util';
 
 export const readFile = util.promisify(fs.readFile);
 export const readdir = util.promisify(fs.readdir);
+export const lstat = util.promisify(fs.lstat);
 
 export function mapYamlFileNameToId(fileName: string): string {
 	return fileName.replace(/\.yaml/, '');
