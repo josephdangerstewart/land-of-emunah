@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getEncounterRepository, notFound } from '../../../api/api-utility';
+import { notFound } from '../../../api/api-utility';
+import { getEncounterRepository } from '../../../api/type-registry';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const repository = await getEncounterRepository();

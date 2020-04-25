@@ -6,6 +6,7 @@ import {
 } from './api-utility';
 import yaml from 'yaml';
 import fspath from 'path';
+import { Location } from '../types/Location';
 
 export class YamlLocationRepository implements ILocationRepository {
 	private locationsPath: string;

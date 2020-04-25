@@ -1,3 +1,5 @@
+import { Location } from '../types/Location';
+
 export interface ILocationRepository {
 	getPaths(): Promise<string[]>;
 	getLocations(path: string): Promise<string[]>;
