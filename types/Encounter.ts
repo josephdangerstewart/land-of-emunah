@@ -3,6 +3,7 @@ export interface Encounter {
 	coverImageUrl?: string;
 	description: string;
 	choices?: EncounterChoice[];
+	encounterId: string;
 }
 
 export interface EncounterChoice {

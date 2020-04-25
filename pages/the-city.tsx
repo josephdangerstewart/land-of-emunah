@@ -34,7 +34,8 @@ export default function TheCity() {
 							buttonBackgroundColor: '#B8E3CC',
 							result: 'You have chosen the Forest',
 						},
-					]
+					],
+					encounterId: 'initial',
 				}}
 			/>
 		</>

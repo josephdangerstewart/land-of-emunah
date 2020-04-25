@@ -1,0 +1,6 @@
+title: Test Encounter 2
+description: This is a description
+choices:
+  -
+    choiceText: Choice a
+    result: result

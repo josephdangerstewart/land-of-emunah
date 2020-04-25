@@ -1,0 +1,35 @@
+{
+	"title": "Encounter schema",
+	"description": "The shape of encounters for the land of Emunah",
+	"type": "object",
+	"properties": {
+		"title": {
+			"type": "string"
+		},
+		"coverImageUrl": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"choices": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"choiceText": {
+						"type": "string"
+					},
+					"result": {
+						"type": "string"
+					},
+					"buttonBackgroundColor": {
+						"type": "string"
+					}
+				},
+				"required": [ "choiceText", "result" ]
+			}
+		}
+	},
+	"required": [ "description" ]
+}

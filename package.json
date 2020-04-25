@@ -9,11 +9,14 @@
   },
   "dependencies": {
     "@types/styled-components": "^5.1.0",
+    "fs": "^0.0.1-security",
+    "http-status-codes": "^1.4.0",
     "next": "9.3.5",
     "polished": "^3.5.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "yaml": "^1.9.2"
   },
   "devDependencies": {
     "@types/node": "^13.13.0",
