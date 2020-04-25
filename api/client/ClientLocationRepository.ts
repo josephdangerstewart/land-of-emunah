@@ -19,7 +19,7 @@ export class ClientLocationRepository implements ILocationRepository {
 	}
 
 	public async getNextLocation(path: string, location: string): Promise<Location> {
-		const { location: nextLocation } = (await fetchJson(`/api/locations/${path}/${location}`)) as { location: Location };
+		const { nextLocation } = (await fetchJson(`/api/locations/${path}/${location}/next`)) as { nextLocation: Location };
 		return nextLocation;
 	}
 }

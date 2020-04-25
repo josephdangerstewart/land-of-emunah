@@ -51,6 +51,7 @@ export class YamlLocationRepository implements ILocationRepository {
 		}
 
 		parsedFile.id = location;
+		parsedFile.path = path;
 		return parsedFile as Location;
 	}
 

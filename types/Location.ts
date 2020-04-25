@@ -3,4 +3,5 @@ export interface Location {
 	name: string;
 	description: string;
 	coverImage: string;
+	path: string;
 }

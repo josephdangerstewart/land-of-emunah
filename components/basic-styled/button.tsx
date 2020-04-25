@@ -21,6 +21,7 @@ const ThemedButton = styled.button<ITheme>`
 
 export interface ButtonProps {
 	onClick: () => void;
+	disabled: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({ children, ...rest }) => {

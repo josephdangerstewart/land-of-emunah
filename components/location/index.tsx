@@ -37,6 +37,7 @@ export interface LocationProps {
 	encounter?: Encounter;
 	buttonText?: string;
 	onContinue: () => void;
+	expectingEncounter?: boolean;
 }
 
 export const Location: React.FC<LocationProps> = ({
@@ -46,6 +47,7 @@ export const Location: React.FC<LocationProps> = ({
 	buttonText,
 	onContinue,
 	encounter,
+	expectingEncounter,
 }) => {
 	const { isInView, shouldRenderView, setView, addView } = useTransitionViewState('intro', ANIMATION_DURATION);
 	const loadedCoverImageSrc = useImageLoader(coverImageUrl);
@@ -92,7 +94,10 @@ export const Location: React.FC<LocationProps> = ({
 					>
 						<BodyText>{bodyText}</BodyText>
 						<ButtonContainer>
-							<Button onClick={encounter ? handleOpenEncounter : handleOnContinue}>
+							<Button
+								onClick={(encounter || expectingEncounter) ? handleOpenEncounter : handleOnContinue}
+								disabled={!encounter && expectingEncounter}
+							>
 								{buttonText ?? 'Continue'}
 							</Button>
 						</ButtonContainer>
