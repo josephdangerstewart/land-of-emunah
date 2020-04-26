@@ -4,3 +4,4 @@ export { desertTheme } from './desert-theme';
 export { forestTheme } from './forest-theme';
 export { mountainsTheme } from './mountains-theme';
 export { seaTheme } from './sea-theme';
+export { endTheme } from './end-theme';
