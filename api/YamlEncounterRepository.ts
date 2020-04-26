@@ -18,6 +18,14 @@ export class YamlEncounterRepository implements IEncounterRepository {
 	public async init() {
 		this.knownTypes = await readdir(this.encountersPath);
 	}
+
+	public async getFinalEncounter(type: string): Promise<Encounter> {
+		if (!this.knownTypes.includes(type)) {
+			return null;
+		}
+
+		return this.getEncounter(type, 'final');
+	}
 	
 	public async getRandomEncounter(previousEncounters: string[], type: string): Promise<Encounter> {
 		if (!this.knownTypes.includes(type)) {
@@ -25,7 +33,7 @@ export class YamlEncounterRepository implements IEncounterRepository {
 		}
 
 		const typePath = path.join(this.encountersPath, type);
-		const allEncounters = await readdir(typePath);
+		const allEncounters = (await readdir(typePath)).filter(x => x !== 'final.yaml');
 		let availableEncounters = allEncounters.filter(x => !previousEncounters.includes(x.replace(/\.yaml/, '')));
 
 		if (availableEncounters.length == 0) {
@@ -38,15 +46,19 @@ export class YamlEncounterRepository implements IEncounterRepository {
 
 		const nextEncounter = availableEncounters[Math.floor(Math.random() * availableEncounters.length)];
 
-		const fileContents = await readFile(path.join(typePath, nextEncounter), { encoding: 'utf8' });
-		const parsedEncounter = yaml.parse(fileContents);
+		return await this.getEncounter(type, nextEncounter.replace(/\.yaml/, ''));
+	}
 
-		if (!parsedEncounter) {
+	private async getEncounter(type: string, id: string): Promise<Encounter> {
+		const encounterPath = path.join(this.encountersPath, type, `${id}.yaml`);
+		const contents = await readFile(encounterPath, { encoding: 'utf8' });
+		const parsed = yaml.parse(contents);
+
+		if (!parsed) {
 			return null;
 		}
 
-		parsedEncounter.encounterId = nextEncounter.replace(/\.yaml/, '');
-
-		return parsedEncounter as Encounter;
+		parsed.encounterId = id;
+		return parsed as Encounter;
 	}
 }

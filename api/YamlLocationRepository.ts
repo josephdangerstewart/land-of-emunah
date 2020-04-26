@@ -8,9 +8,14 @@ import yaml from 'yaml';
 import fspath from 'path';
 import { Location } from '../types/Location';
 
+interface IMap {
+	[key: string]: string[];
+}
+
 export class YamlLocationRepository implements ILocationRepository {
 	private locationsPath: string;
 	private knownPaths: string[];
+	private map: IMap;
 	
 	constructor(relativeLocationsPath: string) {
 		this.locationsPath = fspath.join(fspath.resolve('./'), relativeLocationsPath);
@@ -18,6 +23,9 @@ export class YamlLocationRepository implements ILocationRepository {
 
 	public async init(): Promise<void> {
 		this.knownPaths = (await readdir(this.locationsPath)).filter(x => x !== 'map.json');
+
+		const rawMapData = await readFile(fspath.join(this.locationsPath, 'map.json'), { encoding: 'utf8' });
+		this.map = JSON.parse(rawMapData) as IMap;
 	}
 	
 	public async getPaths(): Promise<string[]> {
@@ -52,6 +60,13 @@ export class YamlLocationRepository implements ILocationRepository {
 
 		parsedFile.id = location;
 		parsedFile.path = path;
+
+		if (this.getMapIndex(path, location) === this.map[path].length - 1) {
+			parsedFile.isLastInPath = true;
+		} else {
+			parsedFile.isLastInPath = false;
+		}
+
 		return parsedFile as Location;
 	}
 
@@ -65,19 +80,20 @@ export class YamlLocationRepository implements ILocationRepository {
 			return null;
 		}
 
-		const rawMapData = await readFile(fspath.join(this.locationsPath, 'map.json'), { encoding: 'utf8' });
-		const map = JSON.parse(rawMapData) as { [key: string]: string[] };
-
 		if (!location) {
-			return await this.getLocation(path, map[path][0]);
+			return await this.getLocation(path, this.map[path][0]);
 		}
 
-		const index = map[path].findIndex(v => v === location);
+		const index = this.getMapIndex(path, location);
 		
-		if (!map[path][index + 1]) {
+		if (!this.map[path][index + 1]) {
 			return null;
 		}
 
-		return await this.getLocation(path, map[path][index + 1]);
+		return await this.getLocation(path, this.map[path][index + 1]);
+	}
+
+	private getMapIndex(path: string, location: string) {
+		return this.map[path].findIndex(v => v === location);
 	}
 }

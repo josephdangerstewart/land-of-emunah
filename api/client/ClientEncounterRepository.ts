@@ -7,4 +7,8 @@ export class ClientEncounterRepository implements IEncounterRepository {
 		const pastEncountersParam = previousEncounters?.length ? `?pastEncounters=${previousEncounters.join(',')}` : '';
 		return (await fetchJson(`/api/encounters/${type}${pastEncountersParam}`)).encounter as Encounter;
 	}
+
+	public async getFinalEncounter(type: string): Promise<Encounter> {
+		return (await fetchJson(`/api/encounters/${type}/final`)).encounter as Encounter;
+	}
 }
