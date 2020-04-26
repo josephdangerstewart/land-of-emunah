@@ -12,5 +12,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		return notFound(res, 'Encounter type not found');
 	}
 
-	return { encounter };
+	return res.json({ encounter });
 };

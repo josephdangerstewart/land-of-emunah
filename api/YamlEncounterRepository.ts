@@ -24,7 +24,7 @@ export class YamlEncounterRepository implements IEncounterRepository {
 			return null;
 		}
 
-		return this.getEncounter(type, 'final');
+		return this.getEncounter(type, '_final');
 	}
 	
 	public async getRandomEncounter(previousEncounters: string[], type: string): Promise<Encounter> {
@@ -33,7 +33,7 @@ export class YamlEncounterRepository implements IEncounterRepository {
 		}
 
 		const typePath = path.join(this.encountersPath, type);
-		const allEncounters = (await readdir(typePath)).filter(x => x !== 'final.yaml');
+		const allEncounters = (await readdir(typePath)).filter(x => x !== '_final.yaml');
 		let availableEncounters = allEncounters.filter(x => !previousEncounters.includes(x.replace(/\.yaml/, '')));
 
 		if (availableEncounters.length == 0) {

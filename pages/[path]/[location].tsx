@@ -48,6 +48,11 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 	const [encounter, setEncounter] = useState<Encounter>(null);
 
 	const handleOnContinue = useCallback(async () => {
+		if (currentLocation.isLastInPath) {
+			router.push('/asleep');
+			return;
+		}
+
 		const nextLocation = await locationRepository.getNextLocation(currentLocation.path, currentLocation.id);
 		router.push(`/${nextLocation.path}/${nextLocation.id}`);
 	}, []);
@@ -57,11 +62,13 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 	}, []);
 
 	useEffect(() => {
-		encounterRepository
-			.getRandomEncounter(getPastEncounters(), currentLocation.path)
-			.then(encounter => {
-				setEncounter(encounter);
-			});
+		const encounterPromise = currentLocation.isLastInPath
+			? encounterRepository.getFinalEncounter(currentLocation.path)
+			: encounterRepository.getRandomEncounter(getPastEncounters(), currentLocation.path);
+		
+		encounterPromise.then(encounter => {
+			setEncounter(encounter);
+		});
 	}, []);
 
 	const onOpenEncounter = useCallback(() => {

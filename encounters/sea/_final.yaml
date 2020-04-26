@@ -1,0 +1,9 @@
+title: Sleepy time
+description: Go to sleep now plz
+choices:
+  -
+    choiceText: KK
+    result: Aight, goodnight
+  -
+    choiceText: No!
+    result: You fall asleep anyway but when you wake up you'll be super tired
