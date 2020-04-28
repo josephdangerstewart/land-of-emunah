@@ -14,15 +14,16 @@ interface DirectusLocation {
 
 interface DirectusAsset {
 	data: {
-		full_url: string;
+		url: string;
 	};
 }
 
 export class DirectusLocationRepository implements ILocationRepository {
 	private knownPaths = [];
 	private baseUri = '';
+	private imageUri = '';
 
-	constructor(baseUri: string) {
+	constructor(baseUri: string, imageUri: string) {
 		this.knownPaths = [
 			'desert',
 			'forest',
@@ -30,6 +31,7 @@ export class DirectusLocationRepository implements ILocationRepository {
 			'sea',
 		];
 		this.baseUri = baseUri;
+		this.imageUri = imageUri;
 	}
 	
 	public async getPaths(): Promise<string[]> {
@@ -69,7 +71,7 @@ export class DirectusLocationRepository implements ILocationRepository {
 			id: location.id.toString(),
 			name: location.title,
 			description: location.description,
-			coverImage: asset.data.full_url,
+			coverImage: `${this.imageUri}${asset.data.url}`,
 			path: location.path,
 			isLastInPath: !Boolean(location.next_location),
 			nextLocationId: location.next_location?.toString() ?? null,
