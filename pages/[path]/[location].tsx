@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useState, useEffect } from 'react';
+import React, { useMemo, useCallback, useState, useEffect, useRef } from 'react';
 import { getClientLocationRepository, getClientEncounterRepository } from '../../components/utility';
 import { Location as ILocation } from '../../types/Location';
 import { Head } from '../../components/head';
@@ -44,8 +44,17 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 	const { setPreviousLocation } = usePreviousLocation();
 	const locationRepository = useMemo(() => getClientLocationRepository(), []);
 	const encounterRepository = useMemo(() => getClientEncounterRepository(), []);
+	const getNextLocationPromise = useRef<Promise<ILocation>>(null);
 
 	const [encounter, setEncounter] = useState<Encounter>(null);
+
+	useEffect(() => {
+		if (currentLocation.isLastInPath) {
+			return;
+		}
+
+		getNextLocationPromise.current = locationRepository.getNextLocation(currentLocation.path, currentLocation.id);
+	}, [currentLocation]);
 
 	const handleOnContinue = useCallback(async () => {
 		if (currentLocation.isLastInPath) {
@@ -53,7 +62,7 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 			return;
 		}
 
-		const nextLocation = await locationRepository.getNextLocation(currentLocation.path, currentLocation.id);
+		const nextLocation = await getNextLocationPromise.current;
 		router.push(`/${nextLocation.path}/${nextLocation.id}`);
 	}, []);
 
