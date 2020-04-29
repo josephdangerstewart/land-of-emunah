@@ -2,6 +2,7 @@ export interface IPartialTheme {
 	background?: string;
 	buttonBackground?: string;
 	buttonHoverBackground?: string;
+	buttonDisabledBackground?: string;
 
 	headerColor?: string;
 	bodyColor?: string;

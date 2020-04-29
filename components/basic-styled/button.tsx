@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ITheme } from '../../types/ITheme';
 import { useTheme } from '../theme';
 
-const ThemedButton = styled.button<ITheme>`
+const ThemedButton = styled.button<ITheme & ButtonProps>`
 	color: ${({ buttonColor }) => buttonColor};
 	background: ${({ buttonBackground }) => buttonBackground};
 	font: ${({ buttonFont }) => buttonFont};
@@ -18,6 +18,11 @@ const ThemedButton = styled.button<ITheme>`
 	&:hover {
 		background: ${({ buttonHoverBackground }) => buttonHoverBackground};
 	}
+
+	${({ disabled, buttonDisabledBackground }) => disabled ? `
+	background: ${buttonDisabledBackground} !important;
+	cursor: not-allowed !important;
+	` : ''}
 `;
 
 export interface ButtonProps {

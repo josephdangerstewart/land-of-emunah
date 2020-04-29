@@ -31,6 +31,10 @@ const AnimatedEncounterCard = styled(EncounterCard)<AnimatableComponent>`
 		: generateAnimation(AnimationKind.FadeOut, animationDuration)}
 `;
 
+const AnimatedButton = styled(Button)`
+	${({ disabled }) => disabled ? 'visibility: hidden;' : generateAnimation(AnimationKind.FadeIn, ANIMATION_DURATION)}
+`;
+
 export interface LocationProps {
 	title: string;
 	bodyText: string;
@@ -103,12 +107,12 @@ export const Location: React.FC<LocationProps> = ({
 					>
 						<BodyText>{bodyText}</BodyText>
 						<ButtonContainer>
-							<Button
+							<AnimatedButton
 								onClick={(encounter || expectingEncounter) ? handleOpenEncounter : handleOnContinue}
 								disabled={!encounter && expectingEncounter}
 							>
 								{buttonText ?? 'Continue'}
-							</Button>
+							</AnimatedButton>
 						</ButtonContainer>
 					</FadeIn>
 				</TextContainer>

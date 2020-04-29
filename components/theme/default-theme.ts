@@ -1,10 +1,11 @@
 import { ITheme } from '../../types/ITheme';
-import { darken } from 'polished';
+import { darken, lighten } from 'polished';
 
 export const defaultTheme: ITheme = {
 	background: '#A4B494',
 	buttonBackground: '#E0D2A8',
 	buttonHoverBackground: darken(0.1, '#E0D2A8'),
+	buttonDisabledBackground: lighten(0.1, '#E0D2A8'),
 
 	headerColor: '#375147',
 	bodyColor: '#375147',
