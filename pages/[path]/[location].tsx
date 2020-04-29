@@ -73,7 +73,7 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 	useEffect(() => {
 		const encounterPromise = currentLocation.isLastInPath
 			? encounterRepository.getFinalEncounter(currentLocation.path)
-			: encounterRepository.getRandomEncounter(getPastEncounters(), currentLocation.path);
+			: encounterRepository.getRandomEncounter(getPastEncounters(), currentLocation.path, currentLocation.id);
 		
 		encounterPromise.then(encounter => {
 			setEncounter(encounter);

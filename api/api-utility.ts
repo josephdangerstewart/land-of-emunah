@@ -14,3 +14,9 @@ export function mapYamlFileNameToId(fileName: string): string {
 export function notFound(res: NextApiResponse, message?: string) {
 	res.status(HttpStatusCodes.NOT_FOUND).json({ message });
 }
+
+export interface DirectusAsset {
+	data: {
+		url: string;
+	};
+}

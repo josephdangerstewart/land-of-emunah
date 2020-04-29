@@ -1,5 +1,6 @@
 import { ILocationRepository } from '../types/ILocationRepository';
 import { Location } from '../types/Location';
+import { DirectusAsset } from './api-utility';
 import axios from 'axios';
 
 interface DirectusLocation {
@@ -10,12 +11,6 @@ interface DirectusLocation {
 	path: string;
 	is_first_location: boolean;
 	next_location: number;
-}
-
-interface DirectusAsset {
-	data: {
-		url: string;
-	};
 }
 
 export class DirectusLocationRepository implements ILocationRepository {
