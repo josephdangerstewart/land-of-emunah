@@ -44,27 +44,42 @@ export class DirectusLocationRepository implements ILocationRepository {
 	}
 
 	public async getLocation(path: string, locationId: string): Promise<Location> {
-		const response = (await axios.get(`${this.baseUri}/items/location/${locationId}`)).data.data as DirectusLocation;
-		return await this.mapLocation(response);
-	}
+		const locations = await this.getSortedLocationsForPath(path);
+		const locationIndex = locations.findIndex(x => x.id.toString() === locationId);
 
-	public async getNextLocation(path: string, locationId?: string): Promise<Location> {
-		if (!locationId) {
-			const firstLocations = (await axios.get(`${this.baseUri}/items/location?filter[is_first_location][eq]=1&filter[path][eq]=${path}`)).data.data as DirectusLocation[];
-			const firstLocation = firstLocations[Math.floor(Math.random() * firstLocations.length)];
-			return await this.mapLocation(firstLocation);
-		}
-
-		const currentLocation = await this.getLocation(path, locationId);
-
-		if (!currentLocation?.nextLocationId) {
+		if (!locations[locationIndex]) {
 			return null;
 		}
 
-		return await this.getLocation(path, currentLocation.nextLocationId);
+		return await this.mapLocation(locations[locationIndex], !Boolean(locations[locationIndex + 1]));
 	}
 
-	private async mapLocation(location: DirectusLocation): Promise<Location> {
+	public async getNextLocation(path: string, locationId?: string): Promise<Location> {
+		const locations = await this.getSortedLocationsForPath(path);
+
+		if (!locations.length) {
+			return null;
+		}
+		
+		if (!locationId) {
+			return await this.mapLocation(locations[0], !Boolean(locations[1]));
+		}
+
+		const currentLocationIndex = locations.findIndex(x => x.id.toString() === locationId);
+		
+		if (!locations[currentLocationIndex + 1]) {
+			return null;
+		}
+
+		return await this.mapLocation(locations[currentLocationIndex + 1], !Boolean(locations[currentLocationIndex + 2]));
+	}
+
+	private async getSortedLocationsForPath(path: string): Promise<DirectusLocation[]> {
+		const mapId = (await axios.get(`${this.baseUri}/items/map?filter[path][eq]=${path}`)).data.data[0]?.id as number;
+		return (await axios.get(`${this.baseUri}/items/location?filter[map_id][eq]=${mapId}&sort=sort,id`)).data.data as DirectusLocation[];
+	}
+
+	private async mapLocation(location: DirectusLocation, isLastInPath: boolean): Promise<Location> {
 		const asset = (await axios.get(`${this.baseUri}/files/${location.cover_image}`)).data.data as DirectusAsset;
 
 		return {
@@ -73,8 +88,7 @@ export class DirectusLocationRepository implements ILocationRepository {
 			description: location.description,
 			coverImage: `${this.imageUri}${asset.data.url}`,
 			path: location.path,
-			isLastInPath: !Boolean(location.next_location),
-			nextLocationId: location.next_location?.toString() ?? null,
+			isLastInPath,
 		};
 	}
 }
