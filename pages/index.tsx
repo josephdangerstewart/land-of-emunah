@@ -8,7 +8,6 @@ import { useTransitionViewState } from '../components/animations';
 import { Card } from '../components/card';
 import { useRouter } from 'next/router';
 import { useImageLoader } from '../components/hooks/use-image-loader';
-import { usePreviousLocation } from '../components/hooks/use-previous-location';
 
 const ANIMATION_DURATION = .75;
 const LOGO_DISPLAY_DURATION = 4000;
@@ -37,7 +36,6 @@ const Container = styled.div`
 export default function Index() {
 	const setTimeout = useSetTimeout();
 	const logoSrc = useImageLoader('/images/homepage-logo.png');
-	const { getPreviousLocation } = usePreviousLocation();
 
 	const { isInView, setView, shouldRenderView } = useTransitionViewState('logo', ANIMATION_DURATION);
 	const router = useRouter();
@@ -54,13 +52,6 @@ export default function Index() {
 	}, [logoSrc]);
 
 	const onContinue = useCallback(() => {
-		const previousLocation = getPreviousLocation();
-
-		if (previousLocation) {
-			router.push(previousLocation);
-			return;
-		}
-
 		setView('home');
 	}, [router]);
 

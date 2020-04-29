@@ -42,12 +42,12 @@ export class DirectusEncounterRepository implements IEncounterRepository {
 				availableEncounters = encountersForLocation;
 			}
 
-			possibleEncounters = (await axios.get(`${this.baseUri}/items/encounter?filter[id][in]=${availableEncounters.map(x => x.encounter_id).join(',')}`)).data.data as DirectusEncounter[];
+			possibleEncounters = (await axios.get(`${this.baseUri}/items/encounter?filter[id][in]=${availableEncounters.map(x => x.encounter_id).join(',')}&filter[is_final_encounter][eq]=0`)).data.data as DirectusEncounter[];
 		} else {
-			possibleEncounters = (await axios.get(`${this.baseUri}/items/encounter?filter[path][eq]=${type}&filter[id][nin]=${previousEncounters.join(',')}`)).data.data as DirectusEncounter[];
+			possibleEncounters = (await axios.get(`${this.baseUri}/items/encounter?filter[path][eq]=${type}&filter[id][nin]=${previousEncounters.join(',')}&filter[is_final_encounter][eq]=0`)).data.data as DirectusEncounter[];
 
 			if (!possibleEncounters.length) {
-				possibleEncounters = (await axios.get(`${this.baseUri}/items/encounter?filter[path][eq]=${type}`)).data.data as DirectusEncounter[];
+				possibleEncounters = (await axios.get(`${this.baseUri}/items/encounter?filter[path][eq]=${type}&filter[is_final_encounter][eq]=0`)).data.data as DirectusEncounter[];
 			}
 		}
 

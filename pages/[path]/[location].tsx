@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import { Encounter } from '../../types/Encounter';
 import { getLocationRepository } from '../../api/type-registry';
 import { usePastEncounters } from '../../components/hooks/use-past-encounters';
-import { usePreviousLocation } from '../../components/hooks/use-previous-location';
 import {
 	desertTheme,
 	seaTheme,
@@ -41,7 +40,6 @@ interface LocationProps {
 export default function LocationPage({ currentLocation }: LocationProps) {
 	const router = useRouter();
 	const { getPastEncounters, addEncounterToHistory } = usePastEncounters();
-	const { setPreviousLocation } = usePreviousLocation();
 	const locationRepository = useMemo(() => getClientLocationRepository(), []);
 	const encounterRepository = useMemo(() => getClientEncounterRepository(), []);
 	const getNextLocationPromise = useRef<Promise<ILocation>>(null);
@@ -64,10 +62,6 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 
 		const nextLocation = await getNextLocationPromise.current;
 		router.push(`/${nextLocation.path}/${nextLocation.id}`);
-	}, []);
-
-	useEffect(() => {
-		setPreviousLocation(`/${currentLocation.path}/${currentLocation.id}`);
 	}, []);
 
 	useEffect(() => {

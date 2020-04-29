@@ -4,11 +4,9 @@ import { Location } from '../components/location';
 import { EncounterChoice } from '../types/Encounter';
 import { getClientLocationRepository } from '../components/utility';
 import { useRouter } from 'next/router';
-import { useSaveLocation } from '../components/hooks/use-previous-location';
 
 export default function TheCity() {
 	const router = useRouter();
-	useSaveLocation();
 
 	const handleOnContinue = useCallback(async (result: EncounterChoice) => {
 		const repository = getClientLocationRepository();
