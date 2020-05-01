@@ -26,7 +26,7 @@ export default function Asleep() {
 
 	const handleOnContinue = useCallback(() => {
 		setView(false);
-	}, [router]);
+	}, [isInView]);
 
 	useEffect(() => {
 		if (isInView(false)) {

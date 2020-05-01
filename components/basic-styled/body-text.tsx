@@ -6,6 +6,10 @@ import { useTheme } from '../theme';
 const P = styled.p<ITheme>`
 	color: ${({ bodyColor }) => bodyColor};
 	font: ${({ bodyFont }) => bodyFont};
+
+	br {
+		margin-top: 6px;
+	}
 `;
 
 export const BodyText: React.FC = ({ children, ...rest }) => {

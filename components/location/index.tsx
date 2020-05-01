@@ -8,17 +8,14 @@ import { CenteredPage } from '../basic-styled/centered-page';
 import { Encounter, EncounterChoice } from '../../types/Encounter';
 import {
 	Image,
-	TextContainer,
 	Container,
-	ButtonContainer,
 } from './styled';
-import { generateAnimation, AnimationKind, useTransitionViewState } from '../animations';
+import { generateAnimation, AnimationKind, useTransitionViewState, useAnimationDuration } from '../animations';
 import { AnimatableComponent } from '../../types/AnimatableComponent';
 import { useImageLoader } from '../hooks/use-image-loader';
 import { EncounterCard } from '../card';
 import { FadeIn } from '../fade-in';
-
-const ANIMATION_DURATION = .75;
+import { TextContainer, ButtonContainer } from '../basic-styled/text-button-container';
 
 const AnimatedEncounterCard = styled(EncounterCard)<AnimatableComponent>`
 	${({ inView, animationDuration }) => inView
@@ -26,8 +23,8 @@ const AnimatedEncounterCard = styled(EncounterCard)<AnimatableComponent>`
 		: generateAnimation(AnimationKind.FadeOut, animationDuration)}
 `;
 
-const AnimatedButton = styled(Button)`
-	${({ disabled }) => disabled ? 'visibility: hidden;' : generateAnimation(AnimationKind.FadeIn, ANIMATION_DURATION)}
+const AnimatedButton = styled(Button)<{ duration: number }>`
+	${({ disabled, duration }) => disabled ? 'visibility: hidden;' : generateAnimation(AnimationKind.FadeIn, duration)}
 `;
 
 export interface LocationProps {
@@ -51,7 +48,8 @@ export const Location: React.FC<LocationProps> = ({
 	expectingEncounter,
 	onOpenEncounter,
 }) => {
-	const { isInView, shouldRenderView, setView, addView } = useTransitionViewState('intro', ANIMATION_DURATION);
+	const { duration } = useAnimationDuration();
+	const { isInView, shouldRenderView, setView, addView } = useTransitionViewState('intro', duration);
 	const loadedCoverImageSrc = useImageLoader(coverImageUrl);
 	const [result, setResult] = useState<EncounterChoice>();
 
@@ -83,13 +81,13 @@ export const Location: React.FC<LocationProps> = ({
 			<Container>
 				<FadeIn
 					inView={isInView('intro')}
-					animationDuration={ANIMATION_DURATION}
+					animationDuration={duration}
 				>
 					<Header margin="0 0 15px">{title}</Header>
 				</FadeIn>
 				<FadeIn
 					inView={isInView('intro')}
-					animationDuration={ANIMATION_DURATION}
+					animationDuration={duration}
 					delay={.15}
 				>
 					<Image src={loadedCoverImageSrc} />
@@ -97,7 +95,7 @@ export const Location: React.FC<LocationProps> = ({
 				<TextContainer>
 					<FadeIn
 						inView={isInView('intro')}
-						animationDuration={ANIMATION_DURATION}
+						animationDuration={duration}
 						delay={.3}
 					>
 						<BodyText>{bodyText}</BodyText>
@@ -105,6 +103,7 @@ export const Location: React.FC<LocationProps> = ({
 							<AnimatedButton
 								onClick={(encounter || expectingEncounter) ? handleOpenEncounter : handleOnContinue}
 								disabled={!encounter && expectingEncounter}
+								duration={duration}
 							>
 								{buttonText ?? 'Continue'}
 							</AnimatedButton>
@@ -117,7 +116,7 @@ export const Location: React.FC<LocationProps> = ({
 					encounter={encounter}
 					onContinue={handleOnContinue}
 					inView={isInView('encounter')}
-					animationDuration={ANIMATION_DURATION}
+					animationDuration={duration}
 				/>
 			) : null}
 		</CenteredPage>
