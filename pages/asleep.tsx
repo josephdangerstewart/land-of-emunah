@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import {
 	ThemeProvider,
@@ -9,6 +9,10 @@ import { Header } from '../components/basic-styled/header';
 import { CenteredPage } from '../components/basic-styled/centered-page';
 import { Button } from '../components/basic-styled/button';
 import { useRouter } from 'next/router';
+import { useTransitionViewState } from '../components/animations';
+import { FadeIn } from '../components/fade-in';
+
+const ANIMATION_DURATION = 0.75;
 
 const Container = styled.div`
 	display: flex;
@@ -18,18 +22,37 @@ const Container = styled.div`
 
 export default function Asleep() {
 	const router = useRouter();
+	const { isInView, setView } = useTransitionViewState(true, ANIMATION_DURATION);
 
 	const handleOnContinue = useCallback(() => {
-		router.push('/contribution');
+		setView(false);
 	}, [router]);
+
+	useEffect(() => {
+		if (isInView(false)) {
+			router.push('/contribution');
+		}
+	}, [isInView]);
 
 	return (
 		<ThemeProvider value={endTheme}>
 			<Head />
 			<CenteredPage>
 				<Container>
-					<Header>You have fallen asleep</Header>
-					<Button onClick={handleOnContinue}>Continue?</Button>
+					<FadeIn
+						inView={isInView(true)}
+						animationDuration={ANIMATION_DURATION}
+						delay={0.5}
+					>
+						<Header>You have fallen asleep</Header>
+					</FadeIn>
+					<FadeIn
+						inView={isInView(true)}
+						animationDuration={ANIMATION_DURATION}
+						delay={0.65}
+					>
+						<Button onClick={handleOnContinue}>Continue?</Button>
+					</FadeIn>
 				</Container>
 			</CenteredPage>
 		</ThemeProvider>

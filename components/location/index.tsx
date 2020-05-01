@@ -16,14 +16,9 @@ import { generateAnimation, AnimationKind, useTransitionViewState } from '../ani
 import { AnimatableComponent } from '../../types/AnimatableComponent';
 import { useImageLoader } from '../hooks/use-image-loader';
 import { EncounterCard } from '../card';
+import { FadeIn } from '../fade-in';
 
 const ANIMATION_DURATION = .75;
-
-const FadeIn = styled.div<AnimatableComponent>`
-	${({ inView, animationDuration, delay }) => inView
-		? generateAnimation(AnimationKind.FadeIn, animationDuration, delay)
-		: generateAnimation(AnimationKind.FadeOut, animationDuration, delay)}
-`;
 
 const AnimatedEncounterCard = styled(EncounterCard)<AnimatableComponent>`
 	${({ inView, animationDuration }) => inView
