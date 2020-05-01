@@ -12,7 +12,7 @@ export class ClientEncounterRepository implements IEncounterRepository {
 			locationIdParam,
 		].filter(Boolean);
 
-		return (await fetchJson(`/api/encounters/${type}${params.length ? `?${params.join(',')}` : ''}`)).encounter as Encounter;
+		return (await fetchJson(`/api/encounters/${type}${params.length ? `?${params.join('&')}` : ''}`)).encounter as Encounter;
 	}
 
 	public async getFinalEncounter(type: string): Promise<Encounter> {
