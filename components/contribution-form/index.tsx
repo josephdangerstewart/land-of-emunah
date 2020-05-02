@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useFormState } from 'react-use-form-state';
 import { CardFace, Title as TitleCore, Button } from '../card';
 import { Input, TextArea, FileUpload } from '../forms';
+import { ContributionFormSubmission } from '../../types/ContributionFormSubmission';
 
 const Title = styled(TitleCore)`
 	margin-bottom: 16px;
@@ -14,16 +15,6 @@ const ButtonContainer = styled.div`
 	width: 100%;
 `;
 
-interface FormState {
-	name: string;
-	email: string;
-	content: string;
-}
-
-export interface ContributionFormSubmission extends FormState {
-	fileUpload: File;
-}
-
 export interface ContributionFormProps {
 	onSubmit: (submission: ContributionFormSubmission) => void;
 }
@@ -31,7 +22,7 @@ export interface ContributionFormProps {
 export const ContributionForm: React.FC<ContributionFormProps> = ({
 	onSubmit
 }) => {
-	const [formState, { text, email }] = useFormState<FormState>();
+	const [formState, { text, email }] = useFormState<ContributionFormSubmission>();
 	const [hasSubmitted, setHasSubmitted] = useState(false);
 	const [fileUpload, setFileUpload] = useState<File>(null);
 

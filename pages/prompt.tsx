@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import { Head } from '../components/head';
 import { ThemeProvider, endTheme } from '../components/theme';
@@ -8,12 +8,20 @@ import { ColumnLayout, Column } from '../components/basic-styled/column-layout';
 import { BodyText } from '../components/basic-styled/body-text';
 import { PromptBox } from '../components/prompt-box';
 import { ContributionForm } from '../components/contribution-form';
+import { getClientPromptRepository } from '../components/utility';
+import { ContributionFormSubmission } from '../types/ContributionFormSubmission';
 
 const StyledPromptBox = styled(PromptBox)`
 	margin-top: 40px;
 `;
 
 export default function Prompt() {
+	const promptRepository = useMemo(() => getClientPromptRepository(), []);
+
+	const onSubmitForm = useCallback((submission: ContributionFormSubmission) => {
+		promptRepository.submitResponse('1', submission);
+	}, [promptRepository]);
+
 	return (
 		<ThemeProvider value={endTheme}>
 			<Head />
@@ -36,7 +44,7 @@ export default function Prompt() {
 					</Column>
 					<Column>
 						<ContributionForm
-							onSubmit={() => null}
+							onSubmit={onSubmitForm}
 						/>
 					</Column>
 				</ColumnLayout>

@@ -2,6 +2,8 @@ import { IEncounterRepository } from '../types/IEncounterRepository';
 import { ILocationRepository } from '../types/ILocationRepository';
 import { DirectusLocationRepository } from './DirectusLocationRepository';
 import { DirectusEncounterRepository } from './DirectusEncounterRepository';
+import { IPromptRepository } from '../types/IPromptRepository';
+import { DirectusPromptRepository } from './DirectusPromptRepository';
 
 const DIRECTUS_IMAGE_URL = 'http://admin.landofemunah.com';
 const DIRECTUS_DEV_URL = 'http://admin.landofemunah.com/admin';
@@ -18,5 +20,10 @@ export async function getEncounterRepository(): Promise<IEncounterRepository> {
 
 export async function getLocationRepository(): Promise<ILocationRepository> {
 	const repository = new DirectusLocationRepository(directusBaseUri, DIRECTUS_IMAGE_URL);
+	return repository;
+}
+
+export async function getPromptRepository(): Promise<IPromptRepository> {
+	const repository = new DirectusPromptRepository();
 	return repository;
 }
