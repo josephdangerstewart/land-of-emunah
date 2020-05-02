@@ -8,6 +8,7 @@ import { useTransitionViewState } from '../components/animations';
 import { Card } from '../components/card';
 import { useRouter } from 'next/router';
 import { useImageLoader } from '../components/hooks/use-image-loader';
+import { useCaptcha } from '../components/hooks/use-captcha';
 
 const LOGO_DISPLAY_DURATION = 4000;
 
@@ -33,6 +34,7 @@ const Container = styled.div`
 `;
 
 export default function Index() {
+	useCaptcha('index');
 	const { duration } = useAnimationDuration();
 	const setTimeout = useSetTimeout();
 	const logoSrc = useImageLoader('/images/homepage-logo.png');

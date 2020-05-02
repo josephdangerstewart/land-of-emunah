@@ -4,9 +4,11 @@ import { Location } from '../components/location';
 import { EncounterChoice } from '../types/Encounter';
 import { getClientLocationRepository } from '../components/utility';
 import { useRouter } from 'next/router';
+import { useCaptcha } from '../components/hooks/use-captcha';
 
 export default function TheCity() {
 	const router = useRouter();
+	useCaptcha('the_city');
 
 	const handleOnContinue = useCallback(async (result: EncounterChoice) => {
 		const repository = getClientLocationRepository();

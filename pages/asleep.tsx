@@ -11,6 +11,7 @@ import { Button } from '../components/basic-styled/button';
 import { useRouter } from 'next/router';
 import { useTransitionViewState } from '../components/animations';
 import { FadeIn } from '../components/fade-in';
+import { useCaptcha } from '../components/hooks/use-captcha';
 
 const ANIMATION_DURATION = 0.75;
 
@@ -23,6 +24,7 @@ const Container = styled.div`
 export default function Asleep() {
 	const router = useRouter();
 	const { isInView, setView } = useTransitionViewState(true, ANIMATION_DURATION);
+	useCaptcha('asleep');
 
 	const handleOnContinue = useCallback(() => {
 		setView(false);

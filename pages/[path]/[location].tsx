@@ -15,6 +15,7 @@ import {
 	ThemeProvider,
 } from '../../components/theme';
 import { IPartialTheme } from '../../types/IPartialTheme';
+import { useCaptcha } from '../../components/hooks/use-captcha';
 
 interface PageContext {
 	params: {
@@ -38,6 +39,7 @@ interface LocationProps {
 }
 
 export default function LocationPage({ currentLocation }: LocationProps) {
+	useCaptcha(`${location}_${currentLocation.path}_${currentLocation.id}`);
 	const router = useRouter();
 	const { getPastEncounters, addEncounterToHistory } = usePastEncounters();
 	const locationRepository = useMemo(() => getClientLocationRepository(), []);

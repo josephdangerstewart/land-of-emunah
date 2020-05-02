@@ -12,8 +12,10 @@ import {
 	TextContainer,
 	ButtonContainer
 } from '../components/basic-styled/text-button-container';
+import { useCaptcha } from '../components/hooks/use-captcha';
 
 export default function Contribution() {
+	useCaptcha('contribution_description');
 	const router = useRouter();
 	const { duration, getDelay } = useAnimationDuration(0.5);
 	const { isInView, setView } = useTransitionViewState(true, duration);
