@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useFormState } from 'react-use-form-state';
-import { CardFace, Title as TitleCore, Button, CardContainer } from '../card';
+import { FaceContainer, Title as TitleCore, Button, CardContainer, BodyText } from '../card';
 import { Input, TextArea, FileUpload } from '../forms';
 import { ContributionFormSubmission } from '../../types/ContributionFormSubmission';
 
@@ -35,6 +35,10 @@ export const ContributionForm: React.FC<ContributionFormProps> = ({
 
 	const isFormDisabled = isNameInvalid || isEmailInvalid || isSubmitting;
 
+	const handleSubmitAnother = useCallback(async () => {
+		setView('form');
+	}, [setView]);
+
 	const handleSubmit = useCallback(async () => {
 		setHasSubmitted(true);
 		if (isFormDisabled) {
@@ -50,20 +54,23 @@ export const ContributionForm: React.FC<ContributionFormProps> = ({
 		try {
 			onSubmit && await onSubmit(submission);
 			setView('success');
-		} catch (e) {
-			console.log(e);
 		} finally {
 			setIsSubmitting(false);
 		}
 
 		formState.clearField('content');
-		setFileUpload(null);
+		setFileUpload(undefined);
 	}, [formState, onSubmit, fileUpload, isFormDisabled, setView]);
+
+	const handleChangeFile = useCallback((file) => {
+		console.log(file);
+		setFileUpload(file);
+	}, [setFileUpload]);
 
 
 	return (
 		<CardContainer>
-			<CardFace visible flipped={view === 'success'}>
+			<FaceContainer visible flipped={view === 'success'}>
 				<Title>SUBMISSION</Title>
 				<Input
 					{...text('name')}
@@ -80,17 +87,23 @@ export const ContributionForm: React.FC<ContributionFormProps> = ({
 					placeholder="Email"
 					invalid={(!formState.validity.email && formState.touched.email) || (!formState.values.email && hasSubmitted)}
 				/>
-				<FileUpload onChange={setFileUpload} file={fileUpload} />
+				<FileUpload onChange={handleChangeFile} file={fileUpload} />
 				<TextArea {...text('content')} placeholder="Type your response here..." />
 				<ButtonContainer>
 					<Button onClick={handleSubmit}>
-						Submit
+						{isSubmitting ? 'Submitting...' : 'Submit'}
 					</Button>
 				</ButtonContainer>
-			</CardFace>
-			<CardFace isBack flipped={view !== 'success'} visible>
-				<p>I am the back of the card! Maybe I need to be in a p tag?</p>
-			</CardFace>
+			</FaceContainer>
+			<FaceContainer isBack flipped={view !== 'success'} visible>
+				<Title>SUBMISSION</Title>
+				<BodyText>
+					Thank you for your contribution!
+				</BodyText>
+				<Button onClick={handleSubmitAnother}>
+					Submit another?
+				</Button>
+			</FaceContainer>
 		</CardContainer>
 	);
 };

@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { lighten, darken } from 'polished';
 import { FormInputToken } from './form-input-token';
@@ -58,13 +58,20 @@ export interface FileUploadProps {
 }
 
 export const FileUpload: React.FC<FileUploadProps> = ({ onChange, file }) => {
-	const input = useRef(null);
+	const input = useRef<HTMLInputElement>(null);
 
 	const handleButtonClick = useCallback(() => {
 		input.current?.click();
 	}, []);
 
+	useEffect(() => {
+		if (!file) {
+			input.current.value = '';
+		}
+	}, [file]);
+
 	const clear = useCallback(() => {
+		input.current.value = '';
 		onChange && onChange(null);
 	}, [onChange]);
 

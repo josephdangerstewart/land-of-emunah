@@ -93,11 +93,12 @@ export const FaceContainer = styled.div<{ visible: boolean; isBack?: boolean; fl
 	transition: transform 0.6s;
 	transform-style: preserve-3d;
 	backface-visibility: hidden;
+	z-index: 15;
 
 	width: 100%;
     flex: none;
 
-	${({ isBack }) => isBack ? 'margin-left: -100%; backface-visibility: visible; z-index: -1;' : ''}
+	${({ isBack }) => isBack ? 'margin-left: -100%; backface-visibility: visible; z-index: 10;' : ''}
 	${({ visible }) => !visible ? 'visibility: hidden;' : ''}
 
 	${({ flipped }) => flipped ? 'transform: rotateY(180deg);' : ''}

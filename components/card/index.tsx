@@ -1,3 +1,10 @@
-export { Card } from './card';
+export { Card, CardFace } from './card';
 export { EncounterCard } from './encounter-card';
-export { CardContainer, Title, FaceContainer as CardFace, Button } from './card-elements';
+export {
+	CardContainer,
+	Title,
+	FaceContainer,
+	Button,
+	BodyText,
+	Overlay,
+} from './card-elements';
