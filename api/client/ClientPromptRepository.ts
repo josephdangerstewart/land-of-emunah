@@ -2,10 +2,15 @@ import { IPromptRepository } from '../../types/IPromptRepository';
 import { Prompt } from '../../types/Prompt';
 import { ContributionFormSubmission } from '../../types/ContributionFormSubmission';
 import axios from 'axios';
+import { ContactFormSubmission } from '../../types/ContactFormSubmission';
 
 export class ClientPromptRepository implements IPromptRepository {
 	async getPrompt(): Promise<Prompt> {
 		return (await axios.get('/api/prompts')).data.prompt as Prompt;
+	}
+
+	async submitContactInfo(submission: ContactFormSubmission): Promise<void> {
+		await axios.post('/api/contact-info', submission);
 	}
 	
 	async submitResponse(promptId: string, submission: ContributionFormSubmission): Promise<void> {

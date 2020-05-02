@@ -14,6 +14,7 @@ import { useCaptcha } from '../components/hooks/use-captcha';
 import { ContactInfoForm } from '../components/contact-info-form';
 import { AnimatableComponent } from '../types/AnimatableComponent';
 import { generateAnimation, AnimationKind, useTransitionViewState, useAnimationDuration } from '../components/animations';
+import { ContactFormSubmission } from '../types/ContactFormSubmission';
 
 const StyledPromptBox = styled(PromptBox)`
 	margin-top: 40px;
@@ -48,7 +49,8 @@ export default function Prompt() {
 	const [promptId, setPromptId] = useState(null);
 	const { duration } = useAnimationDuration();
 	const { isInView, setView, shouldRenderView } = useTransitionViewState<PromptViewType>('prompt', duration);
-	const { getToken } = useCaptcha('prompt_submission', false);
+	const { getToken: getPromptFormToken } = useCaptcha('prompt_submission', false);
+	const { getToken: getContactFormToken } = useCaptcha('contact_info_submission', false);
 
 	const openContactForm = useCallback(() => {
 		setView('contact-form', false);
@@ -65,14 +67,23 @@ export default function Prompt() {
 		});
 	}, [setPromptText]);
 
-	const onSubmitForm = useCallback(async (submission: ContributionFormSubmission) => {
-		const captchaToken = await getToken();
+	const onSubmitContributionForm = useCallback(async (submission: ContributionFormSubmission) => {
+		const captchaToken = await getPromptFormToken();
 		const submissionWithToken = {
 			...submission,
 			captchaToken,
 		};
 		await promptRepository.submitResponse(promptId, submissionWithToken);
-	}, [promptRepository, promptId, getToken]);
+	}, [promptRepository, promptId, getPromptFormToken]);
+
+	const onSubmitContactForm = useCallback(async (submission: ContactFormSubmission) => {
+		const captchaToken = await getContactFormToken();
+		const submissionWithToken = {
+			...submission,
+			captchaToken,
+		};
+		await promptRepository.submitContactInfo(submissionWithToken);
+	}, [promptRepository, getContactFormToken]);
 
 	return (
 		<ThemeProvider value={endTheme}>
@@ -96,7 +107,7 @@ export default function Prompt() {
 					</Column>
 					<Column>
 						<ContributionForm
-							onSubmit={onSubmitForm}
+							onSubmit={onSubmitContributionForm}
 							isDisabled={!promptId}
 						/>
 					</Column>
@@ -107,7 +118,7 @@ export default function Prompt() {
 						inView={isInView('contact-form')}
 						animationDuration={duration}
 						onClose={closeContactForm}
-						onSubmit={console.log}
+						onSubmit={onSubmitContactForm}
 					/>
 				)}
 			</CenteredPage>

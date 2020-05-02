@@ -3,6 +3,7 @@ import { Prompt } from '../types/Prompt';
 import { ContributionFormSubmission, FormidableFile } from '../types/ContributionFormSubmission';
 import { uploadImage, getNow } from './api-utility';
 import axios from 'axios';
+import { ContactFormSubmission } from '../types/ContactFormSubmission';
 
 interface DirectusPrompt {
 	id: number;
@@ -37,7 +38,7 @@ export class DirectusPromptRepository implements IPromptRepository {
 	}
 	
 	async submitResponse(promptId: string, submission: ContributionFormSubmission): Promise<void> {
-		const url = await uploadImage(submission.fileUpload as FormidableFile);
+		const url = submission.fileUpload ? await uploadImage(submission.fileUpload as FormidableFile) : '';
 
 		const createSubmissionBody = {
 			name: submission.name,
@@ -48,5 +49,15 @@ export class DirectusPromptRepository implements IPromptRepository {
 		};
 
 		await axios.post(`${this.baseUri}/items/prompt_submission`, createSubmissionBody);
+	}
+
+	async submitContactInfo(submission: ContactFormSubmission): Promise<void> {
+		const createSubmissionBody = {
+			name: submission.name,
+			email: submission.email,
+			phone: submission.phone,
+		};
+
+		await axios.post(`${this.baseUri}/items/contact_info_submission`, createSubmissionBody);
 	}
 }
