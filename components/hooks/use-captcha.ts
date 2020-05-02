@@ -14,7 +14,11 @@ export function useCaptcha(action: string, validateImmediately = true): UseCaptc
 	const [token, setToken] = useState<string>(null);
 
 	const getToken = useCallback(() => {
-		return new Promise<string>((resolve) => {
+		return new Promise<string>((resolve, reject) => {
+			if (!grecaptcha) {
+				return reject();
+			}
+
 			grecaptcha.ready(() => {
 				grecaptcha.execute(SITE_KEY, { action }).then(token => {
 					resolve(token as string);
