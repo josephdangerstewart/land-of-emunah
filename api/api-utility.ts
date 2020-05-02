@@ -17,7 +17,6 @@ export const readdir = util.promisify(fs.readdir);
 export const lstat = util.promisify(fs.lstat);
 
 export function uploadImage(file: FormidableFile): Promise<string> {
-	console.log(file.path);
 	return new Promise((resolve, reject) => {
 		cloudinary.uploader.upload(file.path, {
 			folder: 'land-of-emunah'

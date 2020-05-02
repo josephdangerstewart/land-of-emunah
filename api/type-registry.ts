@@ -5,8 +5,8 @@ import { DirectusEncounterRepository } from './DirectusEncounterRepository';
 import { IPromptRepository } from '../types/IPromptRepository';
 import { DirectusPromptRepository } from './DirectusPromptRepository';
 
-const DIRECTUS_IMAGE_URL = 'http://admin.landofemunah.com';
-const DIRECTUS_DEV_URL = 'http://admin.landofemunah.com/admin';
+const DIRECTUS_IMAGE_URL = 'https://admin.landofemunah.com';
+const DIRECTUS_DEV_URL = 'https://admin.landofemunah.com/admin';
 const DIRECTUS_PROD_URL = 'http://localhost:8080/admin';
 
 const directusBaseUri = process.env.NODE_ENV === 'development'
@@ -24,6 +24,6 @@ export async function getLocationRepository(): Promise<ILocationRepository> {
 }
 
 export async function getPromptRepository(): Promise<IPromptRepository> {
-	const repository = new DirectusPromptRepository();
+	const repository = new DirectusPromptRepository(directusBaseUri);
 	return repository;
 }
