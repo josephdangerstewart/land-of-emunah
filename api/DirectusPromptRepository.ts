@@ -1,7 +1,7 @@
 import { IPromptRepository } from '../types/IPromptRepository';
 import { Prompt } from '../types/Prompt';
 import { ContributionFormSubmission, FormidableFile } from '../types/ContributionFormSubmission';
-import { uploadImage } from './api-utility';
+import { uploadImage, getNow } from './api-utility';
 import axios from 'axios';
 
 interface DirectusPrompt {
@@ -27,7 +27,8 @@ export class DirectusPromptRepository implements IPromptRepository {
 			};
 		}
 
-		const now = '';
+		const now = getNow();
+		console.log(now);
 		const response = (await axios.get(`${this.baseUri}/items/prompt?filter[date][lte]=${now}&sort=-date`)).data.data as DirectusPrompt[];
 
 		return {

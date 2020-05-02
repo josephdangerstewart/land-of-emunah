@@ -5,6 +5,7 @@ import util from 'util';
 import { v2 as cloudinary } from 'cloudinary';
 import creds from '../creds.json';
 import { FormidableFile } from '../types/ContributionFormSubmission.js';
+import { DateTime } from 'luxon';
 
 cloudinary.config({
 	cloud_name: creds.CLOUDINARY_CLOUD_NAME,
@@ -36,6 +37,11 @@ export function mapYamlFileNameToId(fileName: string): string {
 
 export function notFound(res: NextApiResponse, message?: string) {
 	res.status(HttpStatusCodes.NOT_FOUND).json({ message });
+}
+
+export function getNow(): string {
+	const pst = 'UTC-8';
+	return DateTime.local().setZone(pst).toFormat('yyyy-MM-dd');
 }
 
 export interface DirectusAsset {

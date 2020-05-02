@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Head } from '../components/head';
 import { ThemeProvider, endTheme } from '../components/theme';
@@ -17,6 +17,11 @@ const StyledPromptBox = styled(PromptBox)`
 
 export default function Prompt() {
 	const promptRepository = useMemo(() => getClientPromptRepository(), []);
+	const [promptText, setPromptText] = useState('Loading prompt...');
+
+	useEffect(() => {
+		promptRepository.getPrompt().then(p => setPromptText(p.text));
+	}, [setPromptText]);
 
 	const onSubmitForm = useCallback(async (submission: ContributionFormSubmission) => {
 		await promptRepository.submitResponse('1', submission);
@@ -39,7 +44,7 @@ export default function Prompt() {
 							All you need to do in order to contribute is to either: upload a file of your work (PNG or PDF) or use the text box below to write in your work. Do whatever fits best with your contribution. Everything will be accepted and considered as part of the Land of Emunah.
 						</BodyText>
 						<StyledPromptBox
-							prompt="Create a character that can cause a sandstorm in the desert."
+							prompt={promptText}
 						/>
 					</Column>
 					<Column>

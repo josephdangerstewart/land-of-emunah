@@ -4,8 +4,8 @@ import { ContributionFormSubmission } from '../../types/ContributionFormSubmissi
 import axios from 'axios';
 
 export class ClientPromptRepository implements IPromptRepository {
-	getPrompt(): Promise<Prompt> {
-		throw new Error('Method not implemented.');
+	async getPrompt(): Promise<Prompt> {
+		return (await axios.get('/api/prompts')).data.prompt as Prompt;
 	}
 	
 	async submitResponse(promptId: string, submission: ContributionFormSubmission): Promise<void> {
