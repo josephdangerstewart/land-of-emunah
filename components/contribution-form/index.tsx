@@ -65,7 +65,6 @@ export const ContributionForm: React.FC<ContributionFormProps> = ({
 	}, [formState, onSubmit, fileUpload, isFormDisabled, setView]);
 
 	const handleChangeFile = useCallback((file) => {
-		console.log(file);
 		setFileUpload(file);
 	}, [setFileUpload]);
 

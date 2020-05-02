@@ -55,7 +55,6 @@ interface CaptchaResponse {
 
 export async function validateCaptcha(token): Promise<CaptchaResponse> {
 	const url = `https://www.google.com/recaptcha/api/siteverify?secret=${creds.CAPTCHA_SECRET}&response=${token}`;
-	console.log(url);
 	const { data } = await axios.post(url);
 	return data as CaptchaResponse;
 }
