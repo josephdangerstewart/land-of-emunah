@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import { lighten, darken } from 'polished';
 import { FormInputToken } from './form-input-token';
@@ -54,23 +54,21 @@ const FileInput = styled.input`
 
 export interface FileUploadProps {
 	onChange?: (file: File) => void;
+	file: File;
 }
 
-export const FileUpload: React.FC<FileUploadProps> = ({ onChange }) => {
+export const FileUpload: React.FC<FileUploadProps> = ({ onChange, file }) => {
 	const input = useRef(null);
-	const [file, setFile] = useState(null);
 
 	const handleButtonClick = useCallback(() => {
 		input.current?.click();
 	}, []);
 
 	const clear = useCallback(() => {
-		setFile(null);
 		onChange && onChange(null);
 	}, [onChange]);
 
 	const handleFileChange = useCallback((e) => {
-		setFile(e.target.files[0]);
 		onChange && onChange(e.target.files[0] as File);
 	}, [onChange]);
 

@@ -18,8 +18,8 @@ const StyledPromptBox = styled(PromptBox)`
 export default function Prompt() {
 	const promptRepository = useMemo(() => getClientPromptRepository(), []);
 
-	const onSubmitForm = useCallback((submission: ContributionFormSubmission) => {
-		promptRepository.submitResponse('1', submission);
+	const onSubmitForm = useCallback(async (submission: ContributionFormSubmission) => {
+		await promptRepository.submitResponse('1', submission);
 	}, [promptRepository]);
 
 	return (
