@@ -39,7 +39,7 @@ interface LocationProps {
 }
 
 export default function LocationPage({ currentLocation }: LocationProps) {
-	useCaptcha(`${location}_${currentLocation.path}_${currentLocation.id}`);
+	useCaptcha(`location_${currentLocation.path}_${currentLocation.id}`);
 	const router = useRouter();
 	const { getPastEncounters, addEncounterToHistory } = usePastEncounters();
 	const locationRepository = useMemo(() => getClientLocationRepository(), []);
