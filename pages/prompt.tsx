@@ -107,6 +107,7 @@ export default function Prompt() {
 						inView={isInView('contact-form')}
 						animationDuration={duration}
 						onClose={closeContactForm}
+						onSubmit={console.log}
 					/>
 				)}
 			</CenteredPage>

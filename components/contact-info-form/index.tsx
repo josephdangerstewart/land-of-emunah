@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { FaceContainer, CardContainer, Title, Overlay, Button as ButtonCore } from '../card';
 import { CenteredPage } from '../basic-styled/centered-page';
 import styled from 'styled-components';
 import { Input } from '../forms';
+import { useFormState } from 'react-use-form-state';
+import { ContactFormSubmission } from '../../types/ContactFormSubmission';
+import { FlexSpacer } from '../basic-styled/flex-spacer';
 
 const Button = styled(ButtonCore)`
 	font-size: 18px;
@@ -50,17 +53,55 @@ const InstaContainer = styled.div`
 	}
 `;
 
+const InstaDetails: React.FC = () => (
+	<InstaContainer>
+		<img src="/images/instagram-logo.svg" />
+		<a
+			rel="noopener noreferrer"
+			target="_blank"
+			href="https://instagram.com/landofemunah"
+		>
+			@landofemunah
+		</a>
+	</ InstaContainer>
+);
+
 export interface ContactInfoFormProps {
 	className?: string;
 	onClose: () => void;
+	onSubmit: (submission: ContactFormSubmission) => void;
 }
 
-export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ className, onClose }) => {
+type ViewType = "form" | "success";
+
+export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ className, onClose, onSubmit }) => {
+	const [formState, { text, email }] = useFormState<ContactFormSubmission>();
+	const [hasSubmitted, setHasSubmitted] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [view, setView] = useState<ViewType>('form');
+
+	const isFormValid = formState.values.email && formState.values.name && formState.validity.email && !isSubmitting;
+
+	const submit = useCallback(async () => {
+		setHasSubmitted(true);
+		if (!isFormValid) {
+			return;
+		}
+
+		setIsSubmitting(true);
+		try {
+			await onSubmit(formState.values);
+			setView('success');
+		} finally {
+			setIsSubmitting(false);
+		}
+	}, [setHasSubmitted, setIsSubmitting, isFormValid, onSubmit, setView]);	
+
 	return (
 		<Overlay zIndex={100}>
 			<CenteredPage>
 				<CardContainer className={className}>
-					<FaceContainer visible>
+					<FaceContainer visible flipped={view !== 'form'}>
 						<Title>CONTACT INFO</Title>
 						<BodyText>
 							By providing your contact information, we can keep you posted with news and updates regarding the Land of Emunah.
@@ -68,25 +109,37 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ className, onC
 						<BodyText>
 							We will not give away your contact information or spam you with emails or messages. We will just send updates and news whenever they come!
 						</BodyText>
-						<Input placeholder="Name" required />
-						<Input placeholder="Email" required />
-						<Input placeholder="Phone" />
+						<Input
+							{...text('name')}
+							placeholder="Name"
+							autoComplete="name"
+							required
+							invalid={(!formState.values.email && hasSubmitted)}
+						/>
+						<Input
+							{...email('email')}
+							placeholder="Email"
+							required
+							invalid={(!formState.validity.email && formState.touched.email) || (!formState.values.email && hasSubmitted)}
+						/>
+						<Input placeholder="Phone" {...text('phone')} />
 						<BodyText>
 							Make sure to follow our instagram page as another way to stay posted and to check out submissions from anyone who has contributed to the Land of Emunah.
 						</BodyText>
+						<FlexSpacer />
 						<ButtonContainer>
-							<InstaContainer>
-								<img src="/images/instagram-logo.svg" />
-								<a
-									rel="noopener noreferrer"
-									target="_blank"
-									href="https://instagram.com/landofemunah"
-								>
-									@landofemunah
-								</a>
-							</InstaContainer>
+							<InstaDetails />
 							<CloseButton onClick={onClose}>Cancel</CloseButton>
-							<Button>Submit</Button>
+							<Button onClick={submit}>{isSubmitting ? 'Submitting...' : 'Submit'}</Button>
+						</ButtonContainer>
+					</FaceContainer>
+					<FaceContainer visible isBack flipped={view !== 'success'}>
+						<Title>CONTACT INFO</Title>
+						<BodyText>Thank you! We will message you soon about any updates.</BodyText>
+						<FlexSpacer />
+						<ButtonContainer>
+							<InstaDetails />
+							<Button onClick={onClose}>Continue</Button>
 						</ButtonContainer>
 					</FaceContainer>
 				</CardContainer>

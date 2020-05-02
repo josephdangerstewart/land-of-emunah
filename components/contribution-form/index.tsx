@@ -32,10 +32,7 @@ export const ContributionForm: React.FC<ContributionFormProps> = ({
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [view, setView] = useState<ViewType>('form');
 
-	const isNameInvalid = !formState.values.name && hasSubmitted;
-	const isEmailInvalid = (!formState.validity.email && formState.touched.email) || (!formState.values.email && hasSubmitted);
-
-	const isFormDisabled = isNameInvalid || isEmailInvalid || isSubmitting || isDisabled;
+	const isFormDisabled = !formState.validity.email || !formState.values.name || isSubmitting || isDisabled || !formState.values.email;
 
 	const handleSubmitAnother = useCallback(async () => {
 		setView('form');
