@@ -15,6 +15,7 @@ export class ClientPromptRepository implements IPromptRepository {
 		formData.append('email', submission.email);
 		formData.append('content', submission.content);
 		formData.append('fileUpload', submission.fileUpload as File);
+		formData.append('captchaToken', submission.captchaToken);
 
 		await axios.post(`/api/prompts/submit/${promptId}`, formData, {
 			headers: {

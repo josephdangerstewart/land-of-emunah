@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import formidable from 'formidable';
 import { ContributionFormSubmission } from '../../../../types/ContributionFormSubmission';
 import { getPromptRepository } from '../../../../api/type-registry';
-import { notFound } from '../../../../api/api-utility';
+import { notFound, validateCaptcha, forbidden } from '../../../../api/api-utility';
 
 export const config = {
 	api: {
@@ -25,8 +25,18 @@ async function parseSubmission(req: NextApiRequest): Promise<ContributionFormSub
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+	if (req.method !== 'POST') {
+		return notFound(res);
+	}
+
 	const promptId = req.query.promptId as string;
 	const data = await parseSubmission(req);
+
+	const response = await validateCaptcha(data.captchaToken);
+	
+	if (!response.success) {
+		return forbidden(res, 'Invalid captcha');
+	}
 
 	const repository = await getPromptRepository();
 

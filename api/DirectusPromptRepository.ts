@@ -28,7 +28,6 @@ export class DirectusPromptRepository implements IPromptRepository {
 		}
 
 		const now = getNow();
-		console.log(now);
 		const response = (await axios.get(`${this.baseUri}/items/prompt?filter[date][lte]=${now}&sort=-date`)).data.data as DirectusPrompt[];
 
 		return {

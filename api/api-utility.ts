@@ -6,6 +6,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import creds from '../creds.json';
 import { FormidableFile } from '../types/ContributionFormSubmission.js';
 import { DateTime } from 'luxon';
+import axios from 'axios';
 
 cloudinary.config({
 	cloud_name: creds.CLOUDINARY_CLOUD_NAME,
@@ -39,9 +40,24 @@ export function notFound(res: NextApiResponse, message?: string) {
 	res.status(HttpStatusCodes.NOT_FOUND).json({ message });
 }
 
+export function forbidden(res: NextApiResponse, message?: string) {
+	res.status(HttpStatusCodes.FORBIDDEN).json({ message });
+}
+
 export function getNow(): string {
 	const pst = 'UTC-8';
 	return DateTime.local().setZone(pst).toFormat('yyyy-MM-dd');
+}
+
+interface CaptchaResponse {
+	success: boolean;
+}
+
+export async function validateCaptcha(token): Promise<CaptchaResponse> {
+	const url = `https://www.google.com/recaptcha/api/siteverify?secret=${creds.CAPTCHA_SECRET}&response=${token}`;
+	console.log(url);
+	const { data } = await axios.post(url);
+	return data as CaptchaResponse;
 }
 
 export interface DirectusAsset {

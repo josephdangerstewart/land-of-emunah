@@ -32,6 +32,11 @@ export const Head: React.FC<HeadProps> = ({ title }) => {
 				body {
 					background: ${theme.background};
 				}
+
+				.grecaptcha-badge {
+					visibility: collapse !important;
+					z-index: -100000 !important;
+				}
 			`}</style>
 		</>
 	);

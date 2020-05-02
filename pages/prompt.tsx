@@ -10,6 +10,7 @@ import { PromptBox } from '../components/prompt-box';
 import { ContributionForm } from '../components/contribution-form';
 import { getClientPromptRepository } from '../components/utility';
 import { ContributionFormSubmission } from '../types/ContributionFormSubmission';
+import { useCaptcha } from '../components/hooks/use-captcha';
 
 const StyledPromptBox = styled(PromptBox)`
 	margin-top: 40px;
@@ -18,14 +19,24 @@ const StyledPromptBox = styled(PromptBox)`
 export default function Prompt() {
 	const promptRepository = useMemo(() => getClientPromptRepository(), []);
 	const [promptText, setPromptText] = useState('Loading prompt...');
+	const [promptId, setPromptId] = useState('');
+	const { getToken } = useCaptcha('prompt_submission', false);
 
 	useEffect(() => {
-		promptRepository.getPrompt().then(p => setPromptText(p.text));
+		promptRepository.getPrompt().then(p => {
+			setPromptText(p.text);
+			setPromptId(p.id);
+		});
 	}, [setPromptText]);
 
 	const onSubmitForm = useCallback(async (submission: ContributionFormSubmission) => {
-		await promptRepository.submitResponse('1', submission);
-	}, [promptRepository]);
+		const captchaToken = await getToken();
+		const submissionWithToken = {
+			...submission,
+			captchaToken,
+		};
+		await promptRepository.submitResponse(promptId, submissionWithToken);
+	}, [promptRepository, promptId, getToken]);
 
 	return (
 		<ThemeProvider value={endTheme}>

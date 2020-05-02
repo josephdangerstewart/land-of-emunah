@@ -26,6 +26,7 @@ export default class MyDocument extends Document {
         <Head>
           {/* Step 5: Output the styles in the head  */}
           {this.props.styleTags}
+		  <script src="https://www.google.com/recaptcha/api.js?render=6LfxhfEUAAAAALWKUojZTi6qWzj62miHHsZgJGV-"></script>
         </Head>
         <body>
           <Main />

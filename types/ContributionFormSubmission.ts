@@ -7,4 +7,5 @@ export interface ContributionFormSubmission {
 	email: string;
 	content: string;
 	fileUpload: File | FormidableFile;
+	captchaToken: string;
 }
