@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-	"start": "next start",
-	"lint": "eslint ./ --ext .ts,.tsx,.js,.jsx"
+    "start": "next start",
+    "lint": "eslint ./ --ext .ts,.tsx,.js,.jsx"
   },
   "dependencies": {
     "@types/styled-components": "^5.1.0",
@@ -17,6 +17,7 @@
     "polished": "^3.5.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-use-form-state": "^0.12.1",
     "styled-components": "^5.1.0",
     "yaml": "^1.9.2"
   },

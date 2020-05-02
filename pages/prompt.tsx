@@ -7,6 +7,7 @@ import { Header } from '../components/basic-styled/header';
 import { ColumnLayout, Column } from '../components/basic-styled/column-layout';
 import { BodyText } from '../components/basic-styled/body-text';
 import { PromptBox } from '../components/prompt-box';
+import { ContributionForm } from '../components/contribution-form';
 
 const StyledPromptBox = styled(PromptBox)`
 	margin-top: 40px;
@@ -34,7 +35,9 @@ export default function Prompt() {
 						/>
 					</Column>
 					<Column>
-						<p>This is another column</p>
+						<ContributionForm
+							onSubmit={() => null}
+						/>
 					</Column>
 				</ColumnLayout>
 			</CenteredPage>
