@@ -11,7 +11,7 @@ export const CardContainer = styled.div`
 	flex-flow: row nowrap;
 `;
 
-export const Overlay = styled.div`
+export const Overlay = styled.div<{ zIndex?: number}>`
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -20,6 +20,7 @@ export const Overlay = styled.div`
 	display: flex;
 	justify-content: center;
 	overflow: hidden;
+	${({ zIndex }) => zIndex ? `z-index: ${zIndex};` : ''}
 `;
 
 export const CoverImage = styled.img`

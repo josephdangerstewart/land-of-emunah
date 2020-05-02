@@ -11,16 +11,52 @@ import { ContributionForm } from '../components/contribution-form';
 import { getClientPromptRepository } from '../components/utility';
 import { ContributionFormSubmission } from '../types/ContributionFormSubmission';
 import { useCaptcha } from '../components/hooks/use-captcha';
+import { ContactInfoForm } from '../components/contact-info-form';
+import { AnimatableComponent } from '../types/AnimatableComponent';
+import { generateAnimation, AnimationKind, useTransitionViewState, useAnimationDuration } from '../components/animations';
 
 const StyledPromptBox = styled(PromptBox)`
 	margin-top: 40px;
 `;
 
+const AbsoluteButton = styled.a`
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	font: 22px 'Trade Winds';
+	cursor: pointer;
+	color: #FDF6E3;
+	text-decoration: none;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+	}
+`;
+
+const AnimatedContactInfoForm = styled(ContactInfoForm)<AnimatableComponent>`
+	${({ inView, animationDuration }) => inView
+		? generateAnimation(AnimationKind.FadeIn, animationDuration)
+		: generateAnimation(AnimationKind.FadeOut, animationDuration)}
+`;
+
+type PromptViewType = "prompt" | "contact-form";
+
 export default function Prompt() {
 	const promptRepository = useMemo(() => getClientPromptRepository(), []);
 	const [promptText, setPromptText] = useState('Loading prompt...');
 	const [promptId, setPromptId] = useState(null);
+	const { duration } = useAnimationDuration();
+	const { isInView, setView, shouldRenderView } = useTransitionViewState<PromptViewType>('prompt', duration);
 	const { getToken } = useCaptcha('prompt_submission', false);
+
+	const openContactForm = useCallback(() => {
+		setView('contact-form', false);
+	}, [setView]);
+
+	const closeContactForm = useCallback(() => {
+		setView('prompt');
+	}, [setView]);
 
 	useEffect(() => {
 		promptRepository.getPrompt().then(p => {
@@ -65,6 +101,14 @@ export default function Prompt() {
 						/>
 					</Column>
 				</ColumnLayout>
+				<AbsoluteButton onClick={openContactForm}>Stay Connected!</AbsoluteButton>
+				{shouldRenderView('contact-form') && (
+					<AnimatedContactInfoForm
+						inView={isInView('contact-form')}
+						animationDuration={duration}
+						onClose={closeContactForm}
+					/>
+				)}
 			</CenteredPage>
 		</ThemeProvider>
 	);
