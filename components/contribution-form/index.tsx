@@ -17,12 +17,14 @@ const ButtonContainer = styled.div`
 
 export interface ContributionFormProps {
 	onSubmit: (submission: ContributionFormSubmission) => void;
+	isDisabled: boolean;
 }
 
 type ViewType = "form" | "success";
 
 export const ContributionForm: React.FC<ContributionFormProps> = ({
-	onSubmit
+	onSubmit,
+	isDisabled,
 }) => {
 	const [formState, { text, email }] = useFormState<ContributionFormSubmission>();
 	const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -33,7 +35,7 @@ export const ContributionForm: React.FC<ContributionFormProps> = ({
 	const isNameInvalid = !formState.values.name && hasSubmitted;
 	const isEmailInvalid = (!formState.validity.email && formState.touched.email) || (!formState.values.email && hasSubmitted);
 
-	const isFormDisabled = isNameInvalid || isEmailInvalid || isSubmitting;
+	const isFormDisabled = isNameInvalid || isEmailInvalid || isSubmitting || isDisabled;
 
 	const handleSubmitAnother = useCallback(async () => {
 		setView('form');

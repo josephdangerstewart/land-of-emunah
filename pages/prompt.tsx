@@ -19,7 +19,7 @@ const StyledPromptBox = styled(PromptBox)`
 export default function Prompt() {
 	const promptRepository = useMemo(() => getClientPromptRepository(), []);
 	const [promptText, setPromptText] = useState('Loading prompt...');
-	const [promptId, setPromptId] = useState('');
+	const [promptId, setPromptId] = useState(null);
 	const { getToken } = useCaptcha('prompt_submission', false);
 
 	useEffect(() => {
@@ -61,6 +61,7 @@ export default function Prompt() {
 					<Column>
 						<ContributionForm
 							onSubmit={onSubmitForm}
+							isDisabled={!promptId}
 						/>
 					</Column>
 				</ColumnLayout>
