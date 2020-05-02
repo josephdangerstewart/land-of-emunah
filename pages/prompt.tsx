@@ -5,7 +5,7 @@ import { ThemeProvider, endTheme } from '../components/theme';
 import { CenteredPage } from '../components/basic-styled/centered-page';
 import { Header } from '../components/basic-styled/header';
 import { ColumnLayout, Column } from '../components/basic-styled/column-layout';
-import { BodyText } from '../components/basic-styled/body-text';
+import { BodyText as BodyTextCore } from '../components/basic-styled/body-text';
 import { PromptBox } from '../components/prompt-box';
 import { ContributionForm } from '../components/contribution-form';
 import { getClientPromptRepository } from '../components/utility';
@@ -15,24 +15,25 @@ import { ContactInfoForm } from '../components/contact-info-form';
 import { AnimatableComponent } from '../types/AnimatableComponent';
 import { generateAnimation, AnimationKind, useTransitionViewState, useAnimationDuration } from '../components/animations';
 import { ContactFormSubmission } from '../types/ContactFormSubmission';
+import { Button as ButtonCore } from '../components/card';
+
+const Button = styled(ButtonCore)`
+	font-family: 'Trade Winds';
+`;
+
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	width: 100%;
+`;
 
 const StyledPromptBox = styled(PromptBox)`
 	margin-top: 40px;
+	margin-bottom: 30px;
 `;
 
-const AbsoluteButton = styled.a`
-	position: absolute;
-	top: 15px;
-	left: 15px;
-	font: 22px 'Trade Winds';
-	cursor: pointer;
-	color: #FDF6E3;
-	text-decoration: none;
-	cursor: pointer;
-
-	&:hover {
-		text-decoration: underline;
-	}
+const BodyText = styled(BodyTextCore)`
+	font-size: 16px;
 `;
 
 const AnimatedContactInfoForm = styled(ContactInfoForm)<AnimatableComponent>`
@@ -104,6 +105,9 @@ export default function Prompt() {
 						<StyledPromptBox
 							prompt={promptText}
 						/>
+						<ButtonContainer>
+							<Button onClick={openContactForm}>How to stay in contact!</Button>
+						</ButtonContainer>
 					</Column>
 					<Column>
 						<ContributionForm
@@ -112,7 +116,6 @@ export default function Prompt() {
 						/>
 					</Column>
 				</ColumnLayout>
-				<AbsoluteButton onClick={openContactForm}>Stay Connected!</AbsoluteButton>
 				{shouldRenderView('contact-form') && (
 					<AnimatedContactInfoForm
 						inView={isInView('contact-form')}

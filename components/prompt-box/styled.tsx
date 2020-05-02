@@ -9,7 +9,7 @@ export const Container = styled.div`
 export const Text = styled.p`
 	color: #375147;
 	margin: 0;
-	font: 22px Averia Serif Libre;
+	font: 18px Averia Serif Libre;
 	font-style: italic;
 `;
 
