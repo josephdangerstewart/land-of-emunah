@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const ScrollBoundary = styled.div`
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+`;
+
 const Outer = styled.div<{ responsiveMargins?: boolean }>`
 	width: 100%;
 	height: 100%;
@@ -17,6 +23,7 @@ const Outer = styled.div<{ responsiveMargins?: boolean }>`
 
 const Inner = styled.div<{ minHeight?: string }>`
 	margin: auto;
+	overflow: visible;
 	width: 100%;
 	min-height: ${({ minHeight }) => minHeight}; 
 `;
@@ -26,11 +33,13 @@ export const CenteredPage: React.FC<{ minHeight?: string; responsiveMargins?: bo
 	minHeight,
 	responsiveMargins = true,
 }) => (
-	<Outer responsiveMargins={responsiveMargins}>
-		<Inner
-			minHeight={minHeight}
-		>
-			{children}
-		</Inner>
-	</Outer>
+	<ScrollBoundary>
+		<Outer responsiveMargins={responsiveMargins}>
+			<Inner
+				minHeight={minHeight}
+			>
+				{children}
+			</Inner>
+		</Outer>
+	</ScrollBoundary>
 );
