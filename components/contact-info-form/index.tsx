@@ -13,6 +13,10 @@ const Button = styled(ButtonCore)`
 
 const CloseButton = styled(Button)`
 	margin-right: 6px;
+
+	@media (max-width: 680px) {
+		margin-right: 0;
+	}
 `;
 
 const BodyText = styled.p`
@@ -29,6 +33,14 @@ const ButtonContainer = styled.div`
 	display: flex;
 	width: 100%;
 	align-items: center;
+
+	@media (max-width: 680px) {
+		flex-direction: column;
+
+		${Button} {
+			margin-top: 8px;
+		}
+	}
 `;
 
 const InstaContainer = styled.div`
@@ -50,6 +62,11 @@ const InstaContainer = styled.div`
 		&:hover {
 			text-decoration: underline;
 		}
+	}
+
+	@media (max-width: 680px) {
+		justify-content: center;
+		width: 100%;
 	}
 `;
 
@@ -99,7 +116,7 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ className, onC
 
 	return (
 		<Overlay zIndex={100}>
-			<CenteredPage>
+			<CenteredPage responsiveMargins={false}>
 				<CardContainer className={className}>
 					<FaceContainer visible flipped={view !== 'form'}>
 						<Title>CONTACT INFO</Title>

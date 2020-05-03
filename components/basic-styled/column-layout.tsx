@@ -42,4 +42,8 @@ export const ColumnLayout = styled.div<ColumnLayoutProps>`
 			}
 		}
 	` : ''}
+
+	@media (max-width: 680px) {
+		flex-direction: column;
+	}
 `;

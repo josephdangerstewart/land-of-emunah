@@ -20,6 +20,10 @@ import { FadeIn } from '../components/fade-in';
 
 const Button = styled(ButtonCore)`
 	font-family: 'Trade Winds';
+
+	@media (max-width: 680px) {
+		margin-bottom: 30px;
+	}
 `;
 
 const ButtonContainer = styled.div`
@@ -101,6 +105,7 @@ export default function Prompt() {
 				<ColumnLayout
 					maxWidth={900}
 					columnSpacing={12}
+					margin="0 auto"
 				>
 					<FadeIn
 						inView

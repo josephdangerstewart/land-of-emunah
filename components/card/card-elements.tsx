@@ -6,6 +6,7 @@ export const CardContainer = styled.div`
 	min-height: 100%;
 	max-height: 880px;
 	height: fit-content;
+	margin: 0 auto;
 
 	display: flex;
 	flex-flow: row nowrap;
@@ -49,6 +50,10 @@ export const Title = styled.h1`
 	color: #375147;
 	text-align: center;
 	font: 45px 'Trade Winds', cursive;
+
+	@media (max-width: 680px) {
+		font-size: 38px;
+	}
 `;
 
 export const Button = styled.button`
@@ -80,6 +85,12 @@ export const ChoiceButton = styled(Button)<{ backgroundColor?: string }>`
 			background-color: ${lighten(0.1, backgroundColor)}
 		}
 	`: ''}
+
+	@media (max-width: 680px) {
+		white-space: normal;
+		flex: initial;
+		width: 100%;
+	}
 `;
 
 export const ButtonsContainer = styled.div`
@@ -107,4 +118,8 @@ export const FaceContainer = styled.div<{ visible: boolean; isBack?: boolean; fl
 	${({ visible }) => !visible ? 'visibility: hidden;' : ''}
 
 	${({ flipped }) => flipped ? 'transform: rotateY(180deg);' : ''}
+
+	@media (max-width: 680px) {
+		padding: 15px;
+	}
 `;

@@ -91,7 +91,7 @@ export const Card: React.FC<CardProps> = ({
 
 	return (
 		<Overlay>
-			<CenteredPage minHeight="min(80%, 880px)">
+			<CenteredPage minHeight="min(80%, 880px)" responsiveMargins={false}>
 				<CardContainer className={className}>
 					<CardFace
 						title={title}

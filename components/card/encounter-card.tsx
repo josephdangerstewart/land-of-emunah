@@ -36,7 +36,7 @@ export const EncounterCard: React.FC<EncounterCardProps> = ({
 
 	return (
 		<Overlay>
-			<CenteredPage minHeight="min(80%, 880px)">
+			<CenteredPage minHeight="min(80%, 880px)" responsiveMargins={false}>
 				<CardContainer className={className}>
 					<CardFace
 						title="ENCOUNTER"
