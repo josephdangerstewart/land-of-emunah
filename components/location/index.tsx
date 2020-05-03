@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useCallback, useState } from 'react';
-import styled from 'styled-components';
 import { Header } from '../basic-styled/header';
 import { BodyText } from '../basic-styled/body-text';
 import { Button } from '../basic-styled/button';
@@ -9,19 +8,12 @@ import { Encounter, EncounterChoice } from '../../types/Encounter';
 import {
 	Image, Container,
 } from './styled';
-import { generateAnimation, AnimationKind, useTransitionViewState, useAnimationDuration } from '../animations';
-import { AnimatableComponent } from '../../types/AnimatableComponent';
+import { useTransitionViewState, useAnimationDuration } from '../animations';
 import { useImageLoader } from '../hooks/use-image-loader';
 import { EncounterCard } from '../card';
 import { FadeIn } from '../fade-in';
 import { TextContainer, ButtonContainer } from '../basic-styled/text-button-container';
 import { ColumnLayout, Column } from '../basic-styled/column-layout';
-
-const AnimatedEncounterCard = styled(EncounterCard)<AnimatableComponent>`
-	${({ inView, animationDuration }) => inView
-		? generateAnimation(AnimationKind.FadeIn, animationDuration)
-		: generateAnimation(AnimationKind.FadeOut, animationDuration)}
-`;
 
 export interface LocationProps {
 	title: string;
@@ -122,7 +114,7 @@ export const Location: React.FC<LocationProps> = ({
 				</Column>
 			</ColumnLayout>
 			{shouldRenderView('encounter') ? (
-				<AnimatedEncounterCard
+				<EncounterCard
 					encounter={encounter}
 					onContinue={handleOnContinue}
 					inView={isInView('encounter')}

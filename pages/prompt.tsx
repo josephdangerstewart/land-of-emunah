@@ -12,8 +12,7 @@ import { getClientPromptRepository } from '../components/utility';
 import { ContributionFormSubmission } from '../types/ContributionFormSubmission';
 import { useCaptcha } from '../components/hooks/use-captcha';
 import { ContactInfoForm } from '../components/contact-info-form';
-import { AnimatableComponent } from '../types/AnimatableComponent';
-import { generateAnimation, AnimationKind, useTransitionViewState, useAnimationDuration } from '../components/animations';
+import { useTransitionViewState, useAnimationDuration } from '../components/animations';
 import { ContactFormSubmission } from '../types/ContactFormSubmission';
 import { Button as ButtonCore } from '../components/card';
 import { FadeIn } from '../components/fade-in';
@@ -39,12 +38,6 @@ const StyledPromptBox = styled(PromptBox)`
 
 const BodyText = styled(BodyTextCore)`
 	font-size: 16px;
-`;
-
-const AnimatedContactInfoForm = styled(ContactInfoForm)<AnimatableComponent>`
-	${({ inView, animationDuration }) => inView
-		? generateAnimation(AnimationKind.FadeIn, animationDuration)
-		: generateAnimation(AnimationKind.FadeOut, animationDuration)}
 `;
 
 type PromptViewType = "prompt" | "contact-form";
@@ -165,7 +158,7 @@ export default function Prompt() {
 					</FadeIn>
 				</ColumnLayout>
 				{shouldRenderView('contact-form') && (
-					<AnimatedContactInfoForm
+					<ContactInfoForm
 						inView={isInView('contact-form')}
 						animationDuration={duration}
 						onClose={closeContactForm}

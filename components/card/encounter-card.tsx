@@ -8,6 +8,8 @@ import {
 
 import { CenteredPage } from '../basic-styled/centered-page';
 import { CardFace, ChoiceButton } from './card';
+import { AnimatableComponent } from '../../types/AnimatableComponent';
+import { FadeIn } from '../fade-in';
 
 export interface EncounterCardProps {
 	encounter: Encounter;
@@ -15,10 +17,12 @@ export interface EncounterCardProps {
 	className?: string;
 }
 
-export const EncounterCard: React.FC<EncounterCardProps> = ({
+export const EncounterCard: React.FC<EncounterCardProps & AnimatableComponent> = ({
 	encounter,
 	onContinue,
-	className,
+	inView,
+	animationDuration,
+	delay,
 }) => {
 	const [view, setView] = useState(-1);
 
@@ -37,29 +41,33 @@ export const EncounterCard: React.FC<EncounterCardProps> = ({
 	return (
 		<Overlay>
 			<CenteredPage minHeight="min(80%, 880px)" responsiveMargins={false}>
-				<CardContainer className={className}>
-					<CardFace
-						title="ENCOUNTER"
-						coverImageUrl={encounter.coverImageUrl}
-						bodyText={encounter.description}
-						buttons={mappedChoiceButtons}
-						onContinue={onContinue}
-						flipped={view !== -1}
-						visible
-					/>
-					{encounter.choices?.map((choice, index) => (
+				<FadeIn
+					inView={inView}
+					animationDuration={animationDuration}
+					delay={delay}
+				>
+					<CardContainer flipped={view !== -1}>
 						<CardFace
 							title="ENCOUNTER"
 							coverImageUrl={encounter.coverImageUrl}
-							bodyText={choice.result}
-							onContinue={() => onContinue(choice)}
-							visible={view === index}
-							key={choice.choiceText}
-							flipped={view === -1}
-							isBack
+							bodyText={encounter.description}
+							buttons={mappedChoiceButtons}
+							onContinue={onContinue}
+							visible
 						/>
-					))}
-				</CardContainer>
+						{encounter.choices?.map((choice, index) => (
+							<CardFace
+								title="ENCOUNTER"
+								coverImageUrl={encounter.coverImageUrl}
+								bodyText={choice.result}
+								onContinue={() => onContinue(choice)}
+								visible={view === index}
+								key={choice.choiceText}
+								isBack
+							/>
+						))}
+					</CardContainer>
+				</FadeIn>
 			</CenteredPage>
 		</Overlay>
 	);

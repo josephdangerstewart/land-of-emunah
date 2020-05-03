@@ -67,8 +67,8 @@ export const ContributionForm: React.FC<ContributionFormProps> = ({
 
 
 	return (
-		<CardContainer>
-			<FaceContainer visible flipped={view === 'success'}>
+		<CardContainer flipped={view !== 'form'}>
+			<FaceContainer visible>
 				<Title>SUBMISSION</Title>
 				<Input
 					{...text('name')}
@@ -93,7 +93,7 @@ export const ContributionForm: React.FC<ContributionFormProps> = ({
 					</Button>
 				</ButtonContainer>
 			</FaceContainer>
-			<FaceContainer isBack flipped={view !== 'success'} visible>
+			<FaceContainer isBack visible>
 				<Title>SUBMISSION</Title>
 				<BodyText>
 					Thank you for your contribution!

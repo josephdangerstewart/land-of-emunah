@@ -1,7 +1,8 @@
+import React from 'react';
 import styled from 'styled-components';
 import { lighten } from 'polished';
 
-export const CardContainer = styled.div`
+const CardContainerCore = styled.div<{ flipped?: boolean }>`
 	max-width: 470px;
 	min-height: 100%;
 	max-height: 880px;
@@ -10,7 +11,23 @@ export const CardContainer = styled.div`
 
 	display: flex;
 	flex-flow: row nowrap;
+
+	transform-style: preserve-3d;
+	transition: transform 0.6s;
+	${({ flipped }) => flipped ? 'transform: rotateY(180deg);' : 'transform: rotateY(0deg);'}
 `;
+
+const CardContainerOuter = styled.div`
+	perspective: 3000px;
+`;
+
+export const CardContainer: React.FC<{ flipped?: boolean }> = ({ flipped, children }) => (
+	<CardContainerOuter>
+		<CardContainerCore flipped={flipped}>
+			{children}
+		</CardContainerCore>
+	</CardContainerOuter>
+);
 
 export const Overlay = styled.div<{ zIndex?: number}>`
 	position: absolute;
@@ -24,7 +41,7 @@ export const Overlay = styled.div<{ zIndex?: number}>`
 	${({ zIndex }) => zIndex ? `z-index: ${zIndex};` : ''}
 
 	@media (max-width: 680px) {
-		${CardContainer} {
+		${CardContainerCore} {
 			margin-bottom: 40px;
 		}
 	}
@@ -112,19 +129,16 @@ export const FaceContainer = styled.div<{ visible: boolean; isBack?: boolean; fl
 	border: 4px solid #67614E;
 	padding: 20px 40px;
 	border-radius: 6px;
-	transition: transform 0.6s;
-	transform-style: preserve-3d;
 	backface-visibility: hidden;
 	z-index: 150;
 	overflow: visible;
+	transform: rotateY(0deg);
 
 	width: 100%;
     flex: none;
 
-	${({ isBack }) => isBack ? 'margin-left: -100%; backface-visibility: visible; z-index: 10;' : ''}
+	${({ isBack }) => isBack ? 'margin-left: -100%; backface-visibility: hidden; transform: rotateY(180deg); z-index: 155;' : ''}
 	${({ visible }) => !visible ? 'visibility: hidden;' : ''}
-
-	${({ flipped }) => flipped ? 'transform: rotateY(180deg);' : ''}
 
 	@media (max-width: 680px) {
 		padding: 15px;

@@ -13,6 +13,8 @@ import {
 import { FlexSpacer } from '../basic-styled/flex-spacer';
 import { CenteredPage } from '../basic-styled/centered-page';
 import { useImageLoader } from '../hooks/use-image-loader';
+import { FadeIn } from '../fade-in';
+import { AnimatableComponent } from '../../types/AnimatableComponent';
 
 export interface ChoiceButton {
 	text: string;
@@ -76,12 +78,14 @@ export interface CardProps {
 	coverImageUrl?: string;
 }
 
-export const Card: React.FC<CardProps> = ({
+export const Card: React.FC<CardProps & AnimatableComponent> = ({
 	title,
 	bodyText,
 	onContinue,
-	className,
 	coverImageUrl,
+	inView,
+	animationDuration,
+	delay,
 }) => {
 	const loadedCoverImageSrc = useImageLoader(coverImageUrl);
 
@@ -92,15 +96,21 @@ export const Card: React.FC<CardProps> = ({
 	return (
 		<Overlay>
 			<CenteredPage minHeight="min(80%, 880px)" responsiveMargins={false}>
-				<CardContainer className={className}>
-					<CardFace
-						title={title}
-						coverImageUrl={loadedCoverImageSrc}
-						bodyText={bodyText}
-						onContinue={onContinue}
-						visible
-					/>
-				</CardContainer>
+				<FadeIn
+					inView={inView}
+					animationDuration={animationDuration}
+					delay={delay}
+				>
+					<CardContainer>
+						<CardFace
+							title={title}
+							coverImageUrl={loadedCoverImageSrc}
+							bodyText={bodyText}
+							onContinue={onContinue}
+							visible
+						/>
+					</CardContainer>
+				</FadeIn>
 			</CenteredPage>
 		</Overlay>
 	);

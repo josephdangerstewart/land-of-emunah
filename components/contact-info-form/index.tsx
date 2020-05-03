@@ -6,6 +6,8 @@ import { Input } from '../forms';
 import { useFormState } from 'react-use-form-state';
 import { ContactFormSubmission } from '../../types/ContactFormSubmission';
 import { FlexSpacer } from '../basic-styled/flex-spacer';
+import { FadeIn } from '../fade-in';
+import { AnimatableComponent } from '../../types/AnimatableComponent';
 
 const Button = styled(ButtonCore)`
 	font-size: 18px;
@@ -91,7 +93,13 @@ export interface ContactInfoFormProps {
 
 type ViewType = "form" | "success";
 
-export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ className, onClose, onSubmit }) => {
+export const ContactInfoForm: React.FC<ContactInfoFormProps & AnimatableComponent> = ({
+	onClose,
+	onSubmit,
+	inView,
+	animationDuration,
+	delay,
+}) => {
 	const [formState, { text, email }] = useFormState<ContactFormSubmission>();
 	const [hasSubmitted, setHasSubmitted] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -117,49 +125,55 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ className, onC
 	return (
 		<Overlay zIndex={100}>
 			<CenteredPage responsiveMargins={false}>
-				<CardContainer className={className}>
-					<FaceContainer visible flipped={view !== 'form'}>
-						<Title>CONTACT INFO</Title>
-						<BodyText>
-							By providing your contact information, we can keep you posted with news and updates regarding the Land of Emunah.
-						</BodyText>
-						<BodyText>
-							We will not give away your contact information or spam you with emails or messages. We will just send updates and news whenever they come!
-						</BodyText>
-						<Input
-							{...text('name')}
-							placeholder="Name"
-							autoComplete="name"
-							required
-							invalid={(!formState.values.email && hasSubmitted)}
-						/>
-						<Input
-							{...email('email')}
-							placeholder="Email"
-							required
-							invalid={(!formState.validity.email && formState.touched.email) || (!formState.values.email && hasSubmitted)}
-						/>
-						<Input placeholder="Phone" {...text('phone')} />
-						<BodyText>
-							Make sure to follow our instagram page as another way to stay posted and to check out submissions from anyone who has contributed to the Land of Emunah.
-						</BodyText>
-						<FlexSpacer />
-						<ButtonContainer>
-							<InstaDetails />
-							<CloseButton onClick={onClose}>Cancel</CloseButton>
-							<Button onClick={submit}>{isSubmitting ? 'Submitting...' : 'Submit'}</Button>
-						</ButtonContainer>
-					</FaceContainer>
-					<FaceContainer visible isBack flipped={view !== 'success'}>
-						<Title>CONTACT INFO</Title>
-						<BodyText>Thank you! We will message you soon about any updates.</BodyText>
-						<FlexSpacer />
-						<ButtonContainer>
-							<InstaDetails />
-							<Button onClick={onClose}>Continue</Button>
-						</ButtonContainer>
-					</FaceContainer>
-				</CardContainer>
+				<FadeIn
+					inView={inView}
+					animationDuration={animationDuration}
+					delay={delay}
+				>
+					<CardContainer flipped={view !== 'form'}>
+						<FaceContainer visible flipped={view !== 'form'}>
+							<Title>CONTACT INFO</Title>
+							<BodyText>
+								By providing your contact information, we can keep you posted with news and updates regarding the Land of Emunah.
+							</BodyText>
+							<BodyText>
+								We will not give away your contact information or spam you with emails or messages. We will just send updates and news whenever they come!
+							</BodyText>
+							<Input
+								{...text('name')}
+								placeholder="Name"
+								autoComplete="name"
+								required
+								invalid={(!formState.values.email && hasSubmitted)}
+							/>
+							<Input
+								{...email('email')}
+								placeholder="Email"
+								required
+								invalid={(!formState.validity.email && formState.touched.email) || (!formState.values.email && hasSubmitted)}
+							/>
+							<Input placeholder="Phone" {...text('phone')} />
+							<BodyText>
+								Make sure to follow our instagram page as another way to stay posted and to check out submissions from anyone who has contributed to the Land of Emunah.
+							</BodyText>
+							<FlexSpacer />
+							<ButtonContainer>
+								<InstaDetails />
+								<CloseButton onClick={onClose}>Cancel</CloseButton>
+								<Button onClick={submit}>{isSubmitting ? 'Submitting...' : 'Submit'}</Button>
+							</ButtonContainer>
+						</FaceContainer>
+						<FaceContainer visible isBack flipped={view !== 'success'}>
+							<Title>CONTACT INFO</Title>
+							<BodyText>Thank you! We will message you soon about any updates.</BodyText>
+							<FlexSpacer />
+							<ButtonContainer>
+								<InstaDetails />
+								<Button onClick={onClose}>Continue</Button>
+							</ButtonContainer>
+						</FaceContainer>
+					</CardContainer>
+				</FadeIn>
 			</CenteredPage>
 		</Overlay>
 	);
