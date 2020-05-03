@@ -4,7 +4,7 @@ import { useWait } from '../hooks/use-wait';
 export interface UseTransitionStateHook<T> {
 	shouldRenderView: (view: T) => boolean;
 	isInView: (view: T) => boolean;
-	setView: (nextView: T, hasAnimation?: boolean) => void;
+	setView: (nextView: T, hasAnimation?: boolean, delay?: number) => void;
 	addView: (nextView: T) => void;
 }
 
@@ -14,7 +14,7 @@ export function useTransitionViewState<T>(defaultView: T, duration: number): Use
 	const [nextViewState, setNextViewState] = useState([defaultView]);
 	const currentTimeouts = useRef<number[]>([]);
 
-	const setView = useCallback(async (nextView: T, hasAnimation = true) => {
+	const setView = useCallback(async (nextView: T, hasAnimation = true, delay = 0) => {
 		currentTimeouts.current.forEach(clearTimeout);
 
 		while (viewState.length > 1) {
@@ -25,7 +25,7 @@ export function useTransitionViewState<T>(defaultView: T, duration: number): Use
 
 			setNextViewState([...nextViewState]);
 
-			await wait(duration * 1000);
+			await wait((duration + delay) * 1000);
 
 			viewState.pop();
 			setViewState(viewState);
@@ -34,7 +34,7 @@ export function useTransitionViewState<T>(defaultView: T, duration: number): Use
 		setNextViewState([nextView]);
 
 		if (hasAnimation) {
-			await wait(duration * 1000);
+			await wait((duration + delay) * 1000);
 		}
 		
 		setViewState([nextView]);

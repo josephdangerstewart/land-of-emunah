@@ -9,11 +9,9 @@ import { Header } from '../components/basic-styled/header';
 import { CenteredPage } from '../components/basic-styled/centered-page';
 import { Button } from '../components/basic-styled/button';
 import { useRouter } from 'next/router';
-import { useTransitionViewState } from '../components/animations';
+import { useTransitionViewState, useAnimationDuration } from '../components/animations';
 import { FadeIn } from '../components/fade-in';
 import { useCaptcha } from '../components/hooks/use-captcha';
-
-const ANIMATION_DURATION = 0.75;
 
 const Container = styled.div`
 	display: flex;
@@ -23,11 +21,12 @@ const Container = styled.div`
 
 export default function Asleep() {
 	const router = useRouter();
-	const { isInView, setView } = useTransitionViewState(true, ANIMATION_DURATION);
+	const { getDelay, duration } = useAnimationDuration(0.5);
+	const { isInView, setView } = useTransitionViewState(true, duration);
 	useCaptcha('asleep');
 
 	const handleOnContinue = useCallback(() => {
-		setView(false);
+		setView(false, true, getDelay(1));
 	}, [isInView]);
 
 	useEffect(() => {
@@ -43,15 +42,15 @@ export default function Asleep() {
 				<Container>
 					<FadeIn
 						inView={isInView(true)}
-						animationDuration={ANIMATION_DURATION}
-						delay={0.5}
+						animationDuration={duration}
+						delay={getDelay(0)}
 					>
 						<Header>You have fallen asleep</Header>
 					</FadeIn>
 					<FadeIn
 						inView={isInView(true)}
-						animationDuration={ANIMATION_DURATION}
-						delay={0.65}
+						animationDuration={duration}
+						delay={getDelay(1)}
 					>
 						<Button onClick={handleOnContinue}>Continue?</Button>
 					</FadeIn>

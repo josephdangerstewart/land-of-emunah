@@ -21,8 +21,8 @@ export default function Contribution() {
 	const { isInView, setView } = useTransitionViewState(true, duration);
 
 	const handleOnContinue = useCallback(() => {
-		setView(false);
-	}, [setView]);
+		setView(false, true, getDelay(4));
+	}, [setView, getDelay]);
 
 	useEffect(() => {
 		if (isInView(false)) {
