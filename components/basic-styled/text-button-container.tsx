@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const TextContainer = styled.div`
-	width: 80%;
-	margin: auto;
+	width: 90%;
+	margin: 0 auto;
 `;
 
 export const ButtonContainer = styled.div`

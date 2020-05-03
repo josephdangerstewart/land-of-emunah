@@ -7,8 +7,7 @@ import { Button } from '../basic-styled/button';
 import { CenteredPage } from '../basic-styled/centered-page';
 import { Encounter, EncounterChoice } from '../../types/Encounter';
 import {
-	Image,
-	Container,
+	Image, Container,
 } from './styled';
 import { generateAnimation, AnimationKind, useTransitionViewState, useAnimationDuration } from '../animations';
 import { AnimatableComponent } from '../../types/AnimatableComponent';
@@ -16,15 +15,12 @@ import { useImageLoader } from '../hooks/use-image-loader';
 import { EncounterCard } from '../card';
 import { FadeIn } from '../fade-in';
 import { TextContainer, ButtonContainer } from '../basic-styled/text-button-container';
+import { ColumnLayout, Column } from '../basic-styled/column-layout';
 
 const AnimatedEncounterCard = styled(EncounterCard)<AnimatableComponent>`
 	${({ inView, animationDuration }) => inView
 		? generateAnimation(AnimationKind.FadeIn, animationDuration)
 		: generateAnimation(AnimationKind.FadeOut, animationDuration)}
-`;
-
-const AnimatedButton = styled(Button)<{ duration: number }>`
-	${({ disabled, duration }) => disabled ? 'visibility: hidden;' : generateAnimation(AnimationKind.FadeIn, duration)}
 `;
 
 export interface LocationProps {
@@ -48,7 +44,7 @@ export const Location: React.FC<LocationProps> = ({
 	expectingEncounter,
 	onOpenEncounter,
 }) => {
-	const { duration } = useAnimationDuration();
+	const { duration, getDelay } = useAnimationDuration(0.35);
 	const { isInView, shouldRenderView, setView, addView } = useTransitionViewState('intro', duration);
 	const loadedCoverImageSrc = useImageLoader(coverImageUrl);
 	const [result, setResult] = useState<EncounterChoice>();
@@ -61,7 +57,7 @@ export const Location: React.FC<LocationProps> = ({
 
 	const handleOnContinue = useCallback((result: EncounterChoice) => {
 		setResult(result);
-		setView('continue');
+		setView('continue', true, getDelay(2));
 	}, [setView]);
 
 	const handleOpenEncounter = useCallback(() => {
@@ -72,45 +68,59 @@ export const Location: React.FC<LocationProps> = ({
 		addView('encounter');
 	}, [onOpenEncounter]);
 
+	const isEncounterLoading = expectingEncounter && !encounter;
+
 	if (!loadedCoverImageSrc) {
 		return null;
 	}
 
 	return (
 		<CenteredPage>
-			<Container>
-				<FadeIn
-					inView={isInView('intro')}
-					animationDuration={duration}
-				>
-					<Header margin="0 0 15px">{title}</Header>
-				</FadeIn>
-				<FadeIn
-					inView={isInView('intro')}
-					animationDuration={duration}
-					delay={.15}
-				>
-					<Image src={loadedCoverImageSrc} />
-				</FadeIn>
-				<TextContainer>
+			<ColumnLayout margin="0 12px">
+				<Column>
 					<FadeIn
 						inView={isInView('intro')}
 						animationDuration={duration}
-						delay={.3}
+						delay={getDelay(0)}
 					>
-						<BodyText>{bodyText}</BodyText>
-						<ButtonContainer>
-							<AnimatedButton
-								onClick={(encounter || expectingEncounter) ? handleOpenEncounter : handleOnContinue}
-								disabled={!encounter && expectingEncounter}
-								duration={duration}
-							>
-								{buttonText ?? 'Continue'}
-							</AnimatedButton>
-						</ButtonContainer>
+						<Image src={loadedCoverImageSrc} />
 					</FadeIn>
-				</TextContainer>
-			</Container>
+				</Column>
+				<Column>
+					<Container>
+						<FadeIn
+							inView={isInView('intro')}
+							animationDuration={duration}
+							delay={getDelay(1)}
+						>
+							<Header margin="0 0 15px">{title}</Header>
+						</FadeIn>
+						<TextContainer>
+							<FadeIn
+								inView={isInView('intro')}
+								animationDuration={duration}
+								delay={getDelay(2)}
+							>
+								<BodyText>{bodyText}</BodyText>
+							</FadeIn>
+							<ButtonContainer>
+								<FadeIn
+									inView={isInView('intro')}
+									animationDuration={duration}
+									delay={getDelay(3)}
+								>
+									<Button
+										onClick={(encounter || expectingEncounter) ? handleOpenEncounter : handleOnContinue}
+										disabled={isEncounterLoading}
+									>
+										{isEncounterLoading ? 'Loading...' : (buttonText ?? 'Continue')}
+									</Button>
+								</FadeIn>
+							</ButtonContainer>
+						</TextContainer>
+					</Container>
+				</Column>
+			</ColumnLayout>
 			{shouldRenderView('encounter') ? (
 				<AnimatedEncounterCard
 					encounter={encounter}

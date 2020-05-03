@@ -25,7 +25,7 @@ export function useTransitionViewState<T>(defaultView: T, duration: number): Use
 
 			setNextViewState([...nextViewState]);
 
-			await wait((duration + delay) * 1000);
+			await wait(duration * 1000);
 
 			viewState.pop();
 			setViewState(viewState);

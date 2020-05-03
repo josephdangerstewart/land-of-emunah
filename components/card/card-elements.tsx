@@ -27,6 +27,10 @@ export const CoverImage = styled.img`
 	width: 100%;
 	height: 225px;
 	object-fit: cover;
+	margin: 0;
+	border: solid 5px #98917A;
+	box-sizing: border-box;
+	border-radius: 3px;
 `;
 
 export const BodyText = styled.p`

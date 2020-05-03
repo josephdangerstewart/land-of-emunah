@@ -96,7 +96,7 @@ export default function Prompt() {
 					animationDuration={duration}
 					delay={getDelay(0)}
 				>
-					<Header>The Prompt</Header>
+					<Header>The Prompt Page</Header>
 				</FadeIn>
 				<ColumnLayout
 					maxWidth={900}
