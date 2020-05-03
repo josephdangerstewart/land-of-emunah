@@ -10,10 +10,6 @@ export const CardContainer = styled.div`
 
 	display: flex;
 	flex-flow: row nowrap;
-
-	@media (max-width: 680px) {
-		margin: 0 20px;
-	}
 `;
 
 export const Overlay = styled.div<{ zIndex?: number}>`
