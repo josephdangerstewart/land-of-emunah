@@ -21,7 +21,8 @@ export const Head: React.FC<HeadProps> = ({ title }) => {
 			<style jsx global>{`
 				* {
 					box-sizing: border-box;
-					-webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+					-webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+					-webkit-overflow-scrolling: touch;
 				}
 
 				html, body, #__next {
