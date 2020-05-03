@@ -16,6 +16,7 @@ import { AnimatableComponent } from '../types/AnimatableComponent';
 import { generateAnimation, AnimationKind, useTransitionViewState, useAnimationDuration } from '../components/animations';
 import { ContactFormSubmission } from '../types/ContactFormSubmission';
 import { Button as ButtonCore } from '../components/card';
+import { FadeIn } from '../components/fade-in';
 
 const Button = styled(ButtonCore)`
 	font-family: 'Trade Winds';
@@ -48,7 +49,7 @@ export default function Prompt() {
 	const promptRepository = useMemo(() => getClientPromptRepository(), []);
 	const [promptText, setPromptText] = useState('Loading prompt...');
 	const [promptId, setPromptId] = useState(null);
-	const { duration } = useAnimationDuration();
+	const { duration, getDelay } = useAnimationDuration(0.5);
 	const { isInView, setView, shouldRenderView } = useTransitionViewState<PromptViewType>('prompt', duration);
 	const { getToken: getPromptFormToken } = useCaptcha('prompt_submission', false);
 	const { getToken: getContactFormToken } = useCaptcha('contact_info_submission', false);
@@ -90,31 +91,73 @@ export default function Prompt() {
 		<ThemeProvider value={endTheme}>
 			<Head />
 			<CenteredPage>
-				<Header>The Prompt Page</Header>
+				<FadeIn
+					inView
+					animationDuration={duration}
+					delay={getDelay(0)}
+				>
+					<Header>The Prompt</Header>
+				</FadeIn>
 				<ColumnLayout
 					maxWidth={900}
 					columnSpacing={12}
 				>
-					<Column padding="0 18px">
-						<BodyText>
-							Welcome to the Prompt Page! This will be updated biweekly with new prompts. Each submission can be written works, visual projects, or anything that shows your creativity.
-						</BodyText>
-						<BodyText>
-							All you need to do in order to contribute is to either: upload a file of your work (PNG or PDF) or use the text box below to write in your work. Do whatever fits best with your contribution. Everything will be accepted and considered as part of the Land of Emunah.
-						</BodyText>
-						<StyledPromptBox
-							prompt={promptText}
-						/>
-						<ButtonContainer>
-							<Button onClick={openContactForm}>How to stay in contact!</Button>
-						</ButtonContainer>
-					</Column>
-					<Column>
-						<ContributionForm
-							onSubmit={onSubmitContributionForm}
-							isDisabled={!promptId}
-						/>
-					</Column>
+					<FadeIn
+						inView
+						animationDuration={duration}
+						delay={getDelay(1)}
+					>
+						<Column padding="0 18px">
+							<FadeIn
+								inView
+								animationDuration={duration}
+								delay={getDelay(2)}
+							>
+								<BodyText>
+									Welcome to the Prompt Page! This will be updated biweekly with new prompts. Each submission can be written works, visual projects, or anything that shows your creativity.
+								</BodyText>
+							</FadeIn>
+							<FadeIn
+								inView
+								animationDuration={duration}
+								delay={getDelay(3)}
+							>
+								<BodyText>
+									All you need to do in order to contribute is to either: upload a file of your work (PNG or PDF) or use the text box below to write in your work. Do whatever fits best with your contribution. Everything will be accepted and considered as part of the Land of Emunah.
+								</BodyText>
+							</FadeIn>
+							<FadeIn
+								inView
+								animationDuration={duration}
+								delay={getDelay(4)}
+							>
+								<StyledPromptBox
+									prompt={promptText}
+								/>
+							</FadeIn>
+							<FadeIn
+								inView
+								animationDuration={duration}
+								delay={getDelay(5)}
+							>
+								<ButtonContainer>
+									<Button onClick={openContactForm}>How to stay in contact!</Button>
+								</ButtonContainer>
+							</FadeIn>
+						</Column>
+					</FadeIn>
+					<FadeIn
+						inView
+						animationDuration={duration}
+						delay={getDelay(6)}
+					>
+						<Column>
+							<ContributionForm
+								onSubmit={onSubmitContributionForm}
+								isDisabled={!promptId}
+							/>
+						</Column>
+					</FadeIn>
 				</ColumnLayout>
 				{shouldRenderView('contact-form') && (
 					<AnimatedContactInfoForm
