@@ -25,7 +25,7 @@ export const Overlay = styled.div<{ zIndex?: number}>`
 
 	@media (max-width: 680px) {
 		${CardContainer} {
-			margin: 40px 0;
+			margin-bottom: 40px;
 		}
 	}
 `;
