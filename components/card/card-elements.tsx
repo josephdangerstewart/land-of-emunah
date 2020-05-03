@@ -115,7 +115,7 @@ export const FaceContainer = styled.div<{ visible: boolean; isBack?: boolean; fl
 	transition: transform 0.6s;
 	transform-style: preserve-3d;
 	backface-visibility: hidden;
-	z-index: 15;
+	z-index: 150;
 	overflow: visible;
 
 	width: 100%;
