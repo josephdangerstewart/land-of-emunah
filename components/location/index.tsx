@@ -67,7 +67,7 @@ export const Location: React.FC<LocationProps> = ({
 
 	return (
 		<CenteredPage>
-			<ColumnLayout margin="0 12px">
+			<ColumnLayout margin="0 32px">
 				<Column>
 					<FadeIn
 						inView={isInView('intro')}
