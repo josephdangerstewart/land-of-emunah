@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { FaceContainer, CardContainer, Title, Overlay, Button as ButtonCore } from '../card';
+import { FaceContainer, CardContainer, Title, Overlay, Button as ButtonCore, CoverImage } from '../card';
 import { CenteredPage } from '../basic-styled/centered-page';
 import styled from 'styled-components';
 import { Input } from '../forms';
@@ -25,7 +25,7 @@ const CloseButton = styled(Button)`
 const BodyText = styled.p`
 	font: 16px 'Averia Serif Libre';
 	color: #375147;
-	margin-top: 0;
+	margin-top: 12px;
 
 	&:first-child {
 		margin-top: 8px;
@@ -170,6 +170,12 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps & AnimatableComponen
 						</FaceContainer>
 						<FaceContainer visible isBack flipped={view !== 'success'}>
 							<Title>CONTACT INFO</Title>
+							<CoverImage
+								src="/images/homepage-logo.png"
+								objectFit="contain"
+								backgroundColor="#FDF6E3"
+								padding="6px"
+							/>
 							<BodyText>Thank you! We will message you soon about any updates.</BodyText>
 							<FlexSpacer />
 							<ButtonContainer>

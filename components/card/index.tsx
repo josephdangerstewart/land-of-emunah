@@ -7,4 +7,5 @@ export {
 	Button,
 	BodyText,
 	Overlay,
+	CoverImage,
 } from './card-elements';

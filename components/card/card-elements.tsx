@@ -47,14 +47,16 @@ export const Overlay = styled.div<{ zIndex?: number}>`
 	}
 `;
 
-export const CoverImage = styled.img`
+export const CoverImage = styled.img<{ objectFit?: string; backgroundColor?: string; padding?: string }>`
 	width: 100%;
 	height: 225px;
-	object-fit: cover;
+	object-fit: ${({ objectFit }) => objectFit ? objectFit : 'cover'};
 	margin: 0;
 	border: solid 5px #98917A;
 	box-sizing: border-box;
 	border-radius: 3px;
+	${({ backgroundColor }) => backgroundColor ? `background-color: ${backgroundColor};` : ''}
+	${({ padding }) => padding ? `padding: ${padding};` : ''}
 `;
 
 export const BodyText = styled.p`
