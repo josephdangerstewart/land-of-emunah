@@ -5,16 +5,24 @@ import { EncounterChoice } from '../types/Encounter';
 import { useRouter } from 'next/router';
 import { useCaptcha } from '../components/hooks/use-captcha';
 import { useClientLocationRepository } from '../components/hooks/use-repository';
+import { useShowError } from '../components/error-message';
 
 export default function TheCity() {
 	const router = useRouter();
 	const repository = useClientLocationRepository();
+	const { showError } = useShowError();
 	useCaptcha('the_city');
 
 	const handleOnContinue = useCallback(async (result: EncounterChoice) => {
-		const firstLocation = await repository.getNextLocation(result.choiceText.toLowerCase());
-		router.push(`/${firstLocation.path}/${firstLocation.id}`);
-	}, [repository]);
+		try {
+			const firstLocation = await repository.getNextLocation(result.choiceText.toLowerCase());
+			router.push(`/${firstLocation.path}/${firstLocation.id}`);
+		} catch (err) {
+			if (!err.isCanceled) {
+				showError('Looks like your map is wrong! There was an error finding that location. Please try again later.');
+			}
+		}
+	}, [repository, showError]);
 
 	return (
 		<>

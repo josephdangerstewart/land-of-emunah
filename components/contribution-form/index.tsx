@@ -4,6 +4,7 @@ import { useFormState } from 'react-use-form-state';
 import { FaceContainer, Title as TitleCore, Button, CardContainer, BodyText } from '../card';
 import { Input, TextArea, FileUpload } from '../forms';
 import { ContributionFormSubmission } from '../../types/ContributionFormSubmission';
+import { useShowError } from '../error-message';
 
 const Title = styled(TitleCore)`
 	margin-bottom: 16px;
@@ -30,6 +31,7 @@ export const ContributionForm: React.FC<ContributionFormProps> = ({
 	const [hasSubmitted, setHasSubmitted] = useState(false);
 	const [fileUpload, setFileUpload] = useState<File>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { showError } = useShowError();
 	const [view, setView] = useState<ViewType>('form');
 
 	const isFormDisabled = !formState.validity.email || !formState.values.name || isSubmitting || isDisabled || !formState.values.email;
@@ -53,13 +55,17 @@ export const ContributionForm: React.FC<ContributionFormProps> = ({
 		try {
 			onSubmit && await onSubmit(submission);
 			setView('success');
-		} finally {
-			setIsSubmitting(false);
+		} catch (err) {
+			if (!err.isCanceled) {
+				showError();
+				setIsSubmitting(false);
+			}
+			return;
 		}
 
 		formState.clearField('content');
 		setFileUpload(undefined);
-	}, [formState, onSubmit, fileUpload, isFormDisabled, setView]);
+	}, [formState, onSubmit, fileUpload, isFormDisabled, setView, showError]);
 
 	const handleChangeFile = useCallback((file) => {
 		setFileUpload(file);

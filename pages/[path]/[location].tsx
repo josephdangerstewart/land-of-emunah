@@ -16,6 +16,7 @@ import {
 import { IPartialTheme } from '../../types/IPartialTheme';
 import { useCaptcha } from '../../components/hooks/use-captcha';
 import { useClientLocationRepository, useClientEncounterRepository } from '../../components/hooks/use-repository';
+import { useShowError } from '../../components/error-message';
 
 interface PageContext {
 	params: {
@@ -45,6 +46,7 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 	const locationRepository = useClientLocationRepository();
 	const encounterRepository = useClientEncounterRepository();
 	const getNextLocationPromise = useRef<Promise<ILocation>>(null);
+	const { showError } = useShowError();
 
 	const [encounter, setEncounter] = useState<Encounter>(null);
 
@@ -62,9 +64,15 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 			return;
 		}
 
-		const nextLocation = await getNextLocationPromise.current;
-		router.push(`/${nextLocation.path}/${nextLocation.id}`);
-	}, []);
+		try {
+			const nextLocation = await getNextLocationPromise.current;
+			router.push(`/${nextLocation.path}/${nextLocation.id}`);
+		} catch (err) {
+			if (!err.isCanceled) {
+				showError('There was an error loading an encounter. Please try agin later.');
+			}
+		}
+	}, [showError, router, currentLocation]);
 
 	useEffect(() => {
 		const encounterPromise = currentLocation.isLastInPath

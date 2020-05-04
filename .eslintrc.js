@@ -22,14 +22,7 @@ module.exports = {
 		"@typescript-eslint/interface-name-prefix": "off",
 		"@typescript-eslint/no-unused-vars": 2,
 		"@typescript-eslint/camelcase": "off",
-		"@typescript-eslint/no-explicit-any": "off"
-	},
-	overrides: [
-        {
-            "files": ["**/*.tsx"],
-            "rules": {
-                "react/prop-types": "off"
-            }
-        }
-    ]
+		"@typescript-eslint/no-explicit-any": "off",
+		"react/prop-types": "off"
+	}
 };

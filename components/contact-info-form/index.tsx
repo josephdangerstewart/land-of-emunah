@@ -8,6 +8,7 @@ import { ContactFormSubmission } from '../../types/ContactFormSubmission';
 import { FlexSpacer } from '../basic-styled/flex-spacer';
 import { FadeIn } from '../fade-in';
 import { AnimatableComponent } from '../../types/AnimatableComponent';
+import { useShowError } from '../error-message';
 
 const Button = styled(ButtonCore)`
 	font-size: 18px;
@@ -103,6 +104,7 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps & AnimatableComponen
 	const [formState, { text, email }] = useFormState<ContactFormSubmission>();
 	const [hasSubmitted, setHasSubmitted] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { showError } = useShowError();
 	const [view, setView] = useState<ViewType>('form');
 
 	const isFormValid = formState.values.email && formState.values.name && formState.validity.email && !isSubmitting;
@@ -117,10 +119,13 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps & AnimatableComponen
 		try {
 			await onSubmit(formState.values);
 			setView('success');
-		} finally {
-			setIsSubmitting(false);
+		} catch (err) {
+			if (!err.isCanceled) {
+				showError();
+				setIsSubmitting(false);
+			}
 		}
-	}, [setHasSubmitted, setIsSubmitting, isFormValid, onSubmit, setView]);	
+	}, [setHasSubmitted, setIsSubmitting, isFormValid, onSubmit, setView, showError]);	
 
 	return (
 		<Overlay zIndex={100}>
