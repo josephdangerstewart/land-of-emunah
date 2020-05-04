@@ -121,7 +121,7 @@ export default function Prompt() {
 								delay={getDelay(3)}
 							>
 								<BodyText>
-									All you need to do in order to contribute is to either: upload a file of your work (PNG or PDF) or use the text box below to write in your work. Do whatever fits best with your contribution. Everything will be accepted and considered as part of the Land of Emunah.
+									All you need to do in order to contribute is to either: upload a file of your work (PNG, JPEG, JPG, or PDF) or use the text box below to write in your work. Do whatever fits best with your contribution. Everything will be accepted and considered as part of the Land of Emunah.
 								</BodyText>
 							</FadeIn>
 							<FadeIn
