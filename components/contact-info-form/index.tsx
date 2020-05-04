@@ -159,7 +159,7 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps & AnimatableComponen
 							/>
 							<Input placeholder="Phone" {...text('phone')} />
 							<BodyText>
-								Make sure to follow our instagram page as another way to stay posted and to check out submissions from anyone who has contributed to the Land of Emunah.
+								Make sure to follow our Instagram page as another way to stay posted and to check out submissions from anyone who has contributed to the Land of Emunah.
 							</BodyText>
 							<FlexSpacer />
 							<ButtonContainer>
