@@ -69,6 +69,10 @@ const InstaContainer = styled.div`
 	}
 `;
 
+const ButtonContainer = styled.div`
+	display: flex;
+`;
+
 const InstaDetails: React.FC = () => (
 	<InstaContainer>
 		<img src="/images/instagram-logo.svg" />
@@ -160,10 +164,10 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps & AnimatableComponen
 							<FlexSpacer />
 							<Footer>
 								<InstaDetails />
-								<div>
+								<ButtonContainer>
 									<CloseButton onClick={onClose}>Cancel</CloseButton>
 									<Button onClick={submit}>{isSubmitting ? 'Submitting...' : 'Submit'}</Button>
-								</div>
+								</ButtonContainer>
 							</Footer>
 						</FaceContainer>
 						<FaceContainer visible isBack flipped={view !== 'success'}>
