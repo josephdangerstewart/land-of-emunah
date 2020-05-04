@@ -4,7 +4,6 @@ import { Head } from '../../components/head';
 import { Location } from '../../components/location';
 import { useRouter } from 'next/router';
 import { Encounter } from '../../types/Encounter';
-import { getLocationRepository } from '../../api/type-registry';
 import { usePastEncounters } from '../../components/hooks/use-past-encounters';
 import {
 	desertTheme,
@@ -17,23 +16,9 @@ import { IPartialTheme } from '../../types/IPartialTheme';
 import { useCaptcha } from '../../components/hooks/use-captcha';
 import { useClientLocationRepository, useClientEncounterRepository } from '../../components/hooks/use-repository';
 import { useShowError } from '../../components/error-message';
-
-interface PageContext {
-	params: {
-		[key: string]: string;
-	};
-}
-
-export async function getServerSideProps(context: PageContext) {
-	const { path, location } = context.params;
-
-	const repository = await getLocationRepository();
-	const currentLocation = await repository.getLocation(path, location);
-
-	return {
-		props: { currentLocation }
-	};
-}
+import { NextPageContext } from 'next';
+import { fetchJson } from '../../api/client/client-utility';
+import { ClientLocationRepository } from '../../api/client/ClientLocationRepository';
 
 interface LocationProps {
 	currentLocation: ILocation;
@@ -118,3 +103,25 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 		</ThemeProvider>
 	);
 }
+
+LocationPage.getInitialProps = async (context: NextPageContext) => {
+	const { req } = context;
+	const { path, location } = context.query;
+
+	let base = '';
+	if (req) {
+		if (process.env.NODE_ENV === 'development') {
+			base = 'http://localhost:3000';
+		} else {
+			base = 'https://landofemunah.com';
+		}
+	}
+
+	const fetch = (url: string): Promise<any> => fetchJson(`${base}${url}`);
+	const repository = new ClientLocationRepository({ fetchJson: fetch });
+	const currentLocation = await repository.getLocation(path as string, location as string);
+
+	return {
+		currentLocation,
+	};
+};
