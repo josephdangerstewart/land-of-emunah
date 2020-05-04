@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getEncounterRepository } from '../../../../api/type-registry';
-import { notFound } from '../../../../api/api-utility';
+import { notFound, withAlerting } from '../../../../api/api-utility';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default withAlerting(async (req: NextApiRequest, res: NextApiResponse) => {
 	const type = req.query.type as string;
 	const repository = await getEncounterRepository();
 
@@ -13,4 +13,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 
 	return res.json({ encounter });
-};
+});

@@ -1,4 +1,4 @@
-import { NextApiResponse } from 'next';
+import { NextApiResponse, NextApiRequest } from 'next';
 import HttpStatusCodes from 'http-status-codes';
 import fs from 'fs';
 import util from 'util';
@@ -7,6 +7,8 @@ import creds from '../creds.json';
 import { FormidableFile } from '../types/ContributionFormSubmission.js';
 import { DateTime } from 'luxon';
 import axios from 'axios';
+import * as Sentry from '@sentry/node';
+import useragent from 'useragent';
 
 cloudinary.config({
 	cloud_name: creds.CLOUDINARY_CLOUD_NAME,
@@ -48,6 +50,42 @@ export function getNow(): string {
 	const pst = 'UTC-8';
 	return DateTime.local().setZone(pst).toFormat('yyyy-MM-dd');
 }
+
+type NextApiHandler = (req: NextApiRequest, res: NextApiResponse) => any;
+
+export function withAlerting(cb: NextApiHandler): NextApiHandler {
+	return async (req: NextApiRequest, res: NextApiResponse) => {
+		Sentry.init({ dsn: creds.SENTRY_DSN });
+
+		return new Promise(async (resolve, reject) => {
+			try {
+				await cb(req, res);
+				return resolve();
+			} catch (e) {
+				Sentry.withScope((scope) => {
+					scope.setLevel(Sentry.Severity.Error);
+
+					const agent = useragent.parse(req.headers['user-agent']) ?? {};
+					scope.setTags({
+						url: req.url,
+						method: req.method,
+						query: JSON.stringify(req.query),
+						userAgentString: req.headers['user-agent'],
+						userAgentObject: JSON.stringify(agent),
+						browser: agent.family,
+						os: agent.os?.family,
+						device: agent.device?.family,
+					});
+
+					Sentry.captureException(e);
+				});
+
+				await Sentry.flush();
+				reject(e);
+			}
+		});
+	};
+};
 
 interface CaptchaResponse {
 	success: boolean;

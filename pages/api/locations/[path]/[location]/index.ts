@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getLocationRepository } from '../../../../../api/type-registry';
-import { notFound } from '../../../../../api/api-utility';
+import { notFound, withAlerting } from '../../../../../api/api-utility';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default withAlerting(async (req: NextApiRequest, res: NextApiResponse) => {
 	const path = req.query.path as string;
 	const location = req.query.location as string;
 
@@ -14,4 +14,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 
 	return res.json({ location: locationDto });
-};
+});
