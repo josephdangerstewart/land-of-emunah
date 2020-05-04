@@ -171,7 +171,7 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps & AnimatableComponen
 						<FaceContainer visible isBack flipped={view !== 'success'}>
 							<Title>CONTACT INFO</Title>
 							<CoverImage
-								src="/images/homepage-logo.png"
+								src="/images/logo-card.png"
 								objectFit="contain"
 								backgroundColor="#FDF6E3"
 								padding="6px"

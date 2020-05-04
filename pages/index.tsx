@@ -23,7 +23,7 @@ const Image = styled.img<AnimatableComponent>`
 `;
 
 const Container = styled.div`
-	height: calc(100% - 30px);
+	height: 100%;
 	padding: 15px 0;
 `;
 
