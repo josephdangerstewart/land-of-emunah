@@ -53,9 +53,14 @@ export function getNow(): string {
 
 type NextApiHandler = (req: NextApiRequest, res: NextApiResponse) => any;
 
+let isSentryInitialized = false;
+
 export function withAlerting(cb: NextApiHandler): NextApiHandler {
 	return async (req: NextApiRequest, res: NextApiResponse) => {
-		Sentry.init({ dsn: creds.SENTRY_DSN });
+		if (!isSentryInitialized) {
+			Sentry.init({ dsn: creds.SENTRY_DSN });
+			isSentryInitialized = true;
+		}
 
 		return new Promise(async (resolve, reject) => {
 			try {
