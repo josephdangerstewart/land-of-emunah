@@ -7,7 +7,7 @@ import { DirectusPromptRepository } from './DirectusPromptRepository';
 
 const DIRECTUS_IMAGE_URL = 'https://admin.landofemunah.com';
 const DIRECTUS_DEV_URL = 'https://admin.landofemunah.com/admin';
-const DIRECTUS_PROD_URL = 'http://localhost:8080/admin';
+const DIRECTUS_PROD_URL = 'https://admin.landofemunah.com/admin';
 
 const directusBaseUri = process.env.NODE_ENV === 'development'
 		? DIRECTUS_DEV_URL
