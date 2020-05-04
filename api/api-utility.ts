@@ -80,6 +80,7 @@ export function withAlerting(cb: NextApiHandler): NextApiHandler {
 						browser: agent.family,
 						os: agent.os?.family,
 						device: agent.device?.family,
+						nodeEnv: process?.env?.NODE_ENV,
 					});
 
 					Sentry.captureException(e);
