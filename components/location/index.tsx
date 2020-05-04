@@ -1,11 +1,12 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { Header } from '../basic-styled/header';
+import { Header as HeaderCore } from '../basic-styled/header';
 import { BodyText } from '../basic-styled/body-text';
 import { Button } from '../basic-styled/button';
 import { CenteredPage } from '../basic-styled/centered-page';
 import { Encounter, EncounterChoice } from '../../types/Encounter';
 import {
-	Image, Container,
+	Image,
+	Container,
 } from './styled';
 import { useTransitionViewState, useAnimationDuration } from '../animations';
 import { useImageLoader } from '../hooks/use-image-loader';
@@ -13,6 +14,13 @@ import { EncounterCard } from '../card';
 import { FadeIn } from '../fade-in';
 import { TextContainer, ButtonContainer } from '../basic-styled/text-button-container';
 import { ColumnLayout, Column } from '../basic-styled/column-layout';
+import styled from 'styled-components';
+
+const Header = styled(HeaderCore)`
+	@media (max-width: 680px) {
+		margin-top: 18px;
+	}
+`;
 
 export interface LocationProps {
 	title: string;

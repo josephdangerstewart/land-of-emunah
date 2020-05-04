@@ -39,12 +39,6 @@ export const Overlay = styled.div<{ zIndex?: number}>`
 	justify-content: center;
 	overflow: hidden;
 	${({ zIndex }) => zIndex ? `z-index: ${zIndex};` : ''}
-
-	@media (max-width: 680px) {
-		${CardContainerCore} {
-			margin-bottom: 40px;
-		}
-	}
 `;
 
 export const CoverImage = styled.img<{ objectFit?: string; backgroundColor?: string; padding?: string }>`
