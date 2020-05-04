@@ -16,10 +16,6 @@ const Button = styled(ButtonCore)`
 
 const CloseButton = styled(Button)`
 	margin-right: 6px;
-
-	@media (max-width: 680px) {
-		margin-right: 0;
-	}
 `;
 
 const BodyText = styled.p`
@@ -32,7 +28,7 @@ const BodyText = styled.p`
 	} 
 `;
 
-const ButtonContainer = styled.div`
+const Footer = styled.div`
 	display: flex;
 	width: 100%;
 	align-items: center;
@@ -162,11 +158,13 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps & AnimatableComponen
 								Make sure to follow our Instagram page as another way to stay posted and to check out submissions from anyone who has contributed to the Land of Emunah.
 							</BodyText>
 							<FlexSpacer />
-							<ButtonContainer>
+							<Footer>
 								<InstaDetails />
-								<CloseButton onClick={onClose}>Cancel</CloseButton>
-								<Button onClick={submit}>{isSubmitting ? 'Submitting...' : 'Submit'}</Button>
-							</ButtonContainer>
+								<div>
+									<CloseButton onClick={onClose}>Cancel</CloseButton>
+									<Button onClick={submit}>{isSubmitting ? 'Submitting...' : 'Submit'}</Button>
+								</div>
+							</Footer>
 						</FaceContainer>
 						<FaceContainer visible isBack flipped={view !== 'success'}>
 							<Title>CONTACT INFO</Title>
@@ -178,10 +176,10 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps & AnimatableComponen
 							/>
 							<BodyText>Thank you! We will message you soon about any updates.</BodyText>
 							<FlexSpacer />
-							<ButtonContainer>
+							<Footer>
 								<InstaDetails />
 								<Button onClick={onClose}>Continue</Button>
-							</ButtonContainer>
+							</Footer>
 						</FaceContainer>
 					</CardContainer>
 				</FadeIn>

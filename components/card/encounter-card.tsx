@@ -40,7 +40,7 @@ export const EncounterCard: React.FC<EncounterCardProps & AnimatableComponent> =
 
 	return (
 		<Overlay>
-			<CenteredPage minHeight="min(80%, 880px)" responsiveMargins={false}>
+			<CenteredPage responsiveMargins={false}>
 				<FadeIn
 					inView={inView}
 					animationDuration={animationDuration}
