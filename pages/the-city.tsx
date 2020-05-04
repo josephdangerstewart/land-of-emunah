@@ -33,28 +33,28 @@ export default function TheCity() {
 				bodyText="Your journey starts with leaving the city in the center of the land of Emunah. This city is always bustling and busy with many people constantly moving around and continuing through life at their own pace. You have grown to wonder what is further beyond this crowded, noisy city and have decided to set out on a new adventure to explore the Land of Emunah."
 				onContinue={handleOnContinue}
 				encounter={{
-					description: 'As you are heading out of the city gates, ready to embark on a new adventure, you see that there are four different paths in front of you. Which direction do you go?',
+					description: 'As you are heading out of the city gates, ready to embark on a new adventure, you see that there are four different paths in front of you. Which direction do you head towards?',
 					coverImageUrl: '/images/locations/city.png',
 					choices: [
 						{
 							choiceText: 'Mountains',
 							buttonBackgroundColor: '#E8BBBD',
-							result: 'You have chosen the Mountains',
+							result: 'You have chosen the mountain path.',
 						},
 						{
 							choiceText: 'Sea',
 							buttonBackgroundColor: '#A7DAED',
-							result: 'You have chosen the Sea',
+							result: 'You have chosen the sea path.',
 						},
 						{
 							choiceText: 'Desert',
 							buttonBackgroundColor: '#FFE9AC',
-							result: 'You have chosen the Desert',
+							result: 'You have chosen the desert path.',
 						},
 						{
 							choiceText: 'Forest',
 							buttonBackgroundColor: '#B8E3CC',
-							result: 'You have chosen the Forest',
+							result: 'You have chosen the forest path.',
 						},
 					],
 					encounterId: 'initial',
