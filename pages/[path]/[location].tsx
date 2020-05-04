@@ -1,5 +1,4 @@
 import React, { useMemo, useCallback, useState, useEffect, useRef } from 'react';
-import { getClientLocationRepository, getClientEncounterRepository } from '../../components/utility';
 import { Location as ILocation } from '../../types/Location';
 import { Head } from '../../components/head';
 import { Location } from '../../components/location';
@@ -16,6 +15,7 @@ import {
 } from '../../components/theme';
 import { IPartialTheme } from '../../types/IPartialTheme';
 import { useCaptcha } from '../../components/hooks/use-captcha';
+import { useClientLocationRepository, useClientEncounterRepository } from '../../components/hooks/use-repository';
 
 interface PageContext {
 	params: {
@@ -42,8 +42,8 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 	useCaptcha(`location_${currentLocation.path}_${currentLocation.id}`);
 	const router = useRouter();
 	const { getPastEncounters, addEncounterToHistory } = usePastEncounters();
-	const locationRepository = useMemo(() => getClientLocationRepository(), []);
-	const encounterRepository = useMemo(() => getClientEncounterRepository(), []);
+	const locationRepository = useClientLocationRepository();
+	const encounterRepository = useClientEncounterRepository();
 	const getNextLocationPromise = useRef<Promise<ILocation>>(null);
 
 	const [encounter, setEncounter] = useState<Encounter>(null);

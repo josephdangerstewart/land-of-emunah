@@ -5,7 +5,6 @@ export interface UseCaptchaHook {
 	getToken: () => Promise<string>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const grecaptcha: any;
 
 const SITE_KEY = '6LfxhfEUAAAAALWKUojZTi6qWzj62miHHsZgJGV-';

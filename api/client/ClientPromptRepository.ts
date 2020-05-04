@@ -1,16 +1,35 @@
 import { IPromptRepository } from '../../types/IPromptRepository';
 import { Prompt } from '../../types/Prompt';
 import { ContributionFormSubmission } from '../../types/ContributionFormSubmission';
-import axios from 'axios';
 import { ContactFormSubmission } from '../../types/ContactFormSubmission';
 
+interface ClientPromptRepositoryOptions {
+	fetchJson: (url: string) => Promise<any>;
+	postJson: (url: string, data: any) => Promise<any>;
+	postForm: (url: string, data: FormData) => Promise<any>;
+}
+
 export class ClientPromptRepository implements IPromptRepository {
+	private fetchJson: ClientPromptRepositoryOptions['fetchJson'];
+	private postJson: ClientPromptRepositoryOptions['postJson'];
+	private postForm: ClientPromptRepositoryOptions['postForm'];
+	
+	constructor({
+		fetchJson,
+		postJson,
+		postForm,
+	}: ClientPromptRepositoryOptions) {
+		this.fetchJson = fetchJson;
+		this.postJson = postJson;
+		this.postForm = postForm;
+	}
+
 	async getPrompt(): Promise<Prompt> {
-		return (await axios.get('/api/prompts')).data.prompt as Prompt;
+		return (await this.fetchJson('/api/prompts')).prompt as Prompt;
 	}
 
 	async submitContactInfo(submission: ContactFormSubmission): Promise<void> {
-		await axios.post('/api/contact-info', submission);
+		await this.postJson('/api/contact-info', submission);
 	}
 	
 	async submitResponse(promptId: string, submission: ContributionFormSubmission): Promise<void> {
@@ -22,10 +41,6 @@ export class ClientPromptRepository implements IPromptRepository {
 		formData.append('fileUpload', submission.fileUpload as File);
 		formData.append('captchaToken', submission.captchaToken);
 
-		await axios.post(`/api/prompts/submit/${promptId}`, formData, {
-			headers: {
-				'Content-Type': 'multipart/form',
-			}
-		});
+		await this.postForm(`/api/prompts/submit/${promptId}`, formData);
 	}
 }

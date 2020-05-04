@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useCallback, useState } from 'react';
 import { Header } from '../basic-styled/header';
 import { BodyText } from '../basic-styled/body-text';

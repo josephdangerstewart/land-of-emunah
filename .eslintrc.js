@@ -21,7 +21,8 @@ module.exports = {
 		"@typescript-eslint/semi": 2,
 		"@typescript-eslint/interface-name-prefix": "off",
 		"@typescript-eslint/no-unused-vars": 2,
-		"@typescript-eslint/camelcase": "off"
+		"@typescript-eslint/camelcase": "off",
+		"@typescript-eslint/no-explicit-any": "off"
 	},
 	overrides: [
         {

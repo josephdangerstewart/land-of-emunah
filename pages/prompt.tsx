@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Head } from '../components/head';
 import { ThemeProvider, endTheme } from '../components/theme';
@@ -8,7 +8,6 @@ import { ColumnLayout, Column } from '../components/basic-styled/column-layout';
 import { BodyText as BodyTextCore } from '../components/basic-styled/body-text';
 import { PromptBox } from '../components/prompt-box';
 import { ContributionForm } from '../components/contribution-form';
-import { getClientPromptRepository } from '../components/utility';
 import { ContributionFormSubmission } from '../types/ContributionFormSubmission';
 import { useCaptcha } from '../components/hooks/use-captcha';
 import { ContactInfoForm } from '../components/contact-info-form';
@@ -16,6 +15,7 @@ import { useTransitionViewState, useAnimationDuration } from '../components/anim
 import { ContactFormSubmission } from '../types/ContactFormSubmission';
 import { Button as ButtonCore } from '../components/card';
 import { FadeIn } from '../components/fade-in';
+import { useClientPromptRepository } from '../components/hooks/use-repository';
 
 const Button = styled(ButtonCore)`
 	font-family: 'Trade Winds';
@@ -43,7 +43,7 @@ const BodyText = styled(BodyTextCore)`
 type PromptViewType = "prompt" | "contact-form";
 
 export default function Prompt() {
-	const promptRepository = useMemo(() => getClientPromptRepository(), []);
+	const promptRepository = useClientPromptRepository();
 	const [promptText, setPromptText] = useState('Loading prompt...');
 	const [promptId, setPromptId] = useState(null);
 	const { duration, getDelay } = useAnimationDuration(0.5);

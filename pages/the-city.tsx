@@ -2,19 +2,19 @@ import React, { useCallback } from 'react';
 import { Head } from '../components/head';
 import { Location } from '../components/location';
 import { EncounterChoice } from '../types/Encounter';
-import { getClientLocationRepository } from '../components/utility';
 import { useRouter } from 'next/router';
 import { useCaptcha } from '../components/hooks/use-captcha';
+import { useClientLocationRepository } from '../components/hooks/use-repository';
 
 export default function TheCity() {
 	const router = useRouter();
+	const repository = useClientLocationRepository();
 	useCaptcha('the_city');
 
 	const handleOnContinue = useCallback(async (result: EncounterChoice) => {
-		const repository = getClientLocationRepository();
 		const firstLocation = await repository.getNextLocation(result.choiceText.toLowerCase());
 		router.push(`/${firstLocation.path}/${firstLocation.id}`);
-	}, []);
+	}, [repository]);
 
 	return (
 		<>
