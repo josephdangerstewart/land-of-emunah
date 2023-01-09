@@ -17,7 +17,7 @@
     "formidable": "^1.2.2",
     "fs": "^0.0.1-security",
     "http-status-codes": "^1.4.0",
-    "luxon": "^1.23.0",
+    "luxon": "^1.28.1",
     "next": "9.3.5",
     "polished": "^3.5.2",
     "react": "16.13.1",
