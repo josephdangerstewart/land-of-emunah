@@ -62,7 +62,7 @@ export function withAlerting(cb: NextApiHandler): NextApiHandler {
 			isSentryInitialized = true;
 		}
 
-		return new Promise(async (resolve, reject) => {
+		return new Promise<void>(async (resolve, reject) => {
 			try {
 				await cb(req, res);
 				return resolve();

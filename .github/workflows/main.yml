@@ -1,0 +1,13 @@
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build_and_deploy:
+    uses: josephdangerstewart/configuration/actions/deploy-nextjs-app.yaml@master
+    with:
+      deployment_host: 64.227.48.74
+      node_version: 16.x
+    secrets:
+      ssh_private_key: This is a test key
