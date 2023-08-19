@@ -5,7 +5,7 @@ on:
 
 jobs:
   build_and_deploy:
-    uses: josephdangerstewart/configuration/actions/deploy-nextjs-app.yaml@master
+    uses: josephdangerstewart/configuration/.github/workflows/deploy-nextjs-app.yaml@master
     with:
       deployment_host: 64.227.48.74
       node_version: 16.x
