@@ -3,12 +3,19 @@ import HttpStatusCodes from 'http-status-codes';
 import fs from 'fs';
 import util from 'util';
 import { v2 as cloudinary } from 'cloudinary';
-import creds from '../creds.json';
 import { FormidableFile } from '../types/ContributionFormSubmission.js';
 import { DateTime } from 'luxon';
 import axios from 'axios';
 import * as Sentry from '@sentry/node';
 import useragent from 'useragent';
+
+const creds = {
+	"CLOUDINARY_CLOUD_NAME": "",
+	"CLOUDINARY_API_KEY": "",
+	"CLOUDINARY_API_SECRET": "",
+	"SENTRY_DSN": "",
+	"CAPTCHA_SECRET": ""
+}
 
 cloudinary.config({
 	cloud_name: creds.CLOUDINARY_CLOUD_NAME,
