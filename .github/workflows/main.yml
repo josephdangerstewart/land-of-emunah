@@ -12,4 +12,4 @@ jobs:
       deployment_host: 64.227.48.74
       node_version: 16.x
     secrets:
-      ssh_private_key: This is a test key
+      ssh_private_key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
