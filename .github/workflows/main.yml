@@ -8,12 +8,6 @@ on:
 jobs:
   build_and_deploy:
     name: Build and deploy
-    with:
-      deployment_host: 64.227.48.74
-      node_version: 16.x
-      port: 3000
-    secrets:
-      ssh_private_key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
