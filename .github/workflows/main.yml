@@ -7,6 +7,7 @@ on:
 
 jobs:
   build_and_deploy:
+    runs-on: ubuntu-latest
     name: Build and deploy
     steps:
       - name: Checkout
@@ -26,7 +27,7 @@ jobs:
         run: yarn build
 
       - name: Deploy
-        uses: josephdangerstewart/configuration/deploy-nextjs-app@main
+        uses: josephdangerstewart/configuration/actions/deploy-node-app@main
         with:
           ssh_private_key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
           deployment_host: 64.227.48.74
