@@ -7,10 +7,32 @@ on:
 
 jobs:
   build_and_deploy:
-    uses: josephdangerstewart/configuration/.github/workflows/deploy-nextjs-app.yaml@master
+    name: Build and deploy
     with:
       deployment_host: 64.227.48.74
       node_version: 16.x
       port: 3000
     secrets:
       ssh_private_key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node_version }}
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+      - name: Deploy
+        uses: josephdangerstewart/configuration/deploy-nextjs-app@main
+          with:
+            ssh_private_key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
+            deployment_host: 64.227.48.74
