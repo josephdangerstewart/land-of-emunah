@@ -1,16 +1,22 @@
+import { google } from 'googleapis';
+import * as path from 'path';
 import { IEncounterRepository } from '../types/IEncounterRepository';
 import { ILocationRepository } from '../types/ILocationRepository';
 import { IPromptRepository } from '../types/IPromptRepository';
-import { DirectusPromptRepository } from './DirectusPromptRepository';
 import { YamlEncounterRepository } from './YamlEncounterRepository';
 import { YamlLocationRepository } from './YamlLocationRepository';
+import { GooglePromptRepository } from './GooglePromptRepository';
 
-const DIRECTUS_DEV_URL = 'https://admin.landofemunah.com/admin';
-const DIRECTUS_PROD_URL = 'https://admin.landofemunah.com/admin';
+const credentialsPath = path.join(__dirname, 'googleCreds.json');
 
-const directusBaseUri = process.env.NODE_ENV === 'development'
-		? DIRECTUS_DEV_URL
-		: DIRECTUS_PROD_URL;
+const auth = new google.auth.GoogleAuth({
+	keyFile: credentialsPath,
+	scopes: [
+		'https://www.googleapis.com/auth/spreadsheets',
+	],
+});
+
+google.options({ auth });
 
 export async function getEncounterRepository(): Promise<IEncounterRepository> {
 	const repository = new YamlEncounterRepository('./encounters');
@@ -25,6 +31,6 @@ export async function getLocationRepository(): Promise<ILocationRepository> {
 }
 
 export async function getPromptRepository(): Promise<IPromptRepository> {
-	const repository = new DirectusPromptRepository(directusBaseUri);
+	const repository = new GooglePromptRepository();
 	return repository;
 }

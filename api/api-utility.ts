@@ -28,17 +28,7 @@ export const readdir = util.promisify(fs.readdir);
 export const lstat = util.promisify(fs.lstat);
 
 export function uploadImage(file: FormidableFile): Promise<string> {
-	return new Promise((resolve, reject) => {
-		cloudinary.uploader.upload(file.path, {
-			folder: 'land-of-emunah'
-		}, (err, result) => {
-			if (err) {
-				return reject(err);
-			}
-
-			resolve(result.secure_url);
-		});
-	});
+	return Promise.resolve('https://placehold.co/600x400');
 }
 
 export function mapYamlFileNameToId(fileName: string): string {

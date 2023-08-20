@@ -1,10 +1,10 @@
 import { google } from 'googleapis';
-import { DataSheet, DataSheetRow } from './types';
+import { DataSheet, DataSheetRow, RowOf } from './types';
 import { columnNameToIndex, getRange, buildRow } from './sheetsUtil';
 
 export async function addSheetData<T extends Record<string, string>>(
 	sheet: DataSheet<T>,
-	rowData: DataSheetRow<keyof T>[]
+	rowData: T[]
 ): Promise<void> {
 	const sheetsClient = google.sheets({ version: 'v4' });
 
