@@ -27,7 +27,7 @@ jobs:
         run: yarn build
 
       - name: Deploy
-        uses: josephdangerstewart/configuration/actions/deploy-node-app@main
+        uses: josephdangerstewart/configuration/actions/deploy-node-app@master
         with:
           ssh_private_key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
           deployment_host: 64.227.48.74
