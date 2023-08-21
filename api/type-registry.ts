@@ -7,12 +7,13 @@ import { YamlEncounterRepository } from './YamlEncounterRepository';
 import { YamlLocationRepository } from './YamlLocationRepository';
 import { GooglePromptRepository } from './GooglePromptRepository';
 
-const credentialsPath = path.join(__dirname, 'googleCreds.json');
+const credentialsPath = path.join(path.resolve('./'), 'googleCreds.json');
 
 const auth = new google.auth.GoogleAuth({
 	keyFile: credentialsPath,
 	scopes: [
 		'https://www.googleapis.com/auth/spreadsheets',
+		'https://www.googleapis.com/auth/cloud-platform',
 	],
 });
 

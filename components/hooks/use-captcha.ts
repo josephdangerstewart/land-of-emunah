@@ -7,7 +7,7 @@ export interface UseCaptchaHook {
 
 declare const grecaptcha: any;
 
-const SITE_KEY = '6LfxhfEUAAAAALWKUojZTi6qWzj62miHHsZgJGV-';
+const SITE_KEY = '6Lffh8AnAAAAAJEgHGW4hxQroFIXo7wM-lnF_-bG';
 
 export function useCaptcha(action: string, validateImmediately = true): UseCaptchaHook {
 	const [token, setToken] = useState<string>(null);
@@ -18,8 +18,8 @@ export function useCaptcha(action: string, validateImmediately = true): UseCaptc
 				return reject();
 			}
 
-			grecaptcha.ready(() => {
-				grecaptcha.execute(SITE_KEY, { action }).then(token => {
+			grecaptcha.enterprise.ready(() => {
+				grecaptcha.enterprise.execute(SITE_KEY, { action }).then(token => {
 					resolve(token as string);
 				});
 			});

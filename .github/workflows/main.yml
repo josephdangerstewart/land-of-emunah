@@ -26,6 +26,11 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Write service account credentials
+        run: echo "$GOOGLE_KEY"
+        env:
+          GOOGLE_KEY: ${{ secrets.GOOGLE_KEY }}
+
       - name: Deploy
         uses: josephdangerstewart/configuration/actions/deploy-node-app@master
         with:

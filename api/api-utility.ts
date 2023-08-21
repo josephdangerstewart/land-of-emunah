@@ -1,11 +1,11 @@
 import { NextApiResponse, NextApiRequest } from 'next';
 import HttpStatusCodes from 'http-status-codes';
 import fs from 'fs';
+import { google } from 'googleapis';
 import util from 'util';
 import { v2 as cloudinary } from 'cloudinary';
 import { FormidableFile } from '../types/ContributionFormSubmission.js';
 import { DateTime } from 'luxon';
-import axios from 'axios';
 import * as Sentry from '@sentry/node';
 import useragent from 'useragent';
 
@@ -95,9 +95,20 @@ interface CaptchaResponse {
 }
 
 export async function validateCaptcha(token): Promise<CaptchaResponse> {
-	const url = `https://www.google.com/recaptcha/api/siteverify?secret=${creds.CAPTCHA_SECRET}&response=${token}`;
-	const { data } = await axios.post(url);
-	return data as CaptchaResponse;
+	console.log(token);
+	const result = await google.recaptchaenterprise("v1").projects.assessments.create({
+		requestBody: {
+			event: {
+				siteKey: '6Lffh8AnAAAAAJEgHGW4hxQroFIXo7wM-lnF_-bG',
+				token,
+			},
+		},
+		parent: 'projects/personal-projects-396500'
+	});
+
+	return {
+		success: result?.data?.tokenProperties?.valid,
+	};
 }
 
 export interface DirectusAsset {

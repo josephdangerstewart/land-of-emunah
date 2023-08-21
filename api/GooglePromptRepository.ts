@@ -2,7 +2,7 @@ import { ContactFormSubmission } from '../types/ContactFormSubmission';
 import { ContributionFormSubmission, FormidableFile } from '../types/ContributionFormSubmission';
 import { IPromptRepository } from '../types/IPromptRepository';
 import { Prompt } from '../types/Prompt';
-import { uploadImage } from './api-utility';
+import { getNow, uploadImage } from './api-utility';
 import { addSheetData } from './sheetManipulation';
 import { DataSheet } from './sheetManipulation/types';
 
@@ -22,7 +22,7 @@ export class GooglePromptRepository implements IPromptRepository {
 			content: submission.content,
 			fileUpload: url,
 			promptId,
-			timestamp: new Date().toString(),
+			timestamp: getNow(),
 		}]);
 	};
 
@@ -31,7 +31,7 @@ export class GooglePromptRepository implements IPromptRepository {
 			name: submission.name,
 			email: submission.email,
 			phone: submission.phone,
-			timestamp: new Date().toString(),
+			timestamp: getNow(),
 		}]);
 	};
 }
