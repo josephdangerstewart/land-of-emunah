@@ -68,7 +68,7 @@ interface GoogleContactSubmission extends Record<string, string> {
 
 const contactSubmissionSheet: DataSheet<GoogleContactSubmission> = {
 	spreadsheetId: '1webABSBqGvs_SpGxt2oz2nSr2WH-SwjL8y4sJzxH1FE',
-	name: 'Prompt_Submissions',
+	name: 'Contact_Info',
 	dataStartsAtRow: 2,
 	columns: {
 		name: 'A',
