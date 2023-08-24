@@ -12,7 +12,10 @@ export const config = {
 
 async function parseSubmission(req: NextApiRequest): Promise<ContributionFormSubmission> {
 	return new Promise((resolve, reject) => {
-		const form = formidable();
+		const form = formidable({
+			maxFileSize: 100 * 1024 * 1024,
+			allowEmptyFiles: false,
+		});
 
 		form.parse(req, (err, fields, files) => {
 			if (err) {

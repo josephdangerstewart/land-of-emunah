@@ -31,6 +31,11 @@ jobs:
         env:
           GOOGLE_KEY: ${{ secrets.GOOGLE_KEY }}
 
+      - name: Write AWS credentials
+        run: echo "$AWS_CREDENTIALS" > ./awsCreds.json
+        env:
+          AWS_CREDENTIALS: ${{ secrets.AWS_CREDENTIALS }}
+
       - name: Deploy
         uses: josephdangerstewart/configuration/actions/deploy-node-app@master
         with:

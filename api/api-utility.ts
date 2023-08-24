@@ -1,34 +1,42 @@
 import { NextApiResponse, NextApiRequest } from 'next';
 import HttpStatusCodes from 'http-status-codes';
-import fs from 'fs';
+import fs from 'fs/promises';
+import path from 'path';
 import { google } from 'googleapis';
-import util from 'util';
-import { v2 as cloudinary } from 'cloudinary';
+import AWS from 'aws-sdk';
 import { FormidableFile } from '../types/ContributionFormSubmission.js';
 import { DateTime } from 'luxon';
+import cuid from 'cuid';
 import * as Sentry from '@sentry/node';
 import useragent from 'useragent';
 
 const creds = {
-	"CLOUDINARY_CLOUD_NAME": "",
-	"CLOUDINARY_API_KEY": "",
-	"CLOUDINARY_API_SECRET": "",
 	"SENTRY_DSN": "",
-	"CAPTCHA_SECRET": ""
 }
 
-cloudinary.config({
-	cloud_name: creds.CLOUDINARY_CLOUD_NAME,
-	api_key: creds.CLOUDINARY_API_KEY,
-	api_secret: creds.CLOUDINARY_API_SECRET,
-});
+AWS.config.loadFromPath(path.resolve('./awsCreds.json'));
 
-export const readFile = util.promisify(fs.readFile);
-export const readdir = util.promisify(fs.readdir);
-export const lstat = util.promisify(fs.lstat);
+export async function uploadImage(file: FormidableFile): Promise<string> {
+	const s3Client = new AWS.S3();
 
-export function uploadImage(file: FormidableFile): Promise<string> {
-	return Promise.resolve('https://placehold.co/600x400');
+	console.log(await new AWS.STS().getCallerIdentity().promise());
+
+	let fileHandle: fs.FileHandle;
+	try {
+		fileHandle = await fs.open(file.path);
+		const readStream = fileHandle.createReadStream();
+
+		const response = await s3Client.upload({
+			Bucket: 'loe-submissions-bucket',
+			Key: `${cuid()}${path.extname(file.path)}`,
+			Body: readStream,
+			ACL: 'public-read',
+		}).promise();
+
+		return response.Location;
+	} finally {
+		await fileHandle?.close();
+	}
 }
 
 export function mapYamlFileNameToId(fileName: string): string {
@@ -95,7 +103,6 @@ interface CaptchaResponse {
 }
 
 export async function validateCaptcha(token): Promise<CaptchaResponse> {
-	console.log(token);
 	const result = await google.recaptchaenterprise("v1").projects.assessments.create({
 		requestBody: {
 			event: {

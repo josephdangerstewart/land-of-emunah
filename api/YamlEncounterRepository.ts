@@ -2,10 +2,7 @@ import { IEncounterRepository } from '../types/IEncounterRepository';
 import { Encounter } from '../types/Encounter';
 import yaml from 'yaml';
 import path from 'path';
-import {
-	readdir,
-	readFile,
-} from './api-utility';
+import fs from 'fs/promises';
 
 export class YamlEncounterRepository implements IEncounterRepository {
 	private knownTypes: string[];
@@ -16,7 +13,7 @@ export class YamlEncounterRepository implements IEncounterRepository {
 	}
 
 	public async init() {
-		this.knownTypes = await readdir(this.encountersPath);
+		this.knownTypes = await fs.readdir(this.encountersPath);
 	}
 
 	public async getFinalEncounter(type: string): Promise<Encounter> {
@@ -33,7 +30,7 @@ export class YamlEncounterRepository implements IEncounterRepository {
 		}
 
 		const typePath = path.join(this.encountersPath, type);
-		const allEncounters = (await readdir(typePath)).filter(x => x !== '_final.yaml');
+		const allEncounters = (await fs.readdir(typePath)).filter(x => x !== '_final.yaml');
 		let availableEncounters = allEncounters.filter(x => !previousEncounters.includes(x.replace(/\.yaml/, '')));
 
 		if (availableEncounters.length == 0) {
@@ -51,7 +48,7 @@ export class YamlEncounterRepository implements IEncounterRepository {
 
 	private async getEncounter(type: string, id: string): Promise<Encounter> {
 		const encounterPath = path.join(this.encountersPath, type, `${id}.yaml`);
-		const contents = await readFile(encounterPath, { encoding: 'utf8' });
+		const contents = await fs.readFile(encounterPath, { encoding: 'utf8' });
 		const parsed = yaml.parse(contents);
 
 		if (!parsed) {

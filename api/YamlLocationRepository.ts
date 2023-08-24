@@ -1,10 +1,9 @@
 import { ILocationRepository } from '../types/ILocationRepository';
 import {
-	readFile,
-	readdir,
 	mapYamlFileNameToId,
 } from './api-utility';
 import yaml from 'yaml';
+import fs from 'fs/promises';
 import fspath from 'path';
 import { Location } from '../types/Location';
 
@@ -16,18 +15,18 @@ export class YamlLocationRepository implements ILocationRepository {
 	private locationsPath: string;
 	private knownPaths: string[];
 	private map: IMap;
-	
+
 	constructor(relativeLocationsPath: string) {
 		this.locationsPath = fspath.join(fspath.resolve('./'), relativeLocationsPath);
 	}
 
 	public async init(): Promise<void> {
-		this.knownPaths = (await readdir(this.locationsPath)).filter(x => x !== 'map.json');
+		this.knownPaths = (await fs.readdir(this.locationsPath)).filter(x => x !== 'map.json');
 
-		const rawMapData = await readFile(fspath.join(this.locationsPath, 'map.json'), { encoding: 'utf8' });
+		const rawMapData = await fs.readFile(fspath.join(this.locationsPath, 'map.json'), { encoding: 'utf8' });
 		this.map = JSON.parse(rawMapData) as IMap;
 	}
-	
+
 	public async getPaths(): Promise<string[]> {
 		return this.knownPaths;
 	}
@@ -37,7 +36,7 @@ export class YamlLocationRepository implements ILocationRepository {
 			return null;
 		}
 
-		return (await readdir(fspath.join(this.locationsPath, path))).map(x => mapYamlFileNameToId(x));
+		return (await fs.readdir(fspath.join(this.locationsPath, path))).map(x => mapYamlFileNameToId(x));
 	}
 
 	public async getLocation(path: string, location: string): Promise<Location> {
@@ -50,7 +49,7 @@ export class YamlLocationRepository implements ILocationRepository {
 			return null;
 		}
 
-		const fileContents = await readFile(fspath.join(this.locationsPath, `${path}/${location}.yaml`), { encoding: 'utf8' });
+		const fileContents = await fs.readFile(fspath.join(this.locationsPath, `${path}/${location}.yaml`), { encoding: 'utf8' });
 
 		const parsedFile = yaml.parse(fileContents);
 
@@ -85,7 +84,7 @@ export class YamlLocationRepository implements ILocationRepository {
 		}
 
 		const index = this.getMapIndex(path, location);
-		
+
 		if (!this.map[path][index + 1]) {
 			return null;
 		}

@@ -33,3 +33,4 @@ yarn-error.log*
 # Secrets
 creds.json
 googleCreds.json
+awsCreds.json
