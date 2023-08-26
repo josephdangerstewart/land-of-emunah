@@ -4,20 +4,22 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
-  static getInitialProps({ renderPage }) {
-    // Step 1: Create an instance of ServerStyleSheet
+  static async getInitialProps(context) {
     const sheet = new ServerStyleSheet();
 
-    // Step 2: Retrieve styles from components in the page
-    const page = renderPage((App) => (props) =>
-      sheet.collectStyles(<App {...props} />),
-    );
+    const originalRenderPage = context.renderPage;
+    context.renderPage = () => originalRenderPage({
+      enhanceApp: (app) => {
+        sheet.collectStyles(app);
+        return app;
+      }
+    });
 
-    // Step 3: Extract the styles as <style> tags
+    const props = await Document.getInitialProps(context);
+
     const styleTags = sheet.getStyleElement();
 
-    // Step 4: Pass styleTags as a prop
-    return { ...page, styleTags };
+    return { ...props, styleTags };
   }
 
   render() {

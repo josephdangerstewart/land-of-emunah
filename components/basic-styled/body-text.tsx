@@ -12,7 +12,7 @@ const P = styled.p<ITheme>`
 	}
 `;
 
-export const BodyText: React.FC = ({ children, ...rest }) => {
+export const BodyText: React.FC<React.ComponentProps<typeof P>> = ({ children, ...rest }) => {
 	const theme = useTheme();
 
 	return <P {...theme} {...rest}>{children}</P>;

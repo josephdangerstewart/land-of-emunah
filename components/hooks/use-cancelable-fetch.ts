@@ -66,7 +66,7 @@ export function useCancelableFetch(): UseCancelableFetchHook {
 		promises.current.forEach(p => p.cancel());
 	}, []);
 
-	useEffect(() => () => cancelAll, [cancelAll]);
+	useEffect(() => () => { cancelAll(); }, [cancelAll]);
 
 	return {
 		fetchJson: cancelableFetchJson,

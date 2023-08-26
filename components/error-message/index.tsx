@@ -20,7 +20,7 @@ const ErrorContext = React.createContext<UseShowErrorHook>({
 	showError: () => null,
 });
 
-export const ErrorMessageProvider: React.FC = ({ children }) => {
+export const ErrorMessageProvider: React.FC<React.PropsWithChildren<never>> = ({ children }) => {
 	const [error, setError] = useState('');
 	const { duration } = useAnimationDuration();
 	const { setView, isInView, shouldRenderView } = useTransitionViewState(false, duration);

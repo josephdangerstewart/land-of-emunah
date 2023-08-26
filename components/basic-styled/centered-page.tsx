@@ -28,7 +28,7 @@ const Inner = styled.div<{ minHeight?: string }>`
 	min-height: ${({ minHeight }) => minHeight}; 
 `;
 
-export const CenteredPage: React.FC<{ minHeight?: string; responsiveMargins?: boolean }> = ({
+export const CenteredPage: React.FC<React.PropsWithChildren<{ minHeight?: string; responsiveMargins?: boolean }>> = ({
 	children,
 	minHeight,
 	responsiveMargins = true,

@@ -14,7 +14,7 @@ export interface HeaderProps {
 	margin?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ children, margin, ...rest }) => {
+export const Header: React.FC<React.PropsWithChildren<HeaderProps>> = ({ children, margin, ...rest }) => {
 	const theme = useTheme();
 
 	return (

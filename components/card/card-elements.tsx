@@ -21,7 +21,7 @@ const CardContainerOuter = styled.div`
 	perspective: 3000px;
 `;
 
-export const CardContainer: React.FC<{ flipped?: boolean }> = ({ flipped, children }) => (
+export const CardContainer: React.FC<React.PropsWithChildren<{ flipped?: boolean }>> = ({ flipped, children }) => (
 	<CardContainerOuter>
 		<CardContainerCore flipped={flipped}>
 			{children}

@@ -18,6 +18,7 @@ export const Head: React.FC<HeadProps> = ({ title }) => {
 				<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet"></link>
 				<link href="https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap" rel="stylesheet"></link>
 			</NextHead>
+			{/* eslint-disable-next-line react/no-unknown-property */}
 			<style jsx global>{`
 				* {
 					box-sizing: border-box;

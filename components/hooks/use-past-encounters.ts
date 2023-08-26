@@ -6,7 +6,7 @@ export interface UsePastEncountersHook {
 	clearEncounters: () => void;
 }
 
-export function usePastEncounters<UsePastEncountersHook>() {
+export function usePastEncounters(): UsePastEncountersHook {
 	const getPastEncounters = useCallback(() => {
 		if (typeof window === 'undefined') {
 			return [];

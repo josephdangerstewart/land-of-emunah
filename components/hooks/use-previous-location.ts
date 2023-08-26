@@ -6,7 +6,7 @@ export interface UsePreviousLocationHook {
 	setPreviousLocation: (location: string) => void;
 }
 
-export function usePreviousLocation<UsePreviousLocationHook>() {
+export function usePreviousLocation(): UsePreviousLocationHook {
 	const getPreviousLocation = useCallback(() => {
 		if (typeof window === 'undefined') {
 			return null;
