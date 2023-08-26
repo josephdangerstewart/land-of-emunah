@@ -37,7 +37,7 @@ export const ErrorMessageProvider: React.FC = ({ children }) => {
 	}, [setError]);
 
 	const onGoBack = useCallback(() => {
-		setView(false);
+		window.location.reload();
 	}, [setView]);
 
 	const contextValue = useMemo(() => ({ showError }), [showError]);
@@ -60,7 +60,7 @@ export const ErrorMessageProvider: React.FC = ({ children }) => {
 									{error}
 								</BodyText>
 								<ButtonContainer>
-									<Button onClick={onGoBack}>Go back to page!</Button>
+									<Button onClick={onGoBack}>Reload</Button>
 								</ButtonContainer>
 							</Card>
 						</FadeIn>
