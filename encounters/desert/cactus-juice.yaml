@@ -1,0 +1,19 @@
+title: Cactus Juice
+coverImageUrl: https://d1lrsvyr5nwi6q.cloudfront.net/encounters-optimized/The_Quenchiest.png
+description: >
+  You look in your water container and discover that there’s no more water in it. You look ahead of you to see if there’s
+  anywhere to find more water. All you see is a cactus and some rock formation behind it. You could try to drink the cactus
+  juice in order to quench your thirst or just continue on with nothing to drink. Do you try to drink from the cactus?
+choices:
+  -
+    choiceText: Yes, drink the cactus juice.
+    result: >
+      Congratulations, you just learned something. You just learned that four out of five cacti are toxic.
+      Unfortunately, you aren't very lucky. You feel very weak as you try to continue on. Hopefully you
+      won’t die from drinking that...
+  -
+    choiceText: No, that’s disgusting!
+    result: >
+      You don’t drink the cactus, but you still feel very thirsty and wish you had something to drink. As you
+      continue to journey on, you come upon a small spring tickling with clean water from a rock formation
+      not too far from the cactus. Looks like you didn't need to drink that cactus juice anyways.

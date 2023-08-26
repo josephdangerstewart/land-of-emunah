@@ -1,0 +1,20 @@
+title: Shipwreck
+coverImageUrl: https://d1lrsvyr5nwi6q.cloudfront.net/encounters-optimized/Underwater_Shipwreck.png
+description: >
+  With the waves surging so strongly, you fall out of your boat and dive into the depths of the sea!
+  As you start to stabilize yourself on the seafloor, you gaze upon a sunken ship immersed in aquatic
+  life. It seems mysterious to you. Do you explore it or ignore the ship entirely?
+choices:
+  -
+    choiceText: Explore the ship
+    result: >
+      As you swim closer to the boat to explore it, you see a dark blur of movement. Long, yellow teeth emerge
+      from the ship and start gnashing towards you! In panic, you swim to the surface like you should have
+      earlier and barely make it to your boat. You look behind you and see that there are no teeth to be found.
+      Though you are safe now, you feel utterly exhausted...
+  -
+    choiceText: Ignore the ship and swim back up
+    result: >
+      You start swimming your way up to the surface and make it up safely to receive plenty of air. It appears
+      the waves have calmed down a bit and the sky is clearing up. You board back on your boat without any
+      trouble and you are quickly ready to sail. Good thing you are able to travel safely after falling into the sea!

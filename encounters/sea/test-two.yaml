@@ -1,9 +1,0 @@
-title: Test Encounter 2
-description: This is a description
-choices:
-  -
-    choiceText: Choice a
-    result: result for choice a
-  -
-    choiceText: Choice b
-    result: result for choice b

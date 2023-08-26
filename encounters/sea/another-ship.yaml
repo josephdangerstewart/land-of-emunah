@@ -1,0 +1,21 @@
+title: Another Ship Approaches
+coverImageUrl: https://d1lrsvyr5nwi6q.cloudfront.net/encounters-optimized/Another_Ship_Approaches.png
+description: >
+  As you travel through the salty sea, your throat starts to dry due to the lack of water. Upon the
+  horizon, you see a misty vision of a ship approaching yours. It’s difficult to see whether or not
+  they are friends or foes. Do you hail the boat? 
+choices:
+  -
+    choiceText: Yes! Hello there!
+    result: >
+      You call to the ship approaching you and it steadies its sails to slow down. As it comes close to your
+      boat, it drops a bridge, connecting your boat to itself. You suddenly see barrel after barrel rolling
+      down the bridge and into your boat. As you get closer to them, you discover that it’s water, just what
+      you needed. When you look up to show your gratitude, the ship suddenly vanishes into misty air. Whatever
+      just happened, at least you won’t be thirsty!
+  -
+    choiceText: No, I’ll move away.
+    result: >
+      In order to not give the ship your attention, you turn your boat enough to avoid interacting with it.
+      As the ship passes you, it suddenly disappears into the misty air, vanishing right before your eyes.
+      Your throat grows even more dry as time goes on. Perhaps it was trying to get your attention for something...

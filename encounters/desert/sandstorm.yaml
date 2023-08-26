@@ -1,0 +1,18 @@
+title: Sandstorm
+coverImageUrl: https://d1lrsvyr5nwi6q.cloudfront.net/encounters-optimized/Sandstorm.png
+description: >
+  A sandstorm looks like it might be brewing ahead of you. To your right is an abandoned
+  campground with well secured tents. Do you take shelter in the tents or continue on?
+choices:
+  -
+    choiceText: Shelter in the Tents
+    result: >
+      It's a good thing you took shelter! You hear the winds pick up and the flying sand
+      beat against your tent. Once the storm calms down after nearly an hour, you are
+      able to continue your travels safely.
+  -
+    choiceText: Continue On
+    result: >
+      As you walk, the winds begin to pick up. Flying sand begins to scrape at your skin
+      and infiltrate your lungs. It continues for an hour. Perhaps you should have taken
+      shelter after all...

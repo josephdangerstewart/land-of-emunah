@@ -1,0 +1,24 @@
+title: Treasure
+coverImageUrl: https://d1lrsvyr5nwi6q.cloudfront.net/encounters-optimized/Treasure.png
+description: >
+  As you walk along the rocky path, you come across a pedestal with a red shining
+  gemstone the size of your palm sitting centered at the top. The red glow of the
+  stone is mesmerizing and you can’t seem to stop looking at it. Do you touch it?
+choices:
+  -
+    choiceText: Yes, it’s worth observing more.
+    result: >
+      You grab the stone and it immediately feels ice cold. As you hold it in your
+      hand longer and observe the details of the gemstone, you recognize a strange
+      shimmer across the bottom of it. As you look closer at it, the gemstone suddenly
+      explodes from your grip, causing you to fall back on the rocky gravel road.
+      You blink at your hand where the gemstone was and all you see is a bloody carving
+      in your palm of a strange symbol you have never seen before. Although, you have
+      heard of curses happening in this sort of way before...
+  -
+    choiceText: No, it could possibly be a trap.
+    result: >
+      Though you found it difficult to leave the stone away from your sight, you continue on.
+      You believe that it’s better to simply leave it alone because it may have been a trap.
+      If it wasn’t a trap, you would have never known, but you probably don’t need it
+      for this particular journey anyways.

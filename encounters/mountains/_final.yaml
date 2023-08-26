@@ -1,9 +1,24 @@
-title: Sleepy time
-description: Go to sleep now plz
+title: Time to Sleep
+coverImageUrl: https://d1lrsvyr5nwi6q.cloudfront.net/encounters-optimized/Mountain_Sleep.png
+description: >
+  It is beginning to grow too dark to see along the path and your eyes begin to grow heavy.
+  You noticed a strangely quiet cave nearby that’s big enough to sleep comfortably in. Do you
+  sleep in the strangely quiet cave or along the mountainside away from the cave?
 choices:
   -
-    choiceText: KK
-    result: Aight, goodnight
+    choiceText: Sleep in the cave
+    result: >
+      As you lay yourself down within the mouth of the silent cave, you realize how soothing the
+      silence and emptiness of the cave is. You turn your head to stare down the hole of the cave,
+      letting your eyes adjust to the darkness and wonder upon the nothingness. As your eyes adjust,
+      you feel a sense of comfort and security from the rock formation around you. You feel a sense
+      of protection from the earth and easiest drift off in your wonder for the mysterious yet
+      beautiful place.
   -
-    choiceText: No!
-    result: You fall asleep anyway but when you wake up you'll be super tired
+    choiceText: Sleep away from the cave
+    result: >
+      You find a decently comfortable spot to sleep away from the mouth of the cave and lay yourself down.
+      You can't help, but feel as if the cave is luring you in or trying to get you to come inside it.
+      You roll yourself away from staring at the entrance and just force yourself to sleep. Though you
+      are able to sleep without consequence or complication, you wonder what might have happened if you
+      just went inside that cave to sleep...

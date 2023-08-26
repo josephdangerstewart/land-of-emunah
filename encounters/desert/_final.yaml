@@ -1,9 +1,19 @@
-title: Sleepy time
-description: Go to sleep now plz
+title: Time to Sleep
+coverImageUrl: https://d1lrsvyr5nwi6q.cloudfront.net/encounters-optimized/Desert_Sleep.png
+description: >
+  It is night time and your eyes begin to grow heavy. The sky is dotted with stars and the wind is
+  humming a mysterious and haunting melody. Do you sleep under the stars or set up a tent?
 choices:
   -
-    choiceText: KK
-    result: Aight, goodnight
+    choiceText: Sleep under the stars
+    result: >
+      As you lay down and decide to look up before sleeping, you gaze up into the vast and changing cosmos,
+      your eyes journey infinitely through the interconnected systems. You see a balance of space and connectedness,
+      independence and dependence. The wind seems to sing of this harmony. You feel your place in the land, cared
+      for and yet strong, connected to and separate from even the farthest star in the galaxy...
   -
-    choiceText: No!
-    result: You fall asleep anyway but when you wake up you'll be super tired
+    choiceText: Sleep in the tent
+    result: >
+      You sleep safe and sound, isolated from the dangers of the outside world. Your tent is an armor around you,
+      protecting you from the unknown. Though you are able to sleep without consequence or complication, you can't
+      help, but feel as though you've missed something...

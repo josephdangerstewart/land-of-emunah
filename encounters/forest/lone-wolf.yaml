@@ -1,0 +1,19 @@
+title: Lone Wolf
+coverImageUrl: https://d1lrsvyr5nwi6q.cloudfront.net/encounters-optimized/Lone+Creature.png
+description: >
+  Walking along the woodland path, you come across a creature peering through the trees. It looks different
+  than anything you have seen before, with glowing yellow eyes and a blue-grey pelt that swims like mist.
+  It’s walking directly towards you, eyes staring into yours. Do you keep still or try to run away along the path?
+choices:
+  -
+    choiceText: Keep still
+    result: >
+      You keep still as the creature comes toward to you. As you get a closer look at it, you see its eyes
+      are friendly, not dangerous. It comes up to you and rolls on its back for belly rubs. You scratch its
+      belly, realizing that all along it was just lonely and wanting of a friend.
+  -
+    choiceText: Run away
+    result: >
+      You run as fast as you can from the mysterious creature and forward along the path you were already on.
+      As you keep your legs moving, you glance behind you to see the creature hanging it’s head low. It
+      slowly dragged itself back to the trees. Perhaps it was just lonely...

@@ -1,9 +1,27 @@
-title: Sleepy time
-description: Go to sleep now plz
+title: Time to Sleep
+coverImageUrl: https://d1lrsvyr5nwi6q.cloudfront.net/encounters-optimized/Forest_Sleep.png
+description: >
+  You notice your surroundings getting darker and start to see the sun setting through the
+  clearing of the trees above you. It would be too difficult to travel at night so it’s best
+  to find a place to sleep now. Along your path, you discover a tree with branches thick
+  enough to support you if you were to sleep on them, protected by a heavy foliage of leaves.
+  You notice there’s also enough space for you to sleep on the ground, where it may be safer
+  to rest without the possibility of falling. Will you sleep in the branches of the trees closer
+  to the sky or upon the safety of the ground at your feet?
 choices:
   -
-    choiceText: KK
-    result: Aight, goodnight
+    choiceText: In the branches
+    result: >
+      You get settled in the cozy branches of the tree and lay your head down to gaze up at
+      the sky through the leaves. The air feels fresher up here and the limitless sky appears
+      much closer to you than you expected. You notice as the sky turns dark, stars start to
+      flicker sequentially and slowly glow into a pattern of light. As you stare upon such beauty
+      and steadily drift to sleep, you gain a sense of wonder and safety within the forest...
   -
-    choiceText: No!
-    result: You fall asleep anyway but when you wake up you'll be super tired
+    choiceText: Upon the ground
+    result: >
+      You lay down on the sturdy forest ground with no complication and look up among the tall
+      trees and distant leaves. The sky is completely obscured by leaves and branches, with few
+      enough holes to give you an impression of the time. As the sky gets darker, it’s harder to
+      see around you and you are able to fall asleep smoothly. However, you can’t help but think
+      that you might have witnessed something wonderful by laying amongst the tree branches...

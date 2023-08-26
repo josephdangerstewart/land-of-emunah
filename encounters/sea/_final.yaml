@@ -1,9 +1,24 @@
-title: Sleepy time
-description: Go to sleep now plz
+title: Time to Sleep
+coverImageUrl: https://d1lrsvyr5nwi6q.cloudfront.net/encounters-optimized/Ocean_Sleep.png
+description: >
+  The sun is setting its golden rays across the waters and the sky grows darker. You noticed the waves
+  calming down a bit as if the sea itself is falling asleep. You realize that it will be best to sleep
+  at night, but you wonder where you could sleep. There is an island close by with a shore surrounded by
+  rocks that seem to provide a safe space to sleep. However, you also could sleep aboard your boat of
+  which you are already familiar. Do you sleep on the shore or on your boat?
 choices:
   -
-    choiceText: KK
-    result: Aight, goodnight
+    choiceText: Sleep on the shore
+    result: >
+      You sail your boat close to the shore and anchor it there. Right as you step off the boat upon the
+      sandy rocks, you immediately feel a sense of peace, letting the fresh ocean air brush against
+      your face. As you lay down upon the shore, you stare up at the stars and let the crashing of waves
+      fill your ears, satisfying your need for comfort and relaxation. You are grateful to have found such
+      a peaceful spot to lullaby you to sleep with it’s sounds of water and smells of sweet salt...
   -
-    choiceText: No!
-    result: You fall asleep anyway but when you wake up you'll be super tired
+    choiceText: Sleep on you boat
+    result: >
+      You decide to stay on the boat to sleep. As you lay there, you can’t seem to shake off the idea
+      of sleeping upon the shore. There seems to be something about that particular spot that fascinates
+      you, but you can't really pinpoint it. You figured it would be safer on your boat, but you also wonder
+      if there might have been something you needed upon that shore...

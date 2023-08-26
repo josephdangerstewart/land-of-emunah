@@ -1,0 +1,20 @@
+title: Glowing Flower
+coverImageUrl: https://d1lrsvyr5nwi6q.cloudfront.net/encounters-optimized/Glowing_Flowers.png
+description: >
+  You come across a beautiful, glowing flower, surrounded by a ring of dancing mushrooms. As you get closer,
+  you hear music and notice the mushrooms are singing to the flower, as if in celebration or praise. Do you
+  get closer to discover why this mysterious reverie is taking place, or continue along the path out of caution?
+choices:
+  -
+    choiceText: Get closer
+    result: >
+      You step closer towards the ring of mushrooms and the flower, close enough to see its golden petals
+      unfurling, opening into the air. In its center lies a small child just as bright as the flower itself.
+      The mushrooms leap in the air and their song grows more joyous. You just witnessed the birth of a
+      flower fairy, a once in a thousand year occurrence. You smile and hum along to the mushrooms’ song
+      celebrating this new life.
+  -
+    choiceText: Continue Along
+    result: >
+      You walk away from the luminous flower and her dancing mushrooms, their songs growing faint behind you.
+      You’ll never know what they were singing about, but at least you stayed on the path, right?...

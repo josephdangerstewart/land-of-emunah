@@ -1,0 +1,19 @@
+title: Glowing Runes
+coverImageUrl: https://d1lrsvyr5nwi6q.cloudfront.net/encounters-optimized/Glowing_Runes.png
+description: >
+  The sky starts to get dark as you continue walking along the path. As you struggle to progress through the
+  dark, you are suddenly blinded by a bright light that appears on the wall to your left. You catch your
+  bearings and discern strange glowing patterns on the wall. Their white light illuminates your path. Do
+  you stop to read or continue on?
+choices:
+  -
+    choiceText: Read the strange marks
+    result: >
+      You can’t seem to discern much. You keep walking along the runes, but don’t watch the path
+      ahead of you in your wonder. You stumbled off a lucky short, three feet ledge, spraining your
+      ankle. Perhaps you shouldn’t have gotten distracted.
+  -
+    choiceText: Continue on
+    result: >
+      The way is lit by the runes. You see a three foot ledge that the dark might have hidden from
+      you. You are grateful to have the light to guide your way.
