@@ -6,14 +6,13 @@
 	],
 	"forest": [
 		"entrance",
-		"canopy",
 		"clearing",
-		"mushroom-patch"
+		"grove"
 	],
 	"sea": [
 		"bay",
-		"rocks",
-		"waves"
+		"waves",
+		"rocks"
 	],
 	"mountains": [
 		"base",
