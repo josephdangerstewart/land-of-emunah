@@ -27,7 +27,7 @@ interface LocationProps {
 export default function LocationPage({ currentLocation }: LocationProps) {
 	useCaptcha(`location_${currentLocation.path}_${currentLocation.id}`);
 	const router = useRouter();
-	const { getPastEncounters, addEncounterToHistory } = usePastEncounters();
+	const { getPastEncounters, addEncounterToHistory, clearEncounters } = usePastEncounters();
 	const locationRepository = useClientLocationRepository();
 	const encounterRepository = useClientEncounterRepository();
 	const getNextLocationPromise = useRef<Promise<ILocation>>(null);
@@ -45,6 +45,7 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 
 	const handleOnContinue = useCallback(async () => {
 		if (currentLocation.isLastInPath) {
+			clearEncounters();
 			router.push('/asleep');
 			return;
 		}
