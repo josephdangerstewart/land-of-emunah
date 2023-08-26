@@ -61,14 +61,17 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 	}, [showError, router, currentLocation]);
 
 	useEffect(() => {
-		const encounterPromise = currentLocation.isLastInPath
+		const responsePromise = currentLocation.isLastInPath
 			? encounterRepository.getFinalEncounter(currentLocation.path)
 			: encounterRepository.getRandomEncounter(getPastEncounters(), currentLocation.path, currentLocation.id);
-		
-		encounterPromise.then(encounter => {
+
+		responsePromise.then(({ encounter, clearPreviousEncounters }) => {
 			setEncounter(encounter);
+			if (clearPreviousEncounters) {
+				clearEncounters();
+			}
 		});
-	}, []);
+	}, [clearEncounters, getPastEncounters, encounterRepository, currentLocation.isLastInPath, currentLocation.path, currentLocation.id]);
 
 	const onOpenEncounter = useCallback(() => {
 		addEncounterToHistory(encounter.encounterId);

@@ -1,4 +1,4 @@
-import { IEncounterRepository } from '../../types/IEncounterRepository';
+import { GetEncounterResponse, IEncounterRepository } from '../../types/IEncounterRepository';
 import { Encounter } from '../../types/Encounter';
 
 interface ClientEncounterRepositoryOptions {
@@ -12,7 +12,7 @@ export class ClientEncounterRepository implements IEncounterRepository {
 		this.fetchJson = fetchJson;
 	}
 	
-	public async getRandomEncounter(previousEncounters: string[], type: string, locationId: string): Promise<Encounter> {
+	public async getRandomEncounter(previousEncounters: string[], type: string, locationId: string): Promise<GetEncounterResponse> {
 		const pastEncountersParam = previousEncounters?.length ? `pastEncounters=${previousEncounters.join(',')}` : null;
 		const locationIdParam = locationId ? `locationId=${locationId}` : null;
 
@@ -21,10 +21,10 @@ export class ClientEncounterRepository implements IEncounterRepository {
 			locationIdParam,
 		].filter(Boolean);
 
-		return (await this.fetchJson(`/api/encounters/${type}${params.length ? `?${params.join('&')}` : ''}`)).encounter as Encounter;
+		return (await this.fetchJson(`/api/encounters/${type}${params.length ? `?${params.join('&')}` : ''}`)).encounter as GetEncounterResponse;
 	}
 
-	public async getFinalEncounter(type: string): Promise<Encounter> {
-		return (await this.fetchJson(`/api/encounters/${type}/final`)).encounter as Encounter;
+	public async getFinalEncounter(type: string): Promise<GetEncounterResponse> {
+		return (await this.fetchJson(`/api/encounters/${type}/final`)).encounter as GetEncounterResponse;
 	}
 }
