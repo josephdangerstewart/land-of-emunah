@@ -96,6 +96,7 @@ export default function LocationPage({ currentLocation }: LocationProps) {
 		<ThemeProvider value={theme}>
 			<Head />
 			<Location
+				locationId={currentLocation.id}
 				title={currentLocation.name}
 				bodyText={currentLocation.description}
 				coverImageUrl={currentLocation.coverImage}

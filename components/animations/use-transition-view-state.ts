@@ -4,7 +4,7 @@ import { useWait } from '../hooks/use-wait';
 export interface UseTransitionStateHook<T> {
 	shouldRenderView: (view: T) => boolean;
 	isInView: (view: T) => boolean;
-	setView: (nextView: T, hasAnimation?: boolean, delay?: number) => void;
+	setView: (nextView: T, hasAnimation?: boolean, delay?: number) => Promise<void>;
 	addView: (nextView: T) => void;
 }
 

@@ -24,6 +24,7 @@ const Header = styled(HeaderCore)`
 
 export interface LocationProps {
 	title: string;
+	locationId: string;
 	bodyText: string;
 	coverImageUrl: string;
 	encounter?: Encounter;
@@ -42,6 +43,7 @@ export const Location: React.FC<LocationProps> = ({
 	encounter,
 	expectingEncounter,
 	onOpenEncounter,
+	locationId,
 }) => {
 	const { duration, getDelay } = useAnimationDuration(0.35);
 	const { isInView, shouldRenderView, setView, addView } = useTransitionViewState('intro', duration);
@@ -49,12 +51,16 @@ export const Location: React.FC<LocationProps> = ({
 	const [result, setResult] = useState<EncounterChoice>();
 
 	useEffect(() => {
+		setView('intro', false);
+	}, [locationId]);
+
+	useEffect(() => {
 		if (shouldRenderView('continue')) {
 			onContinue(result);
 		}
 	}, [shouldRenderView]);
 
-	const handleOnContinue = useCallback((result: EncounterChoice) => {
+	const handleOnContinue = useCallback(async (result: EncounterChoice) => {
 		setResult(result);
 		setView('continue', true, getDelay(2));
 	}, [setView]);
