@@ -7,6 +7,8 @@ import { useCaptcha } from '../components/hooks/use-captcha';
 import { useClientLocationRepository } from '../components/hooks/use-repository';
 import { useShowError } from '../components/error-message';
 
+const cityLocationId = Symbol('city location id');
+
 export default function TheCity() {
 	const router = useRouter();
 	const repository = useClientLocationRepository();
@@ -28,6 +30,7 @@ export default function TheCity() {
 		<>
 			<Head />
 			<Location
+				locationId={cityLocationId}
 				title="The City"
 				coverImageUrl="/images/locations/city.png"
 				bodyText="Your journey starts with leaving the city in the center of the land of Emunah. This city is always bustling and busy with many people constantly moving around and continuing through life at their own pace. You have grown to wonder what is further beyond this crowded, noisy city and have decided to set out on a new adventure to explore the Land of Emunah."

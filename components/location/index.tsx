@@ -24,7 +24,7 @@ const Header = styled(HeaderCore)`
 
 export interface LocationProps {
 	title: string;
-	locationId: string;
+	locationId: string | symbol;
 	bodyText: string;
 	coverImageUrl: string;
 	encounter?: Encounter;
