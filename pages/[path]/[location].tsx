@@ -113,15 +113,7 @@ LocationPage.getInitialProps = async (context: NextPageContext) => {
 	const { req } = context;
 	const { path, location } = context.query;
 
-	let base = '';
-	if (req) {
-		if (process.env.NODE_ENV === 'development') {
-			base = 'http://localhost:3000';
-		} else {
-			base = 'https://landofemunah.com';
-		}
-	}
-
+	const base = req ? 'http://localhost:3000' : '';
 	const fetch = (url: string): Promise<any> => fetchJson(`${base}${url}`);
 	const repository = new ClientLocationRepository({ fetchJson: fetch });
 	const currentLocation = await repository.getLocation(path as string, location as string);
