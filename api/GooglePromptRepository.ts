@@ -7,11 +7,11 @@ import { addSheetData } from './sheetManipulation';
 import { DataSheet } from './sheetManipulation/types';
 
 export class GooglePromptRepository implements IPromptRepository {
-	getPrompt = async (promptId?: string): Promise<Prompt> => {
+	getPrompt = async (): Promise<Prompt> => {
 		return {
-			id: 'test',
-			text: 'this is a test prompt',
-		}
+			id: 'prompt-1',
+			text: 'What do you look forward to seeing or exploring in this land?',
+		};
 	};
 
 	submitResponse = async (promptId: string, submission: ContributionFormSubmission): Promise<void> => {
@@ -57,7 +57,7 @@ const contributionSubmissionSheet: DataSheet<GoogleContributionSubmission> = {
 		promptId: 'E',
 		timestamp: 'F',
 	}
-}
+};
 
 interface GoogleContactSubmission extends Record<string, string> {
 	name: string;
@@ -76,4 +76,4 @@ const contactSubmissionSheet: DataSheet<GoogleContactSubmission> = {
 		phone: 'C',
 		timestamp: 'D',
 	}
-}
+};
