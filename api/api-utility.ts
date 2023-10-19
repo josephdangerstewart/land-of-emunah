@@ -12,14 +12,12 @@ import useragent from 'useragent';
 
 const creds = {
 	"SENTRY_DSN": "",
-}
+};
 
 AWS.config.loadFromPath(path.resolve('./awsCreds.json'));
 
 export async function uploadImage(file: FormidableFile): Promise<string> {
 	const s3Client = new AWS.S3();
-
-	console.log(await new AWS.STS().getCallerIdentity().promise());
 
 	let fileHandle: fs.FileHandle;
 	try {
